@@ -306,7 +306,7 @@ a {
 
 .specs li {
     margin-bottom: 8px;
-    padding-left: 80px;
+    padding-left: 70px;
     position: relative;
     text-align: left;
     word-break: keep-all;

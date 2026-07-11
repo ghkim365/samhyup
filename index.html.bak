@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼협철망(주) | B2B 모바일 간편 견적 & 제품 카탈로그</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="images/logo_samhyup.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -166,7 +165,7 @@
                 <!-- Product 7: 개비온철망 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="images/gabion.png" alt="개비온철망">
+                        <img src="images/gabion.jpg" alt="개비온철망">
                         <span class="product-tag">토목/조경</span>
                     </div>
                     <div class="product-info">
