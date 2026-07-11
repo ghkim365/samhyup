@@ -620,6 +620,23 @@ input:focus, select:focus, textarea:focus {
         font-size: 11.5px;
         white-space: nowrap;
     }
+    
+    /* Reduce large spacing between sections on mobile */
+    .hero {
+        padding: 40px 0;
+    }
+    .products, .why-us, .quote-form-section {
+        padding: 40px 0;
+    }
+    .section-title {
+        margin-bottom: 25px;
+    }
+    
+    /* Optimize heading size on mobile to prevent wrapping */
+    .section-title h2 {
+        font-size: 21px !important;
+        white-space: nowrap;
+    }
 }
 
 @media (max-width: 576px) {
