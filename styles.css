@@ -597,22 +597,27 @@ input:focus, select:focus, textarea:focus {
         padding: 10px 0;
     }
     .logo {
-        font-size: 18px;
+        font-size: 16px;
     }
     .logo span {
-        font-size: 12px;
+        font-size: 11px;
     }
-    /* Hide text nav links on mobile to make room */
+    /* Keep nav links but make them compact */
     .nav a:not(.btn) {
-        display: none;
+        display: inline-block;
+        font-size: 12.5px;
+        white-space: nowrap;
     }
     .nav {
-        gap: 0;
+        gap: 10px;
+    }
+    .hide-mobile {
+        display: none;
     }
     /* Style button for mobile */
     .nav .btn {
-        padding: 6px 12px;
-        font-size: 12px;
+        padding: 6px 10px;
+        font-size: 11.5px;
         white-space: nowrap;
     }
 }
