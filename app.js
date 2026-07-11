@@ -73,6 +73,12 @@ function handleQuoteSubmit(event) {
     })
     .then(response => {
         if (response.ok) {
+            // Google Ads 전환 추적 이벤트 전송
+            if (typeof gtag === 'function') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-750842470/hAmFCITOvM4cEObkg-YC'
+                });
+            }
             alert('견적 문의가 온라인으로 성공적으로 접수되었습니다!\n\n※ 처음 전송하시는 경우, 삼협철망 메일(samhyupm@naver.com)로 FormSubmit 발송 활성화 링크가 전송됩니다. 해당 메일에서 "Confirm Email" 버튼을 최초 1회만 클릭해주시면 최종 수신이 시작됩니다.');
             event.target.reset();
             const fileNameDisplay = document.getElementById('fileName');
@@ -85,6 +91,13 @@ function handleQuoteSubmit(event) {
     })
     .catch(error => {
         console.error('AJAX Submit Error:', error);
+        
+        // Google Ads 전환 추적 이벤트 전송 (폴백 전송 시도 시에도 이벤트 발송)
+        if (typeof gtag === 'function') {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-750842470/hAmFCITOvM4cEObkg-YC'
+            });
+        }
         
         // AJAX 실패 시 기존 mailto 링크 폴백 방식 작동
         alert('온라인 즉시 전송이 제한되어, 기본 메일 발송 프로그램(Outlook/Mail 등)을 통해 견적 요청 메일을 작성합니다.\n\n※ 첨부파일이 선택된 경우 메일 프로그램 창이 열린 후 직접 수동으로 첨부해서 발송해 주시기 바랍니다.');
