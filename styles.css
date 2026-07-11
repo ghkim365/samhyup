@@ -523,6 +523,51 @@ input:focus, select:focus, textarea:focus {
     font-size: 12px;
 }
 
+/* FILE UPLOAD */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    height: 45px;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+.file-name {
+    font-size: 13px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* RESPONSIVE */
 @media (max-width: 992px) {
     .hero-container {
