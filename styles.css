@@ -112,6 +112,7 @@ a {
     font-size: 22px;
     font-weight: 800;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 .logo span {
@@ -119,6 +120,7 @@ a {
     color: var(--text-muted);
     font-weight: 400;
     margin-left: 4px;
+    white-space: nowrap;
 }
 
 .nav {
@@ -587,6 +589,31 @@ input:focus, select:focus, textarea:focus {
     .quote-info-side {
         border-right: none;
         border-bottom: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 0;
+    }
+    .logo {
+        font-size: 18px;
+    }
+    .logo span {
+        font-size: 12px;
+    }
+    /* Hide text nav links on mobile to make room */
+    .nav a:not(.btn) {
+        display: none;
+    }
+    .nav {
+        gap: 0;
+    }
+    /* Style button for mobile */
+    .nav .btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        white-space: nowrap;
     }
 }
 
