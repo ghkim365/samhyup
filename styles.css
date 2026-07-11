@@ -646,4 +646,17 @@ input:focus, select:focus, textarea:focus {
     .hero-content h1 {
         font-size: 32px;
     }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    .hero-buttons .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14.5px;
+        white-space: nowrap;
+    }
 }
