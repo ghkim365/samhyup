@@ -405,6 +405,12 @@ a {
     gap: 25px;
 }
 
+a.detail-item {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
 .detail-item {
     display: flex;
     gap: 15px;
@@ -417,18 +423,40 @@ a {
     padding: 10px;
     border-radius: 6px;
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .detail-item h4 {
     font-size: 13px;
     color: var(--text-muted);
     margin-bottom: 2px;
+    transition: color 0.3s;
 }
 
 .detail-item p {
     font-size: 15px;
     color: #ffffff;
     margin-bottom: 0;
+    transition: color 0.3s;
+}
+
+a.detail-item:hover {
+    transform: translateX(6px);
+}
+
+a.detail-item:hover span {
+    background-color: rgba(2, 132, 199, 0.15);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+a.detail-item:hover h4 {
+    color: var(--primary-color);
+}
+
+a.detail-item:hover p {
+    color: #ffffff;
+    text-decoration: underline;
 }
 
 .quote-form-side {
