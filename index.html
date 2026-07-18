@@ -6,6 +6,10 @@
     <title>삼협철망(주) | B2B 모바일 간편 견적 & 제품 카탈로그</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/logo_samhyup.png" type="image/png">
+    <link rel="shortcut icon" href="images/logo_samhyup_192.png">
+    <link rel="apple-touch-icon" href="images/logo_samhyup_192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0F172A">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     
     <!-- Google tag (gtag.js) - Google Ads: 750842470 -->
@@ -998,5 +1002,14 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered successfully.', reg))
+                    .catch(err => console.error('Service Worker registration failed.', err));
+            });
+        }
+    </script>
 </body>
 </html>

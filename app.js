@@ -281,7 +281,6 @@ function handleLogoClick(event) {
     }
 }
 
-
 // ── GALLERY FILTER & MODAL ──
 document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.gallery-tab');
@@ -336,8 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalDesc.textContent = desc;
                 
                 modalQuoteBtn.onclick = () => {
-                    selectProduct(service);
                     closeModal();
+                    // 모바일 스크롤 락 해제 및 닫기 애니메이션 시간 확보 후 부드럽게 스크롤
+                    setTimeout(() => {
+                        selectProduct(service);
+                    }, 150);
                 };
                 
                 modal.classList.add('open');
