@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼협철망(주) | B2B 마케팅 & 실시간 견적 모니터링 대시보드</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --glass-bg: rgba(17, 25, 40, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #f97316;
+            --accent-glow: rgba(249, 115, 22, 0.5);
+            --success: #10b981;
+            --danger: #ef4444;
+            --font-main: 'Inter', 'Noto Sans KR', sans-serif;
+            --font-title: 'Outfit', 'Inter', 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.1);
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Styles */
+        header {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-symbol {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-family: var(--font-title);
+            font-size: 20px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Mode Selector Toggle buttons */
+        .mode-selector {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px;
+            border-radius: 30px;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mode-btn:hover {
+            color: #fff;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Target Site Selector */
+        .site-selector-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .site-select {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            padding: 8px 14px;
+            font-size: 12.5px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            font-family: var(--font-main);
+            transition: all 0.2s;
+        }
+
+        .site-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .connection-status {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-indicator.active {
+            background-color: var(--success);
+            box-shadow: 0 0 10px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* KPI Bento Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .kpi-card.ads::before {
+            background: var(--accent);
+        }
+
+        .kpi-card.cvr::before {
+            background: var(--success);
+        }
+
+        .kpi-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-value {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: var(--font-title);
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .kpi-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Main Grid: Charts & Simulator */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            padding: 24px;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chart-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .chart-container {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Simulator Card */
+        .simulator-card {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sim-title-area {
+            margin-bottom: 20px;
+        }
+
+        .sim-row {
+            margin-bottom: 16px;
+        }
+
+        .sim-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .sim-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+
+        .sim-input-wrapper input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            width: 100%;
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .sim-unit {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        .sim-results {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        .sim-result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .sim-result-row:last-child {
+            margin-bottom: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 8px;
+            font-weight: 600;
+        }
+
+        .sim-result-val {
+            font-family: var(--font-title);
+            color: #fff;
+        }
+
+        .sim-result-val.highlight {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        /* Lead Table Section */
+        .leads-section {
+            padding: 24px;
+        }
+
+        .leads-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .leads-title-group h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .leads-title-group p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            border: none;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Responsive Table styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr {
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-source {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-source.ads {
+            background: rgba(249, 115, 22, 0.15);
+            color: #fdba74;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge-source.search {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-source.direct {
+            background: rgba(148, 163, 184, 0.15);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .badge-product {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .date-col {
+            font-family: var(--font-title);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .info-item p {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .info-item-full {
+            grid-column: span 2;
+        }
+
+        .specs-display-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        /* Administrator Security Gate */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .auth-card {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: var(--font-title);
+        }
+
+        .auth-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .auth-input-group {
+            margin-bottom: 12px;
+        }
+
+        .auth-input-group input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 14px;
+            color: #fff;
+            font-size: 20px;
+            letter-spacing: 6px;
+            text-align: center;
+            outline: none;
+            width: 100%;
+            font-family: var(--font-title);
+        }
+
+        .auth-input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .auth-error {
+            color: var(--danger);
+            font-size: 12.5px;
+            min-height: 20px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        /* Blurring Wrapper */
+        #dashboard-wrapper {
+            transition: filter 0.5s ease;
+            filter: blur(25px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Auth Overlay Gate -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="glass-panel auth-card">
+            <div class="logo-symbol" style="margin: 0 auto 20px; width: 50px; height: 50px; font-size: 24px;">S</div>
+            <h2>관리자 인증</h2>
+            <p>보안 데이터 열람을 위해 비밀번호를 입력해 주세요.</p>
+            <div class="auth-input-group">
+                <input type="password" id="authPassword" placeholder="••••" maxlength="8" autocomplete="off" onkeydown="if(event.key === 'Enter') verifyPassword()">
+            </div>
+            <div id="authError" class="auth-error"></div>
+            <button class="btn btn-primary" onclick="verifyPassword()" style="width: 100%; padding: 12px; font-size: 14px;">인증하기</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard content -->
+    <div id="dashboard-wrapper">
+        <div class="container">
+            <!-- Header -->
+            <header class="glass-panel">
+                <div class="header-logo-group">
+                    <div class="header-logo">
+                        <div class="logo-symbol">S</div>
+                        <div class="logo-text">
+                            <h1 id="brand-title">삼협철망(주)</h1>
+                            <p id="brand-subtitle">B2B 모바일 카탈로그 모니터링 관리자</p>
+                        </div>
+                    </div>
+
+                    <!-- Target Site Dropdown Selector -->
+                    <div class="site-selector-wrapper">
+                        <select id="site-selector" class="site-select" onchange="switchSite(this.value)">
+                            <option value="catalog">📱 모바일 카탈로그</option>
+                            <option value="main_site">🌐 공식 홈페이지 (samhyup.com)</option>
+                        </select>
+                    </div>
+
+                    <!-- Mode Selector Toggle Switch -->
+                    <div class="mode-selector">
+                        <button id="mode-realtime" class="mode-btn active" onclick="switchMode('realtime')">🔴 실시간 LIVE</button>
+                        <button id="mode-simulator" class="mode-btn" onclick="switchMode('simulator')">⚙️ 시뮬레이터</button>
+                    </div>
+                </div>
+                
+                <div class="connection-status">
+                    <div class="status-badge" id="badge-google-ads">
+                        <span class="status-indicator active"></span>
+                        Google Ads 연동 (AW-750842470): Active
+                    </div>
+                    <div class="status-badge">
+                        <span class="status-indicator active"></span>
+                        Google GA4 연동: Connected
+                    </div>
+                </div>
+            </header>
+
+            <!-- KPI Grid -->
+            <section class="kpi-grid">
+                <div class="glass-panel kpi-card">
+                    <div class="kpi-title">
+                        총 방문 세션수
+                        <span>👤</span>
+                    </div>
+                    <div class="kpi-value" id="kpi-visits">-</div>
+                    <div class="kpi-subtitle">
+                        <span class="trend-up" id="kpi-visits-ratio">Google Ads 유입 0%</span>
+                    </div>
+                </div>
+                
+                <div class="glass-panel kpi-card ads">
+                    <div class="kpi-title">
+                        누적 접수 견적수
+                        <span>✉️</span>
+                    </div>
+                    <div class="kpi-value" id="kpi-quotes">-</div>
+                    <div class="kpi-subtitle">
+                        최근 24시간 내 <span class="trend-up" id="kpi-quotes-today">0건</span> 추가 접수됨
+                    </div>
+                </div>
+
+                <div class="glass-panel kpi-card cvr">
+                    <div class="kpi-title">
+                        평균 견적 전환율 (CVR)
+                        <span>🎯</span>
+                    </div>
+                    <div class="kpi-value" id="kpi-cvr">-%</div>
+                    <div class="kpi-subtitle">
+                        총 방문 대비 견적 전환 성공 비율
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Visual & Simulator Grid -->
+            <div class="main-grid">
+                <!-- Left: Charts -->
+                <div class="chart-section">
+                    <!-- Chart 1: 유입 채널 비중 -->
+                    <div class="glass-panel chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title" id="chart-visits-title">마케팅 유입 채널 분석</div>
+                            <div class="chart-desc">Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="sourceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: 품목별 견적 분포 -->
+                    <div class="glass-panel chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">요청 품목 선호도</div>
+                            <div class="chart-desc">견적 요청이 접수된 제품별 분포 분석</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="productChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Ads CPA Simulator -->
+                <div class="glass-panel simulator-card">
+                    <div class="sim-title-area">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Google Ads 효율 시뮬레이터</h3>
+                        <p style="font-size: 12px; color: var(--text-secondary);">광고비 설정에 따른 리드당 단가(CPA) 실시간 시뮬레이션</p>
+                    </div>
+                    
+                    <div class="sim-body">
+                        <div class="sim-row">
+                            <div class="sim-label">
+                                <span>일일 설정 광고 예산</span>
+                                <span id="label-budget">150,000 원</span>
+                            </div>
+                            <div class="sim-input-wrapper">
+                                <input type="range" id="input-budget" min="50000" max="1000000" step="50000" value="150000" style="accent-color: var(--accent);">
+                            </div>
+                        </div>
+
+                        <div class="sim-row">
+                            <div class="sim-label">
+                                <span>평균 클릭 단가 (CPC)</span>
+                                <span id="label-cpc">450 원</span>
+                            </div>
+                            <div class="sim-input-wrapper">
+                                <input type="range" id="input-cpc" min="200" max="1500" step="50" value="450" style="accent-color: var(--primary);">
+                            </div>
+                        </div>
+
+                    <div class="sim-results">
+                        <div class="sim-result-row">
+                            <span>예상 일일 클릭수</span>
+                            <span class="sim-result-val" id="result-clicks">- 회</span>
+                        </div>
+                        <div class="sim-result-row">
+                            <span>예상 일일 획득 리드 (견적)</span>
+                            <span class="sim-result-val" id="result-leads">- 건</span>
+                        </div>
+                        <div class="sim-result-row">
+                            <span>리드당 획득 비용 (CPA)</span>
+                            <span class="sim-result-val highlight" id="result-cpa">- 원</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leads Table Section -->
+            <section class="glass-panel leads-section">
+                <div class="leads-header">
+                    <div class="leads-title-group">
+                        <h2 id="table-mode-title">실시간 접수 견적 피드</h2>
+                        <p id="table-mode-desc">스마트폰 간편 견적서 및 이메일 링크를 통해 유입된 실시간 견적 접수 목록</p>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="btn-mock-generate" onclick="generateMockQuote()">
+                            ⚡ 시뮬레이션: 가상 견적 접수
+                        </button>
+                        <button class="btn btn-danger" onclick="resetAnalytics()">
+                            🗑️ 데이터 초기화
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="leads-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>접수 일시</th>
+                                <th>회사/현장명</th>
+                                <th>담당자</th>
+                                <th>연락처</th>
+                                <th>요청 품목</th>
+                                <th>유입 경로</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-body">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                    <div id="table-empty" class="empty-state" style="display: none;">
+                        <div class="empty-state-icon">📥</div>
+                        <p>접수된 견적 요청이 없습니다.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Quote Details -->
+    <div class="modal-overlay" id="quoteModal">
+        <div class="glass-panel modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">견적 요청 상세 보기</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>회사/현장명</label>
+                        <p id="modal-company">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>담당자</label>
+                        <p id="modal-name">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>연락처</label>
+                        <p id="modal-phone">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>이메일</label>
+                        <p id="modal-email">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>요청 품목</label>
+                        <p><span class="badge-product" id="modal-product">-</span></p>
+                    </div>
+                    <div class="info-item">
+                        <label>유입 경로</label>
+                        <p id="modal-source">-</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>희망 규격 및 요청 수량</label>
+                        <div class="specs-display-box" id="modal-specs">-</div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <button class="btn btn-primary" onclick="closeModal()">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Dashboard Logic -->
+    <script>
+        // [중요] 구글 스프레드시트 연동용 앱스 스크립트 웹 앱 URL을 배포 후 아래 빈칸에 붙여넣으세요.
+        // 예: "https://script.google.com/macros/s/AKfycb.../exec"
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwdvHIlVa80e-JNZFnF9cqJYrDQfMg2DUxSyF_tIN5yy0SWiGnUMprGaGEDj9rDZ1kJTQ/exec";
+
+        let currentSite = 'catalog';   // 'catalog' or 'main_site'
+        let dashboardMode = 'realtime'; // 'realtime' or 'simulator'
+        let analyticsData = null;
+        let sourceChart = null;
+        let productChart = null;
+
+        // 1. 모바일 카탈로그 시뮬레이터 기본 더미 데이터
+        const defaultSimData = {
+            visits: { google_ads: 324, search: 215, direct: 98 },
+            quotes: [
+                {
+                    id: 1,
+                    date: "2026-07-10T10:15:30Z",
+                    company: "(주)대성토건",
+                    name: "김민우 과장",
+                    phone: "010-3344-5566",
+                    email: "mw.kim@daesung.co.kr",
+                    product: "용접철망",
+                    specs: "#8 (3.2mm) 150x150 1200장 시공용 단가 문의",
+                    source: "google_ads"
+                },
+                {
+                    id: 2,
+                    date: "2026-07-10T14:22:10Z",
+                    company: "한성조경",
+                    name: "이재혁 대표",
+                    phone: "010-9988-7766",
+                    email: "hansung@naver.com",
+                    product: "동물보호망",
+                    specs: "동물보호휀스 H1.2m 아연도금망 250m 분량 단가 및 배송일정",
+                    source: "search"
+                },
+                {
+                    id: 3,
+                    date: "2026-07-11T09:05:45Z",
+                    company: "(주)우리아이앤씨",
+                    name: "박준형 팀장",
+                    phone: "010-1122-3344",
+                    email: "jhpark@woori.com",
+                    product: "메쉬파레트",
+                    specs: "표준 규격 1000x800x850 (바퀴 장착 옵션 포함) 50개 단가 문의",
+                    source: "direct"
+                },
+                {
+                    id: 4,
+                    date: "2026-07-11T16:40:00Z",
+                    company: "태영산업",
+                    name: "최성호 차장",
+                    phone: "010-5566-7788",
+                    email: "shchoi@taeyoung.co.kr",
+                    product: "일체형메쉬",
+                    specs: "천정 인테리어용 플랫 용접 메쉬 1200x2400 150장",
+                    source: "google_ads"
+                },
+                {
+                    id: 5,
+                    date: "2026-07-12T08:30:15Z",
+                    company: "인천남동공단 철강센터",
+                    name: "정수진 대리",
+                    phone: "010-4455-6677",
+                    email: "sjjeong@steelcenter.co.kr",
+                    product: "개비온철망",
+                    specs: "법면 옹벽용 개비온 80개 단가 및 화물 배송료 문의",
+                    source: "search"
+                }
+            ]
+        };
+
+        // 2. 공식 홈페이지 (samhyup.com) 시뮬레이터 기본 더미 데이터
+        const defaultMainSimData = {
+            visits: { google_ads: 1240, search: 895, direct: 412 },
+            quotes: [
+                {
+                    id: 101,
+                    date: "2026-07-09T09:12:00Z",
+                    company: "삼호개발(주)",
+                    name: "강성태 부장",
+                    phone: "010-3322-8877",
+                    email: "stkang@samho.co.kr",
+                    product: "개비온철망",
+                    specs: "도로사면 옹벽 보호용 아연도금 개비온 매트리스 300헤베 단가 요청",
+                    source: "google_ads"
+                },
+                {
+                    id: 102,
+                    date: "2026-07-10T11:45:00Z",
+                    company: "신세계건설 현장",
+                    name: "윤민호 공사과장",
+                    phone: "010-4455-1122",
+                    email: "mhyoon@shinsegae.co.kr",
+                    product: "용접철망",
+                    specs: "#6 (4.0mm) 150x150 규격 3,500장 대량 출고 단가 및 상차 조건 문의",
+                    source: "search"
+                },
+                {
+                    id: 103,
+                    date: "2026-07-10T15:30:00Z",
+                    company: "동아조경(주)",
+                    name: "정현우 대리",
+                    phone: "010-7766-5544",
+                    email: "donga@daum.net",
+                    product: "동물보호망",
+                    specs: "녹색 PVC 피복 철망 H1.8m 450미터 휀스용 단가 의뢰",
+                    source: "google_ads"
+                },
+                {
+                    id: 104,
+                    date: "2026-07-11T10:20:00Z",
+                    company: "유니온무역",
+                    name: "최성수 과장",
+                    phone: "010-8899-7788",
+                    email: "union@uniontrade.co.kr",
+                    product: "메쉬파레트",
+                    specs: "접이식 메쉬파레트 특대형 (1200x1000x890) 120개 수출 납기 및 가격",
+                    source: "direct"
+                },
+                {
+                    id: 105,
+                    date: "2026-07-12T07:15:00Z",
+                    company: "서해종합건설",
+                    name: "백승기 소장",
+                    phone: "010-5544-2233",
+                    email: "sgbaek@seohae.co.kr",
+                    product: "일체형메쉬",
+                    specs: "지하주차장 천장 마감 메쉬망 아연도금 500장 단가 및 트럭 화물료",
+                    source: "search"
+                }
+            ]
+        };
+
+        // 로컬스토리지 데이터 초기 세팅
+        if (!localStorage.getItem('samhyup_sim_analytics')) {
+            localStorage.setItem('samhyup_sim_analytics', JSON.stringify(defaultSimData));
+        }
+        if (!localStorage.getItem('samhyup_main_sim_analytics')) {
+            localStorage.setItem('samhyup_main_sim_analytics', JSON.stringify(defaultMainSimData));
+        }
+
+        // 1. 대상 사이트 전환 함수
+        function switchSite(site) {
+            currentSite = site;
+            
+            const brandTitle = document.getElementById('brand-title');
+            const brandSubtitle = document.getElementById('brand-subtitle');
+            const adsBadge = document.getElementById('badge-google-ads');
+
+            if (site === 'catalog') {
+                brandTitle.textContent = "삼협철망(주)";
+                brandSubtitle.textContent = "B2B 모바일 카탈로그 모니터링 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (AW-750842470): Active';
+            } else {
+                brandTitle.textContent = "삼협철망(주) 공식홈";
+                brandSubtitle.textContent = "samhyup.com 마케팅 성과 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (Main-9802): Active';
+            }
+
+            // 모드 초기화 후 UI 새로고침
+            updateDashboardUI();
+        }
+
+        // 2. 모드 전환 함수 (실시간 LIVE vs 시뮬레이터)
+        function switchMode(mode) {
+            dashboardMode = mode;
+            
+            const btnRealtime = document.getElementById('mode-realtime');
+            const btnSim = document.getElementById('mode-simulator');
+            const mockGenBtn = document.getElementById('btn-mock-generate');
+            const tableTitle = document.getElementById('table-mode-title');
+            const tableDesc = document.getElementById('table-mode-desc');
+
+            if (mode === 'realtime') {
+                btnRealtime.classList.add('active');
+                btnSim.classList.remove('active');
+                
+                mockGenBtn.disabled = true;
+                mockGenBtn.style.opacity = '0.4';
+                mockGenBtn.style.cursor = 'not-allowed';
+                
+                tableTitle.textContent = "실시간 접수 견적 피드 (LIVE)";
+                tableDesc.textContent = "선택된 사이트에서 수집된 순수 실시간 견적 접수 목록";
+            } else {
+                btnRealtime.classList.remove('active');
+                btnSim.classList.add('active');
+                
+                mockGenBtn.disabled = false;
+                mockGenBtn.style.opacity = '1';
+                mockGenBtn.style.cursor = 'pointer';
+                
+                tableTitle.textContent = "데모 시뮬레이터 견적 피드";
+                tableDesc.textContent = "테스트용으로 셋업된 가상 유입 데이터 및 접수 내역";
+            }
+
+            updateDashboardUI();
+        }
+
+        // Load data from LocalStorage based on site and mode
+        function loadLocalData() {
+            let rawData;
+            
+            if (currentSite === 'catalog') {
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultSimData));
+                    }
+                }
+            } else {
+                // 공식 홈페이지 (main_site)
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_main_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                        localStorage.setItem('samhyup_main_analytics', JSON.stringify(analyticsData));
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_main_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultMainSimData));
+                    }
+                }
+            }
+        }
+
+        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응)
+        function fetchJSONP(url, callbackName) {
+            return new Promise((resolve, reject) => {
+                const uniqueCallbackName = `${callbackName}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+                window[uniqueCallbackName] = (data) => {
+                    resolve(data);
+                    cleanup();
+                };
+                
+                function cleanup() {
+                    delete window[uniqueCallbackName];
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                }
+                
+                const script = document.createElement('script');
+                script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${uniqueCallbackName}`;
+                script.onerror = (err) => {
+                    reject(err);
+                    cleanup();
+                };
+                document.body.appendChild(script);
+            });
+        }
+
+        // Render metrics to UI
+        function updateDashboardUI() {
+            if (GAS_WEB_APP_URL && GAS_WEB_APP_URL.startsWith('http') && dashboardMode === 'realtime') {
+                // 구글 시트에서 실시간 데이터 로드 (CORS가 없는 JSONP 방식 사용)
+                const fetchUrl = `${GAS_WEB_APP_URL}?site=${currentSite}`;
+                
+                // 로딩 상태 표시
+                document.getElementById('kpi-visits').textContent = '로드 중...';
+                document.getElementById('kpi-quotes').textContent = '로드 중...';
+                
+                fetchJSONP(fetchUrl, 'gas_callback')
+                    .then(data => {
+                        analyticsData = data;
+                        renderDashboardData();
+                    })
+                    .catch(err => {
+                        console.error('Error fetching data from GAS via JSONP:', err);
+                        // 에러 시 로컬스토리지 폴백
+                        loadLocalData();
+                        renderDashboardData();
+                    });
+            } else {
+                loadLocalData();
+                renderDashboardData();
+            }
+        }
+
+        // UI 데이터 그리기 핵심 로직
+        function renderDashboardData() {
+            const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+            const totalQuotes = analyticsData.quotes.length;
+            const cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(2) : '0.00';
+
+            document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString();
+            document.getElementById('kpi-quotes').textContent = totalQuotes.toLocaleString();
+            document.getElementById('kpi-cvr').textContent = cvr + '%';
+
+            // Google Ads visits percentage
+            const adsPercentage = totalVisits > 0 ? ((analyticsData.visits.google_ads / totalVisits) * 100).toFixed(1) : '0';
+            document.getElementById('kpi-visits-ratio').textContent = `Google Ads 광고 유입 ${adsPercentage}%`;
+
+            // Calculate quotes from today
+            const now = new Date();
+            const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            const todayQuotesCount = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
+            document.getElementById('kpi-quotes-today').textContent = `${todayQuotesCount}건`;
+
+            // Render table
+            const tbody = document.getElementById('leads-body');
+            const emptyState = document.getElementById('table-empty');
+            tbody.innerHTML = '';
+
+            if (analyticsData.quotes.length === 0) {
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+                
+                const sortedQuotes = [...analyticsData.quotes].sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                sortedQuotes.forEach(quote => {
+                    const tr = document.createElement('tr');
+                    tr.onclick = () => openQuoteDetail(quote.id);
+                    
+                    const dateStr = new Date(quote.date).toLocaleDateString('ko-KR', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    let sourceBadge = '';
+                    if (quote.source === 'google_ads') {
+                        sourceBadge = '<span class="badge-source ads">Google Ads</span>';
+                    } else if (quote.source === 'search') {
+                        sourceBadge = '<span class="badge-source search">Search</span>';
+                    } else {
+                        sourceBadge = '<span class="badge-source direct">Direct</span>';
+                    }
+
+                    tr.innerHTML = `
+                        <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
+                        <td class="date-col">${dateStr}</td>
+                        <td style="font-weight: 500;">${quote.company}</td>
+                        <td>${quote.name}</td>
+                        <td style="font-size: 13px; color: var(--text-secondary);">${quote.phone}</td>
+                        <td><span class="badge-product">${quote.product}</span></td>
+                        <td>${sourceBadge}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Update charts
+            updateCharts();
+            // Update simulator values
+            calculateSimulator();
+        }
+
+        // Initialize and Update Chart.js
+        function updateCharts() {
+            const sourceData = [
+                analyticsData.visits.google_ads,
+                analyticsData.visits.search,
+                analyticsData.visits.direct
+            ];
+
+            if (sourceChart) {
+                sourceChart.data.datasets[0].data = sourceData;
+                sourceChart.update();
+            } else {
+                const ctx = document.getElementById('sourceChart').getContext('2d');
+                sourceChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Google Ads', '검색 (Organic)', '직접 유입 (Direct)'],
+                        datasets: [{
+                            data: sourceData,
+                            backgroundColor: ['#f97316', '#3b82f6', '#64748b'],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Product popularity chart (Bar)
+            const productCounts = {
+                '용접철망': 0,
+                '인테리어용접': 0,
+                '동물보호망': 0,
+                '메쉬파레트': 0,
+                '일체형메쉬': 0,
+                '견사망': 0,
+                '개비온철망': 0
+            };
+
+            analyticsData.quotes.forEach(q => {
+                if (productCounts[q.product] !== undefined) {
+                    productCounts[q.product]++;
+                }
+            });
+
+            const labels = Object.keys(productCounts);
+            const data = Object.values(productCounts);
+
+            if (productChart) {
+                productChart.data.datasets[0].data = data;
+                productChart.update();
+            } else {
+                const ctx2 = document.getElementById('productChart').getContext('2d');
+                productChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '견적 건수',
+                            data: data,
+                            backgroundColor: 'rgba(59, 130, 246, 0.75)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#94a3b8', font: { size: 10 } }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { color: '#94a3b8', stepSize: 1, beginAtZero: true }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Live ROI & CPA Simulator calculation
+        function calculateSimulator() {
+            const budget = parseInt(document.getElementById('input-budget').value);
+            const cpc = parseInt(document.getElementById('input-cpc').value);
+            
+            document.getElementById('label-budget').textContent = budget.toLocaleString() + ' 원';
+            document.getElementById('label-cpc').textContent = cpc.toLocaleString() + ' 원';
+
+            const clicks = Math.round(budget / cpc);
+            document.getElementById('result-clicks').textContent = clicks.toLocaleString() + ' 회';
+
+            const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+            const currentCvr = totalVisits > 0 ? (analyticsData.quotes.length / totalVisits) : 0.02;
+            
+            const expectedLeads = Math.max(1, Math.round(clicks * currentCvr));
+            document.getElementById('result-leads').textContent = expectedLeads.toLocaleString() + ' 건';
+
+            const cpa = Math.round(budget / expectedLeads);
+            document.getElementById('result-cpa').textContent = cpa.toLocaleString() + ' 원';
+        }
+
+        // Generate dynamic mock quote data for testing
+        function generateMockQuote() {
+            if (dashboardMode === 'realtime') return; // Prevent writing to live database
+
+            const companies = ['(주)태진토건', '일우철강', '명성펜스산업', '영남건설자재', '중앙디자인', '서원종합건설', '한국조경자재'];
+            const names = ['강준우 과장', '임지은 대리', '최동식 부장', '오영호 대표', '윤서아 실장', '서태수 팀장'];
+            const phones = ['010-2345-6789', '010-8765-4321', '010-5678-1234', '010-4321-8765', '010-9876-5432'];
+            const emails = ['buyer@taejin.com', 'ilwoo@naver.com', 'msfence@daum.net', 'ynconst@gmail.com', 'design@center.com'];
+            const products = ['용접철망', '인테리어용접', '동물보호망', '메쉬파레트', '일체형메쉬', '견사망', '개비온철망'];
+            const specs = [
+                '#10 (2.6mm) 100x100mm 1500장 견적 및 경기 김포 배송 일정 문의',
+                '인테리어 분체도장 메쉬망 600x1200 40장 블랙 주문제작 가격 회신 요망',
+                '동물보호망 2.0Ø 녹색분체 H1.5m 300m 단가 비교 요청드립니다',
+                '접이식 메쉬파레트 표준형 (중형) 30개 가격 확인 바랍니다',
+                '일체형 메쉬 천장 판넬 아연도금 200장 납기일 확인 바람',
+                '조립식 대형 견사망 주문 제작 규격 (2m x 3m) 5세트 견적 의뢰',
+                '개비온 조경 옹벽용 철망태 1m*1m*1m 50개 단가 메일 송부 요청'
+            ];
+            const sources = ['google_ads', 'search', 'direct'];
+
+            const company = companies[Math.floor(Math.random() * companies.length)];
+            const name = names[Math.floor(Math.random() * names.length)];
+            const phone = phones[Math.floor(Math.random() * phones.length)];
+            const email = emails[Math.floor(Math.random() * emails.length)];
+            const prodIdx = Math.floor(Math.random() * products.length);
+            const product = products[prodIdx];
+            const spec = specs[prodIdx];
+            const source = sources[Math.floor(Math.random() * sources.length)];
+
+            loadData();
+            
+            const additionalVisits = Math.floor(Math.random() * 10) + 5;
+            for(let i = 0; i < additionalVisits; i++) {
+                const randomSource = sources[Math.floor(Math.random() * sources.length)];
+                analyticsData.visits[randomSource]++;
+            }
+
+            const nextId = analyticsData.quotes.length > 0 ? Math.max(...analyticsData.quotes.map(q => q.id)) + 1 : 1;
+            const newQuote = {
+                id: nextId,
+                date: new Date().toISOString(),
+                company: company,
+                name: name,
+                phone: phone,
+                email: email,
+                product: product,
+                specs: spec,
+                source: source
+            };
+
+            analyticsData.quotes.push(newQuote);
+            
+            // Save to correct simulation bucket
+            const targetKey = currentSite === 'catalog' ? 'samhyup_sim_analytics' : 'samhyup_main_sim_analytics';
+            localStorage.setItem(targetKey, JSON.stringify(analyticsData));
+
+            updateDashboardUI();
+        }
+
+        // Reset Data
+        function resetAnalytics() {
+            const targetRealKey = currentSite === 'catalog' ? 'samhyup_analytics' : 'samhyup_main_analytics';
+            const targetSimKey = currentSite === 'catalog' ? 'samhyup_sim_analytics' : 'samhyup_main_sim_analytics';
+            const defaultSimObj = currentSite === 'catalog' ? defaultSimData : defaultMainSimData;
+
+            if (dashboardMode === 'realtime') {
+                if (confirm('이 사이트의 실제 실시간 데이터를 초기화하시겠습니까?')) {
+                    const cleanData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                    localStorage.setItem(targetRealKey, JSON.stringify(cleanData));
+                    updateDashboardUI();
+                }
+            } else {
+                if (confirm('이 사이트의 시뮬레이터 데모 데이터를 초기 상태로 리셋하시겠습니까?')) {
+                    localStorage.setItem(targetSimKey, JSON.stringify(defaultSimObj));
+                    updateDashboardUI();
+                }
+            }
+        }
+
+        // Password Verification
+        function verifyPassword() {
+            const passwordInput = document.getElementById('authPassword');
+            const errorDiv = document.getElementById('authError');
+            const password = passwordInput.value;
+
+            if (password === '4558') {
+                sessionStorage.setItem('samhyup_admin_auth', 'true');
+                
+                const authOverlay = document.getElementById('authOverlay');
+                authOverlay.style.opacity = '0';
+                authOverlay.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    authOverlay.style.display = 'none';
+                }, 500);
+
+                const wrapper = document.getElementById('dashboard-wrapper');
+                wrapper.style.filter = 'none';
+                wrapper.style.pointerEvents = 'auto';
+
+                // Default start site
+                switchSite('catalog');
+            } else {
+                errorDiv.textContent = '❌ 비밀번호가 올바르지 않습니다. 다시 입력해 주세요.';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Open Modal dialog with full details
+        function openQuoteDetail(id) {
+            const quote = analyticsData.quotes.find(q => q.id === id);
+            if (!quote) return;
+
+            document.getElementById('modal-company').textContent = quote.company;
+            document.getElementById('modal-name').textContent = quote.name;
+            document.getElementById('modal-phone').textContent = quote.phone;
+            document.getElementById('modal-email').textContent = quote.email;
+            document.getElementById('modal-product').textContent = quote.product;
+            document.getElementById('modal-specs').textContent = quote.specs;
+
+            let sourceText = '';
+            if (quote.source === 'google_ads') sourceText = '🟢 Google Ads 광고 유입';
+            else if (quote.source === 'search') sourceText = '🔵 검색엔진 (Organic Search) 유입';
+            else sourceText = '⚪ 직접 방문 (Direct)';
+            document.getElementById('modal-source').textContent = sourceText;
+
+            document.getElementById('quoteModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('quoteModal').classList.remove('active');
+        }
+
+        document.getElementById('input-budget').addEventListener('input', calculateSimulator);
+        document.getElementById('input-cpc').addEventListener('input', calculateSimulator);
+
+        // Initial setup check
+        window.addEventListener('DOMContentLoaded', () => {
+            // 과거 구형 더미 데이터 1회성 강제 리셋 (실시간 데이터 오염 방지)
+            if (!localStorage.getItem('samhyup_analytics_cleared')) {
+                const cleanData = {
+                    visits: { google_ads: 0, search: 0, direct: 0 },
+                    quotes: []
+                };
+                localStorage.setItem('samhyup_analytics', JSON.stringify(cleanData));
+                localStorage.setItem('samhyup_analytics_cleared', 'true');
+            }
+
+            if (sessionStorage.getItem('samhyup_admin_auth') === 'true') {
+                document.getElementById('authOverlay').style.display = 'none';
+                const wrapper = document.getElementById('dashboard-wrapper');
+                wrapper.style.filter = 'none';
+                wrapper.style.pointerEvents = 'auto';
+                switchSite('catalog'); // Default start site
+            } else {
+                setTimeout(() => {
+                    document.getElementById('authPassword').focus();
+                }, 200);
+            }
+        });
+    </script>
+</body>
+</html>

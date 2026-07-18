@@ -1,3 +1,7 @@
+// [중요] 구글 스프레드시트 연동용 앱스 스크립트 웹 앱 URL을 배포 후 아래 빈칸에 붙여넣으세요.
+// 예: "https://script.google.com/macros/s/AKfycb.../exec"
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwdvHIlVa80e-JNZFnF9cqJYrDQfMg2DUxSyF_tIN5yy0SWiGnUMprGaGEDj9rDZ1kJTQ/exec";
+
 // 관심 품목 자동 입력 함수
 function selectProduct(productName) {
     const selectEl = document.getElementById('productSelect');
@@ -31,6 +35,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// LocalStorage에 견적 정보 기록 헬퍼 함수
+function saveQuoteToAnalytics(company, name, phone, email, product, specs, attachment) {
+    try {
+        const currentData = JSON.parse(localStorage.getItem('samhyup_analytics')) || { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+        const sessionSource = sessionStorage.getItem('samhyup_session_source') || 'direct';
+        const attachmentName = attachment || '';
+        
+        const newQuote = {
+            id: currentData.quotes.length > 0 ? Math.max(...currentData.quotes.map(q => q.id)) + 1 : 1,
+            date: new Date().toISOString(),
+            company: company,
+            name: name,
+            phone: phone,
+            email: email,
+            product: product,
+            specs: specs || '별도 기재 없음',
+            source: sessionSource,
+            attachment: attachmentName
+        };
+        
+        currentData.quotes.push(newQuote);
+        localStorage.setItem('samhyup_analytics', JSON.stringify(currentData));
+
+        // 구글 스프레드시트 실시간 전송 연동 (sendBeacon / fetch 사용)
+        if (GAS_WEB_APP_URL && GAS_WEB_APP_URL.startsWith('http')) {
+            const payload = JSON.stringify({
+                action: 'submitQuote',
+                site: 'catalog',
+                source: sessionSource,
+                company: company,
+                name: name,
+                phone: phone,
+                email: email,
+                product: product,
+                specs: specs || '별도 기재 없음',
+                attachment: attachmentName
+            });
+
+            if (navigator.sendBeacon) {
+                const blob = new Blob([payload], { type: 'text/plain;charset=utf-8' });
+                navigator.sendBeacon(GAS_WEB_APP_URL, blob);
+                console.log('GAS quote submitted via sendBeacon.');
+            } else {
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: payload
+                }).catch(err => console.error('GAS quote submit error:', err));
+            }
+        }
+    } catch (e) {
+        console.error('Error saving quote to analytics:', e);
+    }
+}
 
 // 견적 문의 폼 제출 이벤트 핸들러
 function handleQuoteSubmit(event) {
@@ -73,6 +134,10 @@ function handleQuoteSubmit(event) {
     })
     .then(response => {
         if (response.ok) {
+            // 로컬 스토리지에 저장
+            const attachmentName = (fileInput && fileInput.files.length > 0) ? fileInput.files[0].name : '';
+            saveQuoteToAnalytics(company, name, phone, email, product, specs, attachmentName);
+            
             // Google Ads 전환 추적 이벤트 전송
             if (typeof gtag === 'function') {
                 gtag('event', 'conversion', {
@@ -92,6 +157,10 @@ function handleQuoteSubmit(event) {
     .catch(error => {
         console.error('AJAX Submit Error:', error);
         
+        // 로컬 스토리지에 저장 (실패 시에도 분석 통계 보존을 위해 견적 시도로 기록)
+        const attachmentName = (fileInput && fileInput.files.length > 0) ? fileInput.files[0].name : '';
+        saveQuoteToAnalytics(company, name, phone, email, product, specs, attachmentName);
+        
         // Google Ads 전환 추적 이벤트 전송 (폴백 전송 시도 시에도 이벤트 발송)
         if (typeof gtag === 'function') {
             gtag('event', 'conversion', {
@@ -104,19 +173,19 @@ function handleQuoteSubmit(event) {
         
         const mailSubject = `[간편견적요청] ${company} - ${product} 문의`;
         const mailBody = `안녕하세요 삼협철망 담당자님,
-
+ 
 B2B 웹 카탈로그를 통해 견적 상담을 요청합니다.
-
+ 
 [신청 정보]
 - 회사명/현장명: ${company}
 - 담당자: ${name}
 - 연락처: ${phone}
 - 이메일: ${email}
 - 문의 품목: ${product}
-
+ 
 [규격 및 요청사항]
 ${specs || '별도 기재 없음'}
-
+ 
 ---
 ※ 첨부파일이 있으신 경우, 메일 프로그램 실행 후 해당 파일을 첨부하여 발송해 주세요.`;
 
@@ -128,3 +197,166 @@ ${specs || '별도 기재 없음'}
         submitBtn.textContent = originalBtnText;
     });
 }
+
+// LocalStorage 분석 데이터 초기화 및 방문 추적
+(function() {
+    // 순수한 실시간 데이터 초기 상태 (더미 없음)
+    const initialData = {
+        visits: {
+            google_ads: 0,
+            search: 0,
+            direct: 0
+        },
+        quotes: []
+    };
+
+    // 로컬 스토리지에 데이터가 없으면 초기 데이터 세팅
+    if (!localStorage.getItem('samhyup_analytics')) {
+        localStorage.setItem('samhyup_analytics', JSON.stringify(initialData));
+    }
+
+    // 이번 세션의 유입 소스 판단 및 기록
+    if (!sessionStorage.getItem('samhyup_session_recorded')) {
+        let source = 'direct';
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. Google Ads 유입 판정 (gclid 파라미터가 있거나, utm_source가 google이거나, utm_medium이 cpc일 때)
+        if (urlParams.has('gclid') || urlParams.get('utm_source') === 'google' || urlParams.get('utm_medium') === 'cpc') {
+            source = 'google_ads';
+        } 
+        // 2. 검색 엔진 유입 판정 (referrer가 네이버, 다음, 구글 등일 때)
+        else if (document.referrer) {
+            const referrer = document.referrer.toLowerCase();
+            if (referrer.includes('naver.com') || referrer.includes('daum.net') || referrer.includes('google.co.kr') || referrer.includes('google.com')) {
+                source = 'search';
+            }
+        }
+
+        // 저장된 통계 업데이트
+        try {
+            const currentData = JSON.parse(localStorage.getItem('samhyup_analytics')) || initialData;
+            currentData.visits[source] = (currentData.visits[source] || 0) + 1;
+            localStorage.setItem('samhyup_analytics', JSON.stringify(currentData));
+            sessionStorage.setItem('samhyup_session_recorded', 'true');
+            sessionStorage.setItem('samhyup_session_source', source);
+
+            // 구글 스프레드시트 실시간 방문 전송
+            if (GAS_WEB_APP_URL && GAS_WEB_APP_URL.startsWith('http')) {
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        action: 'trackVisit',
+                        site: 'catalog',
+                        source: source
+                    })
+                }).catch(err => console.error('GAS visit track error:', err));
+            }
+        } catch (e) {
+            console.error('Error updating analytics data:', e);
+        }
+    }
+})();
+
+// 로고 5회 연속 클릭 시 비밀 마케팅 대시보드로 이동하는 히든 포털 기능
+let logoClickCount = 0;
+let logoClickTimeout = null;
+
+function handleLogoClick(event) {
+    event.preventDefault();
+    logoClickCount++;
+    
+    // 3초 동안 추가 클릭이 없으면 카운터 리셋
+    clearTimeout(logoClickTimeout);
+    logoClickTimeout = setTimeout(() => {
+        logoClickCount = 0;
+    }, 3000);
+    
+    // 5번 연속 클릭 시 대시보드 새 탭 열기
+    if (logoClickCount >= 5) {
+        logoClickCount = 0;
+        window.open('dashboard.html', '_blank');
+    }
+}
+
+
+// ── GALLERY FILTER & MODAL ──
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.gallery-tab');
+    const items = document.querySelectorAll('.gallery-item');
+    
+    // Tab filtering
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            
+            const filter = tab.getAttribute('data-filter');
+            
+            items.forEach(item => {
+                const category = item.getAttribute('data-category');
+                if (filter === 'all' || filter === category) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // Modal control
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('galleryModalImg');
+    const modalBadge = document.getElementById('galleryModalBadge');
+    const modalTitle = document.getElementById('galleryModalTitle');
+    const modalDesc = document.getElementById('galleryModalDesc');
+    const modalClose = document.getElementById('galleryModalClose');
+    const modalBackdrop = document.getElementById('galleryModalBackdrop');
+    const modalQuoteBtn = document.getElementById('galleryModalQuoteBtn');
+
+    if (modal) {
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img').src;
+                const title = item.getAttribute('data-title');
+                const desc = item.getAttribute('data-desc');
+                const catText = item.querySelector('.gallery-cat-badge').textContent;
+                const service = item.getAttribute('data-service');
+                
+                modalImg.src = img;
+                modalImg.alt = title;
+                modalBadge.textContent = catText;
+                modalTitle.textContent = title;
+                modalDesc.textContent = desc;
+                
+                modalQuoteBtn.onclick = () => {
+                    selectProduct(service);
+                    closeModal();
+                };
+                
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+    }
+});
