@@ -136,6 +136,19 @@ a {
     white-space: nowrap;
 }
 
+.logo-text {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.logo-inc {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 4px;
+}
+
 .nav {
     display: flex;
     align-items: center;
@@ -639,9 +652,17 @@ input:focus, select:focus, textarea:focus {
     }
     .logo {
         font-size: 16px;
+        gap: 6px !important;
     }
     .logo span {
         font-size: 11px;
+    }
+    .logo-inc {
+        font-size: 11px;
+    }
+    /* Hide '공장직판' link on mobile to prevent overflow */
+    .nav a[href="#why-us"] {
+        display: none !important;
     }
     /* Keep nav links but make them compact */
     .nav a:not(.btn) {

@@ -7,8 +7,8 @@ function selectProduct(productName) {
     const selectEl = document.getElementById('productSelect');
     if (selectEl) {
         selectEl.value = productName;
-        // 선택 후 견적 폼으로 부드럽게 스크롤
-        document.getElementById('quote-form').scrollIntoView({ behavior: 'smooth' });
+        // 선택 후 실제 견적 입력 폼(contactForm)으로 부드럽게 스크롤
+        document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth' });
     }
 }
 
