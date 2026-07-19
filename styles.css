@@ -116,7 +116,7 @@ a {
     align-items: center;
     gap: 10px;
     font-family: 'Outfit', sans-serif;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     color: #ffffff;
     white-space: nowrap;
@@ -128,22 +128,17 @@ a {
     object-fit: contain;
 }
 
-.logo span {
-    font-size: 14px;
-    color: var(--text-muted);
-    font-weight: 400;
-    margin-left: 4px;
-    white-space: nowrap;
-}
-
 .logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
     white-space: nowrap;
     display: inline-flex;
     align-items: baseline;
 }
 
 .logo-inc {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
     font-weight: 400;
     margin-left: 4px;
@@ -651,14 +646,14 @@ input:focus, select:focus, textarea:focus {
         padding: 10px 0;
     }
     .logo {
-        font-size: 16px;
+        font-size: 20px;
         gap: 6px !important;
     }
-    .logo span {
-        font-size: 11px;
+    .logo-text {
+        font-size: 17px;
     }
     .logo-inc {
-        font-size: 11px;
+        font-size: 12px;
     }
     /* Hide '공장직판' link on mobile to prevent overflow */
     .nav a[href="#why-us"] {

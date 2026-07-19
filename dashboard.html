@@ -806,6 +806,7 @@
                     <div class="mode-selector">
                         <button id="mode-realtime" class="mode-btn active" onclick="switchMode('realtime')">🔴 실시간 LIVE</button>
                         <button id="mode-simulator" class="mode-btn" onclick="switchMode('simulator')">⚙️ 시뮬레이터</button>
+                        <button class="mode-btn" onclick="changeAdminPassword()" style="border-left: 1px solid rgba(255,255,255,0.1); border-radius: 0 20px 20px 0; margin-left: 4px; padding-left: 12px;">🔑 비번 변경</button>
                     </div>
                 </div>
                 
@@ -1586,7 +1587,8 @@
             const errorDiv = document.getElementById('authError');
             const password = passwordInput.value;
 
-            if (password === '4558') {
+            const savedPassword = localStorage.getItem('samhyup_admin_password') || '4558';
+            if (password === savedPassword) {
                 sessionStorage.setItem('samhyup_admin_auth', 'true');
                 
                 const authOverlay = document.getElementById('authOverlay');
@@ -1607,6 +1609,35 @@
                 passwordInput.value = '';
                 passwordInput.focus();
             }
+        }
+
+        // Change Admin Password using prompt
+        function changeAdminPassword() {
+            const currentSaved = localStorage.getItem('samhyup_admin_password') || '4558';
+            const currentInput = prompt("현재 비밀번호를 입력해주세요:");
+            if (currentInput === null) return;
+            if (currentInput !== currentSaved) {
+                alert("현재 비밀번호가 일치하지 않습니다.");
+                return;
+            }
+            const newPassword = prompt("새로 설정할 비밀번호를 입력해주세요 (최대 8자리):");
+            if (newPassword === null) return;
+            if (!newPassword.trim()) {
+                alert("비밀번호는 공백일 수 없습니다.");
+                return;
+            }
+            if (newPassword.length > 8) {
+                alert("비밀번호는 최대 8자리까지 가능합니다.");
+                return;
+            }
+            const confirmPassword = prompt("새 비밀번호를 한번 더 입력해주세요:");
+            if (confirmPassword === null) return;
+            if (newPassword !== confirmPassword) {
+                alert("새 비밀번호가 서로 일치하지 않습니다.");
+                return;
+            }
+            localStorage.setItem('samhyup_admin_password', newPassword);
+            alert("비밀번호가 성공적으로 변경되었습니다.");
         }
 
         // Open Modal dialog with full details

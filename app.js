@@ -109,8 +109,14 @@ function handleQuoteSubmit(event) {
     const phone = document.getElementById('contactPhone').value;
     const email = document.getElementById('contactEmail').value;
     const product = document.getElementById('productSelect').value;
-    const specs = document.getElementById('specsInput').value;
+    let specs = document.getElementById('specsInput').value;
     const fileInput = document.getElementById('fileAttachment');
+
+    // 네이버 UTM 키워드가 세션에 저장되어 있으면 specs 끝에 자동으로 기입
+    const sessionTerm = sessionStorage.getItem('samhyup_session_term');
+    if (sessionTerm) {
+        specs = (specs ? specs + '\n\n' : '') + `[네이버 광고 유입 키워드: ${sessionTerm}]`;
+    }
 
     // FormSubmit AJAX를 위한 FormData 객체 빌드
     const formData = new FormData();
@@ -220,11 +226,21 @@ ${specs || '별도 기재 없음'}
         let source = 'direct';
         const urlParams = new URLSearchParams(window.location.search);
         
+        // 네이버 UTM 키워드 파싱 및 세션 저장
+        const utmTerm = urlParams.get('utm_term');
+        if (utmTerm) {
+            sessionStorage.setItem('samhyup_session_term', utmTerm);
+        }
+        
         // 1. Google Ads 유입 판정 (gclid 파라미터가 있거나, utm_source가 google이거나, utm_medium이 cpc일 때)
         if (urlParams.has('gclid') || urlParams.get('utm_source') === 'google' || urlParams.get('utm_medium') === 'cpc') {
             source = 'google_ads';
         } 
-        // 2. 검색 엔진 유입 판정 (referrer가 네이버, 다음, 구글 등일 때)
+        // 2. 네이버 키워드 광고 유입 판정 (대시보드 통계 분류상 검색 유입으로 카테고리 지정)
+        else if (urlParams.get('utm_source') === 'naver' && urlParams.get('utm_medium') === 'cpc') {
+            source = 'search';
+        }
+        // 3. 검색 엔진 유입 판정 (referrer가 네이버, 다음, 구글 등일 때)
         else if (document.referrer) {
             const referrer = document.referrer.toLowerCase();
             if (referrer.includes('naver.com') || referrer.includes('daum.net') || referrer.includes('google.co.kr') || referrer.includes('google.com')) {
