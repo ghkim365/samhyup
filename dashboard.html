@@ -1587,7 +1587,7 @@
             const errorDiv = document.getElementById('authError');
             const password = passwordInput.value;
 
-            const savedPassword = localStorage.getItem('samhyup_admin_password') || '4558';
+            const savedPassword = localStorage.getItem('samhyup_admin_password') || 'sh1472';
             if (password === savedPassword) {
                 sessionStorage.setItem('samhyup_admin_auth', 'true');
                 
@@ -1613,7 +1613,7 @@
 
         // Change Admin Password using prompt
         function changeAdminPassword() {
-            const currentSaved = localStorage.getItem('samhyup_admin_password') || '4558';
+            const currentSaved = localStorage.getItem('samhyup_admin_password') || 'sh1472';
             const currentInput = prompt("현재 비밀번호를 입력해주세요:");
             if (currentInput === null) return;
             if (currentInput !== currentSaved) {
