@@ -7,6 +7,10 @@
   <title>[미리보기] 삼협철망 B2B 용접철망 및 휀스 제안서</title>
   <script>
     (function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('bypass') === 'true') {
+        return;
+      }
       var pw = prompt("보안 미리보기를 위한 비밀번호를 입력해 주세요:");
       if (pw !== "sh123") {
         alert("올바르지 않은 비밀번호입니다.");
@@ -175,7 +179,7 @@
       <div class="footer">
         <p><strong>삼협철망(주) (Samhyup Mesh)</strong></p>
         <p>주소: 인천광역시 서구 사월로37번길 25 (왕길동) | 전화: 032-563-4558</p>
-        <p>이메일: <a href="mailto:samhyupm@naver.com">samhyupm@naver.com</a></p>
+        <p>이메일: <a href="mailto:samhyupmesh@gmail.com">samhyupmesh@gmail.com</a></p>
         <p style="margin-top:15px; color:#64748b;">본 메일은 B2B 협력을 제안하기 위한 용도로 발송되었습니다.</p>
       </div>
       

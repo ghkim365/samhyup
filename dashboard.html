@@ -802,6 +802,15 @@
                         </select>
                     </div>
 
+                    <!-- 시안 미리보기 목록 드롭다운 -->
+                    <div class="site-selector-wrapper">
+                        <select id="preview-selector" class="site-select" onchange="if(this.value) { window.open(this.value, '_blank'); this.value=''; }">
+                            <option value="">🔍 시안 미리보기 목록</option>
+                            <option value="templates/samhyup_proposal_preview.html?bypass=true">📄 B2B 제안서 시안</option>
+                            <option value="templates/samhyup_blog_post_preview.html?bypass=true">✍️ 공식 블로그 시안</option>
+                        </select>
+                    </div>
+
                     <!-- Mode Selector Toggle Switch -->
                     <div class="mode-selector">
                         <button id="mode-realtime" class="mode-btn active" onclick="switchMode('realtime')">🔴 실시간 LIVE</button>

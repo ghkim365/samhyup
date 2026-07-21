@@ -134,7 +134,7 @@ function handleQuoteSubmit(event) {
     }
 
     // FormSubmit AJAX 전송
-    fetch("https://formsubmit.co/ajax/samhyupm@naver.com", {
+    fetch("https://formsubmit.co/ajax/samhyupmesh@gmail.com", {
         method: "POST",
         body: formData
     })
@@ -150,7 +150,7 @@ function handleQuoteSubmit(event) {
                     'send_to': 'AW-750842470/hAmFCITOvM4cEObkg-YC'
                 });
             }
-            alert('견적 문의가 온라인으로 성공적으로 접수되었습니다!\n\n※ 처음 전송하시는 경우, 삼협철망 메일(samhyupm@naver.com)로 FormSubmit 발송 활성화 링크가 전송됩니다. 해당 메일에서 "Confirm Email" 버튼을 최초 1회만 클릭해주시면 최종 수신이 시작됩니다.');
+            alert('견적 문의가 온라인으로 성공적으로 접수되었습니다!\n\n※ 처음 전송하시는 경우, 삼협철망 메일(samhyupmesh@gmail.com)로 FormSubmit 발송 활성화 링크가 전송됩니다. 해당 메일에서 "Confirm Email" 버튼을 최초 1회만 클릭해주시면 최종 수신이 시작됩니다.');
             event.target.reset();
             const fileNameDisplay = document.getElementById('fileName');
             if (fileNameDisplay) {
@@ -195,7 +195,7 @@ ${specs || '별도 기재 없음'}
 ---
 ※ 첨부파일이 있으신 경우, 메일 프로그램 실행 후 해당 파일을 첨부하여 발송해 주세요.`;
 
-        const mailtoUrl = `mailto:samhyupm@naver.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+        const mailtoUrl = `mailto:samhyupmesh@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
         window.location.href = mailtoUrl;
     })
     .finally(() => {
