@@ -5,17 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼협철망(주) | B2B 모바일 간편 견적 & 제품 카탈로그</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo_samhyup.png" type="image/png">
+    <link rel="shortcut icon" href="images/logo_samhyup_192.png">
+    <link rel="apple-touch-icon" href="images/logo_samhyup_192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0F172A">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Google tag (gtag.js) - Google Ads: 750842470 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-750842470"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-750842470');
+    </script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container header-container">
-            <a href="#" class="logo">삼협철망<span>(주)</span></a>
+            <a href="#" class="logo" onclick="handleLogoClick(event)"><img src="images/logo_samhyup.png" alt="삼협철망(주)" class="logo-img"><span class="logo-text">삼협철망<span class="logo-inc">(주)</span></span></a>
             <nav class="nav">
                 <a href="#products">제품소개</a>
-                <a href="#why-us">공장강점</a>
-                <a href="#quote-form" class="btn btn-primary">간편 견적 요청</a>
+                <a href="#gallery">제품갤러리</a>
+                <a href="#why-us">공장직판</a>
+                <a href="#contactForm" class="btn btn-primary"><span class="hide-mobile">간편 </span>견적 요청</a>
             </nav>
         </div>
     </header>
@@ -29,8 +45,8 @@
                 <h1>공장 직판 합리적 단가<br><span>용접철망 & 메쉬휀스</span></h1>
                 <p>중간 유통 단계를 없앤 압도적인 가격 경쟁력과 정밀 자동화 설비로 균일하고 탄탄한 인장강도를 보장합니다. 신속하게 현장 납품을 진행해 드립니다.</p>
                 <div class="hero-buttons">
-                    <a href="#quote-form" class="btn btn-lg btn-primary">실시간 간편 견적 내기</a>
-                    <a href="#products" class="btn btn-lg btn-outline">제품 카탈로그 보기</a>
+                    <a href="#contactForm" class="btn btn-lg btn-primary">간편 견적 내기</a>
+                    <a href="#products" class="btn btn-lg btn-outline">제품 카탈로그</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -43,73 +59,810 @@
     <section id="products" class="products">
         <div class="container">
             <div class="section-title">
-                <h2>삼협 대표 제품 카탈로그</h2>
+                <h2>삼협철망(주) 제품 카탈로그</h2>
                 <p>자동화 생산라인을 거쳐 완벽한 품질로 출고되는 핵심 품목군입니다.</p>
             </div>
             
             <div class="products-grid">
-                <!-- Product 1 -->
+                <!-- Product 1: 용접철망 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="images/welded.png" alt="용접철망">
+                        <img src="images/assembled_mesh.jpg" alt="용접철망">
                         <span class="product-tag">공장 추천</span>
                     </div>
                     <div class="product-info">
-                        <h3>용접철망 & 인테리어 철망</h3>
-                        <p class="desc">정밀 격자 구조와 우수한 용접 품질을 바탕으로 한 건설 기초용 및 인테리어 파티션용 철망입니다.</p>
+                        <h3>용접철망</h3>
+                        <p class="desc">정밀 격자 구조와 우수한 용접 품질을 바탕으로 한 건설 기초용 및 산업용 고품질 용접철망입니다.</p>
                         <ul class="specs">
-                            <li><strong>선경 범위:</strong> 2.0mm ~ 6.0mm</li>
-                            <li><strong>망눈 규격:</strong> 50mm x 50mm, 100mm x 100mm</li>
-                            <li><strong>용도:</strong> 도로 포장, 바닥 기초 공사, 벽면 인테리어</li>
+                            <li><strong>소재 종류:</strong> 흑선, 아연선, SUS(스테인리스)</li>
+                            <li><strong>선경 범위:</strong> 2Ø ~ 8Ø (그 외 선경도 주문생산 가능)</li>
+                            <li><strong>망목 규격:</strong> 20x20mm ~ 75x75mm 이상 (선경별 상이)</li>
+                            <li><strong>제작 규격:</strong> 최대 2,400mm x 6,000mm까지</li>
                         </ul>
-                        <button onclick="selectProduct('용접철망')" class="btn btn-block btn-secondary">견적 추가</button>
+                        <button onclick="selectProduct('용접철망')" class="btn btn-block btn-secondary">바로 견적요청</button>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
+                <!-- Product 2: 인테리어용접 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="images/fence.png" alt="메쉬휀스">
+                        <img src="images/interior_welding.jpg" alt="인테리어용접">
                         <span class="product-tag">인기 품목</span>
                     </div>
                     <div class="product-info">
-                        <h3>메쉬휀스 & 울타리 판넬</h3>
-                        <p class="desc">고강도 분체도장 처리를 거쳐 부식에 강하고, 미려한 도시 경관 조화를 보장하는 시공용 휀스망입니다.</p>
+                        <h3>인테리어용접</h3>
+                        <p class="desc">선경 선택의 폭이 넓어 경량화가 가능하며, 정교한 마감과 미려한 도장으로 격조 높은 공간을 연출합니다.</p>
                         <ul class="specs">
-                            <li><strong>표준 높이:</strong> 600mm ~ 2000mm (주문제작 가능)</li>
-                            <li><strong>색상옵션:</strong> 연두, 흰색, 밤색, 검정</li>
-                            <li><strong>특징:</strong> 조립식 간편 시공, 뛰어난 내식성과 내구성</li>
+                            <li><strong>소재 종류:</strong> 흑선, 아연선, SUS(스테인리스)</li>
+                            <li><strong>표면 처리:</strong> 다양한 컬러 분체도장 및 아연도금 가능</li>
+                            <li><strong>제품 강점:</strong> 가벼운 경량화 설계, 높은 공간 디자인 연출력</li>
+                            <li><strong>주요 용도:</strong> 천정 및 벽면 인테리어, 부품 Box, 전시매대</li>
                         </ul>
-                        <button onclick="selectProduct('메쉬휀스')" class="btn btn-block btn-secondary">견적 추가</button>
+                        <button onclick="selectProduct('인테리어용접')" class="btn btn-block btn-secondary">바로 견적요청</button>
                     </div>
                 </div>
 
-                <!-- Product 3 -->
+                <!-- Product 3: 동물보호휀스 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="images/gabion.png" alt="개비온 철망">
+                        <img src="images/protection_fence.jpg" alt="동물보호휀스">
+                        <span class="product-tag">안전/보호</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>동물보호휀스</h3>
+                        <p class="desc">야생동물의 도로 및 농가 침입을 원천 차단하여 로드킬 방지와 자산 보호 등 안전한 환경을 구축합니다.</p>
+                        <ul class="specs">
+                            <li><strong>망목 형태:</strong> 촘촘하고 견고한 격자망 (소형 동물 통과 방지)</li>
+                            <li><strong>제품 특징:</strong> 고강도 강선 사용으로 뛰어난 인장강도 보유</li>
+                            <li><strong>표면 처리:</strong> 부식 방지 및 내후성이 뛰어난 분체도장 처리</li>
+                            <li><strong>주요 용도:</strong> 고속도로/국도변 야생동물 차단, 농가 울타리</li>
+                        </ul>
+                        <button onclick="selectProduct('동물보호망')" class="btn btn-block btn-secondary">바로 견적요청</button>
+                    </div>
+                </div>
+
+                <!-- Product 4: 메쉬파레트 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/mesh_pallet.jpg" alt="메쉬파레트">
+                        <span class="product-tag">물류/보관</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>메쉬파레트</h3>
+                        <p class="desc">다단 적재와 지게차 이동이 편리하며, 접이식 설계로 미사용 시 보관 공간을 효율적으로 절감합니다.</p>
+                        <ul class="specs">
+                            <li><strong>적재 성능:</strong> 다단 적재 가능 (3~4단 적재 운영 용이)</li>
+                            <li><strong>선경/망목:</strong> 6Ø / 50mm x 50mm (고내하중 구조)</li>
+                            <li><strong>표준 규격:</strong> 800x600x650 / 1000x800x850 / 1200x1000x950 등</li>
+                            <li><strong>제품 특징:</strong> 접이식 보관(부피 대폭 감소), 바퀴 장착 가능(옵션)</li>
+                        </ul>
+                        <button onclick="selectProduct('메쉬파레트')" class="btn btn-block btn-secondary">바로 견적요청</button>
+                    </div>
+                </div>
+
+                <!-- Product 5: 일체형메쉬 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/integral_mesh.jpg" alt="일체형메쉬">
+                        <span class="product-tag">특허/디자인</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>일체형메쉬</h3>
+                        <p class="desc">철선 교차부를 눌러 플랫 용접하여 단차를 없앴으며, 이음매 없는 매끄러운 표면과 높은 강도를 자랑합니다.</p>
+                        <ul class="specs">
+                            <li><strong>용접 방식:</strong> 교차부 플랫 용접 (단차 해소로 이음매 없음)</li>
+                            <li><strong>표면 처리:</strong> 우수한 도장 밀착성 (뛰어난 내부식성과 내구성)</li>
+                            <li><strong>시공 장점:</strong> 핸들링이 편리하며 우수한 시공성 및 강도 제공</li>
+                            <li><strong>주요 용도:</strong> 고품격 천정 메쉬 인테리어, 벽면 디자인 메쉬</li>
+                        </ul>
+                        <button onclick="selectProduct('일체형메쉬')" class="btn btn-block btn-secondary">바로 견적요청</button>
+                    </div>
+                </div>
+
+                <!-- Product 6: 견사망 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/pet_fence.jpg" alt="견사망">
+                        <span class="product-tag">조립식</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>견사망</h3>
+                        <p class="desc">포인트 스폿 용접으로 매우 튼튼하며, 현장에서 별도 용접 작업 없이 손쉽게 조립 가능한 대형 견사망입니다.</p>
+                        <ul class="specs">
+                            <li><strong>용접 방식:</strong> 포인트 정밀 스폿 용접 (강력한 체결력)</li>
+                            <li><strong>조립 방식:</strong> 용접 작업이 필요 없는 볼트/클립 조립식 구조</li>
+                            <li><strong>표면 처리:</strong> 아연도금 및 분체도장 코팅 (뛰어난 부식 방지)</li>
+                            <li><strong>제품 특징:</strong> 원하는 규격과 사이즈로 100% 주문 제작</li>
+                        </ul>
+                        <button onclick="selectProduct('견사망')" class="btn btn-block btn-secondary">바로 견적요청</button>
+                    </div>
+                </div>
+
+                <!-- Product 7: 개비온철망 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/gabion.png" alt="개비온철망">
                         <span class="product-tag">토목/조경</span>
                     </div>
                     <div class="product-info">
-                        <h3>개비온 & 동물보호휀스</h3>
-                        <p class="desc">자연석을 채워 수해 방지 및 친환경 경관 옹벽을 구축하는 중량물 고강도 개비온 철망입니다.</p>
+                        <h3>개비온철망</h3>
+                        <p class="desc">아연도금 철선을 전기저항 용접한 격자망태 구조물로, 수해 방지 및 자연친화적인 조경 옹벽을 구축합니다.</p>
                         <ul class="specs">
-                            <li><strong>철선 규격:</strong> 3.0mm ~ 5.0mm (아연도금강선)</li>
-                            <li><strong>망눈 형태:</strong> 육각 이중 꼬임, 사각 용접 구조</li>
-                            <li><strong>용도:</strong> 법면 보호, 하천 옹벽, 조경 인테리어 벽체</li>
+                            <li><strong>구조 형식:</strong> 격자 용접형 철망태 (단단한 형상 유지력)</li>
+                            <li><strong>철선 규격:</strong> 고강도 아연도금 강선 적용 (우수한 내식성)</li>
+                            <li><strong>시공 편의:</strong> 신속한 현장 조립 및 다량의 돌 채움에 적합</li>
+                            <li><strong>주요 용도:</strong> 법면 보호 옹벽, 친환경 하천 법면, 조경 벽체</li>
                         </ul>
-                        <button onclick="selectProduct('개비온/동물보호휀스')" class="btn btn-block btn-secondary">견적 추가</button>
+                        <button onclick="selectProduct('개비온철망')" class="btn btn-block btn-secondary">바로 견적요청</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+
+    <!-- ── PRODUCT GALLERY ── -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>제품 가공 및 납품 갤러리</h2>
+                <p>삼협철망(주)의 실제 가공 및 전국 현장 납품 제품들을 직접 확인하세요.</p>
+            </div>
+
+            <!-- 탭 메뉴 -->
+            <div class="gallery-tabs" role="tablist">
+                <button class="gallery-tab active" data-filter="all" role="tab" aria-selected="true" id="tab-all">전체</button>
+                <button class="gallery-tab" data-filter="assembled_mesh" role="tab" aria-selected="false" id="tab-assembled_mesh">용접철망</button>
+                <button class="gallery-tab" data-filter="interior_welding" role="tab" aria-selected="false" id="tab-interior_welding">인테리어용접</button>
+                <button class="gallery-tab" data-filter="protection_fence" role="tab" aria-selected="false" id="tab-protection_fence">동물보호망</button>
+                <button class="gallery-tab" data-filter="mesh_pallet" role="tab" aria-selected="false" id="tab-mesh_pallet">메쉬파레트</button>
+                <button class="gallery-tab" data-filter="integral_mesh" role="tab" aria-selected="false" id="tab-integral_mesh">일체형메쉬</button>
+                <button class="gallery-tab" data-filter="pet_fence" role="tab" aria-selected="false" id="tab-pet_fence">견사망</button>
+                <button class="gallery-tab" data-filter="gabion" role="tab" aria-selected="false" id="tab-gabion">개비온철망</button>
+            </div>
+
+            <!-- 갤러리 그리드 -->
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 01" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_01.jpg" alt="용접철망 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 01</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 02" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_02.jpg" alt="용접철망 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 02</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 03" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_03.jpg" alt="용접철망 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 03</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 04" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_04.jpg" alt="용접철망 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 04</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 05" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_05.jpg" alt="용접철망 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 05</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 06" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_06.jpg" alt="용접철망 06 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 06</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 07" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_07.jpg" alt="용접철망 07 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 07</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 08" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_08.jpg" alt="용접철망 08 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 08</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 09" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_09.jpg" alt="용접철망 09 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 09</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 10" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_10.jpg" alt="용접철망 10 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 10</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 11" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_11.jpg" alt="용접철망 11 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 11</p>
+                </div>
+                <div class="gallery-item" data-category="assembled_mesh" data-title="용접철망 12" data-desc="정밀 자동화 용접 설비로 생산된 고강도 용접철망 실물입니다." data-service="용접철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/assembled_mesh_12.jpg" alt="용접철망 12 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">용접철망</span>
+                    </div>
+                    <p class="gallery-item-title">용접철망 12</p>
+                </div>
+                <div class="gallery-item" data-category="interior_welding" data-title="인테리어용접 01" data-desc="정밀한 용접과 미려한 가공으로 제작된 금속 인테리어망입니다." data-service="인테리어용접">
+                    <div class="gallery-thumb">
+                        <img src="gallery/interior_welding_01.jpg" alt="인테리어용접 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">인테리어용접</span>
+                    </div>
+                    <p class="gallery-item-title">인테리어용접 01</p>
+                </div>
+                <div class="gallery-item" data-category="interior_welding" data-title="인테리어용접 02" data-desc="정밀한 용접과 미려한 가공으로 제작된 금속 인테리어망입니다." data-service="인테리어용접">
+                    <div class="gallery-thumb">
+                        <img src="gallery/interior_welding_02.jpg" alt="인테리어용접 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">인테리어용접</span>
+                    </div>
+                    <p class="gallery-item-title">인테리어용접 02</p>
+                </div>
+                <div class="gallery-item" data-category="interior_welding" data-title="인테리어용접 03" data-desc="정밀한 용접과 미려한 가공으로 제작된 금속 인테리어망입니다." data-service="인테리어용접">
+                    <div class="gallery-thumb">
+                        <img src="gallery/interior_welding_03.jpg" alt="인테리어용접 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">인테리어용접</span>
+                    </div>
+                    <p class="gallery-item-title">인테리어용접 03</p>
+                </div>
+                <div class="gallery-item" data-category="interior_welding" data-title="인테리어용접 04" data-desc="정밀한 용접과 미려한 가공으로 제작된 금속 인테리어망입니다." data-service="인테리어용접">
+                    <div class="gallery-thumb">
+                        <img src="gallery/interior_welding_04.jpg" alt="인테리어용접 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">인테리어용접</span>
+                    </div>
+                    <p class="gallery-item-title">인테리어용접 04</p>
+                </div>
+                <div class="gallery-item" data-category="interior_welding" data-title="인테리어용접 05" data-desc="정밀한 용접과 미려한 가공으로 제작된 금속 인테리어망입니다." data-service="인테리어용접">
+                    <div class="gallery-thumb">
+                        <img src="gallery/interior_welding_05.jpg" alt="인테리어용접 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">인테리어용접</span>
+                    </div>
+                    <p class="gallery-item-title">인테리어용접 05</p>
+                </div>
+                <div class="gallery-item" data-category="protection_fence" data-title="동물보호망 01" data-desc="야생동물 유입 방지 및 도로 안전을 위한 촘촘하고 휀스 제품입니다." data-service="동물보호망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/protection_fence_01.jpg" alt="동물보호망 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">동물보호망</span>
+                    </div>
+                    <p class="gallery-item-title">동물보호망 01</p>
+                </div>
+                <div class="gallery-item" data-category="protection_fence" data-title="동물보호망 02" data-desc="야생동물 유입 방지 및 도로 안전을 위한 촘촘하고 휀스 제품입니다." data-service="동물보호망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/protection_fence_02.jpg" alt="동물보호망 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">동물보호망</span>
+                    </div>
+                    <p class="gallery-item-title">동물보호망 02</p>
+                </div>
+                <div class="gallery-item" data-category="protection_fence" data-title="동물보호망 03" data-desc="야생동물 유입 방지 및 도로 안전을 위한 촘촘하고 휀스 제품입니다." data-service="동물보호망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/protection_fence_03.jpg" alt="동물보호망 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">동물보호망</span>
+                    </div>
+                    <p class="gallery-item-title">동물보호망 03</p>
+                </div>
+                <div class="gallery-item" data-category="protection_fence" data-title="동물보호망 04" data-desc="야생동물 유입 방지 및 도로 안전을 위한 촘촘하고 휀스 제품입니다." data-service="동물보호망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/protection_fence_04.jpg" alt="동물보호망 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">동물보호망</span>
+                    </div>
+                    <p class="gallery-item-title">동물보호망 04</p>
+                </div>
+                <div class="gallery-item" data-category="protection_fence" data-title="동물보호망 05" data-desc="야생동물 유입 방지 및 도로 안전을 위한 촘촘하고 휀스 제품입니다." data-service="동물보호망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/protection_fence_05.jpg" alt="동물보호망 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">동물보호망</span>
+                    </div>
+                    <p class="gallery-item-title">동물보호망 05</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 01" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_01.jpg" alt="메쉬파레트 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 01</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 02" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_02.jpg" alt="메쉬파레트 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 02</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 03" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_03.jpg" alt="메쉬파레트 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 03</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 04" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_04.jpg" alt="메쉬파레트 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 04</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 05" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_05.jpg" alt="메쉬파레트 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 05</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 06" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_06.jpg" alt="메쉬파레트 06 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 06</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 07" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_07.jpg" alt="메쉬파레트 07 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 07</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 08" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_08.jpg" alt="메쉬파레트 08 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 08</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 09" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_09.jpg" alt="메쉬파레트 09 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 09</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 10" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_10.jpg" alt="메쉬파레트 10 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 10</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 11" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_11.jpg" alt="메쉬파레트 11 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 11</p>
+                </div>
+                <div class="gallery-item" data-category="mesh_pallet" data-title="메쉬파레트 12" data-desc="적재 효율성을 극대화하고 보관이 용이한 고내하중 메쉬파레트입니다." data-service="메쉬파레트">
+                    <div class="gallery-thumb">
+                        <img src="gallery/mesh_pallet_12.jpg" alt="메쉬파레트 12 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">메쉬파레트</span>
+                    </div>
+                    <p class="gallery-item-title">메쉬파레트 12</p>
+                </div>
+                <div class="gallery-item" data-category="integral_mesh" data-title="일체형메쉬 01" data-desc="철선 교차부를 눌러 플랫 용접하여 단차가 없는 일체형 메쉬망입니다." data-service="일체형메쉬">
+                    <div class="gallery-thumb">
+                        <img src="gallery/integral_mesh_01.jpg" alt="일체형메쉬 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">일체형메쉬</span>
+                    </div>
+                    <p class="gallery-item-title">일체형메쉬 01</p>
+                </div>
+                <div class="gallery-item" data-category="integral_mesh" data-title="일체형메쉬 02" data-desc="철선 교차부를 눌러 플랫 용접하여 단차가 없는 일체형 메쉬망입니다." data-service="일체형메쉬">
+                    <div class="gallery-thumb">
+                        <img src="gallery/integral_mesh_02.jpg" alt="일체형메쉬 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">일체형메쉬</span>
+                    </div>
+                    <p class="gallery-item-title">일체형메쉬 02</p>
+                </div>
+                <div class="gallery-item" data-category="integral_mesh" data-title="일체형메쉬 03" data-desc="철선 교차부를 눌러 플랫 용접하여 단차가 없는 일체형 메쉬망입니다." data-service="일체형메쉬">
+                    <div class="gallery-thumb">
+                        <img src="gallery/integral_mesh_03.jpg" alt="일체형메쉬 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">일체형메쉬</span>
+                    </div>
+                    <p class="gallery-item-title">일체형메쉬 03</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 01" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_01.jpg" alt="견사망 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 01</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 02" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_02.jpg" alt="견사망 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 02</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 03" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_03.jpg" alt="견사망 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 03</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 04" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_04.jpg" alt="견사망 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 04</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 05" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_05.jpg" alt="견사망 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 05</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 06" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_06.jpg" alt="견사망 06 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 06</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 07" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_07.jpg" alt="견사망 07 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 07</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 08" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_08.jpg" alt="견사망 08 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 08</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 09" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_09.jpg" alt="견사망 09 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 09</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 10" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_10.jpg" alt="견사망 10 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 10</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 11" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_11.jpg" alt="견사망 11 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 11</p>
+                </div>
+                <div class="gallery-item" data-category="pet_fence" data-title="견사망 12" data-desc="용접 부위가 튼튼하며 현장 조립이 간편한 고내식 아연도금 견사망입니다." data-service="견사망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/pet_fence_12.jpg" alt="견사망 12 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">견사망</span>
+                    </div>
+                    <p class="gallery-item-title">견사망 12</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 01" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_01.jpg" alt="개비온철망 01 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 01</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 02" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_02.jpg" alt="개비온철망 02 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 02</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 03" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_03.jpg" alt="개비온철망 03 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 03</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 04" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_04.jpg" alt="개비온철망 04 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 04</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 05" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_05.jpg" alt="개비온철망 05 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 05</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 06" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_06.jpg" alt="개비온철망 06 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 06</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 07" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_07.jpg" alt="개비온철망 07 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 07</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 08" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_08.jpg" alt="개비온철망 08 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 08</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 09" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_09.jpg" alt="개비온철망 09 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 09</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 10" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_10.jpg" alt="개비온철망 10 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 10</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 11" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_11.jpg" alt="개비온철망 11 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 11</p>
+                </div>
+                <div class="gallery-item" data-category="gabion" data-title="개비온철망 12" data-desc="전기저항 용접 방식으로 튼튼한 형상을 장기간 유지하는 개비온철망입니다." data-service="개비온철망">
+                    <div class="gallery-thumb">
+                        <img src="gallery/gabion_12.jpg" alt="개비온철망 12 실물" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-zoom">🔍 상세 보기</span>
+                        </div>
+                        <span class="gallery-cat-badge">개비온철망</span>
+                    </div>
+                    <p class="gallery-item-title">개비온철망 12</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── GALLERY MODAL ── -->
+    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true" aria-label="제품 상세 보기">
+        <div class="gallery-modal-backdrop" id="galleryModalBackdrop"></div>
+        <div class="gallery-modal-content">
+            <button class="gallery-modal-close" id="galleryModalClose" aria-label="닫기">✕</button>
+            <div class="gallery-modal-body">
+                <div class="gallery-modal-img-wrap">
+                    <img id="galleryModalImg" src="" alt="">
+                </div>
+                <div class="gallery-modal-info">
+                    <span class="gallery-modal-badge" id="galleryModalBadge"></span>
+                    <h3 id="galleryModalTitle"></h3>
+                    <p id="galleryModalDesc"></p>
+                    <button class="btn btn-primary btn-lg btn-block" id="galleryModalQuoteBtn">이 제품 견적 문의하기 →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Why Us Section -->
     <section id="why-us" class="why-us">
         <div class="container">
             <div class="section-title">
-                <h2>삼협철망(주)만의 B2B 공급 강점</h2>
+                <h2>삼협철망(주)만의 장점</h2>
                 <p>30년 업력의 신뢰성 높은 생산 프로세스와 유통 최적화 솔루션을 제공합니다.</p>
             </div>
             
@@ -121,13 +874,13 @@
                 </div>
                 <div class="feature-item">
                     <div class="icon-box">⚡</div>
-                    <h3>5분 간편 모바일 견적</h3>
+                    <h3>간편 모바일 견적</h3>
                     <p>팩스나 유선 전화 대기 없이 스마트폰으로 현장 규격만 입력하시면 빠르게 비교 단가를 산출하여 즉시 담당자가 안내해 드립니다.</p>
                 </div>
                 <div class="feature-item">
                     <div class="icon-box">🚛</div>
-                    <h3>수도권 배송 최적화</h3>
-                    <p>인천 왕길동 공장을 기점으로 김포, 화성, 평택, 파주 등 경기도 전역의 주요 건설 현장에 당일 또는 익일 책임 배송 시스템을 운영합니다.</p>
+                    <h3>전국 직송 및 맞춤 제작</h3>
+                    <p>인천 왕길동 공장을 기점으로 전국 건설 현장은 물론, 포스코 등 지방 대기업 산업 현장까지 대용량 물량도 맞춤 제작 후 약속된 납기에 맞춰 책임 배송합니다. (※ 품목/규격별 제작 기간 소요)</p>
                 </div>
             </div>
         </div>
@@ -141,27 +894,34 @@
                     <h2>신속 자재 견적 상담</h2>
                     <p>필요하신 제품군과 규격을 남겨주시면, 담당자가 실시간 단가와 함께 현장 납품 가능 일정을 신속하게 답변해 드리겠습니다.</p>
                     <div class="contact-details">
-                        <div class="detail-item">
+                        <a href="tel:032-563-4558" class="detail-item">
                             <span>📞</span>
                             <div>
-                                <h4>대표 전화</h4>
+                                <h4>대표 전화 (클릭 시 자동 전화)</h4>
                                 <p>032-563-4558</p>
                             </div>
-                        </div>
-                        <div class="detail-item">
+                        </a>
+                        <a href="mailto:samhyupm@naver.com" class="detail-item">
                             <span>✉️</span>
                             <div>
-                                <h4>이메일 접수</h4>
+                                <h4>이메일 접수 (클릭 시 메일 발송)</h4>
                                 <p>samhyupm@naver.com</p>
                             </div>
-                        </div>
-                        <div class="detail-item">
+                        </a>
+                        <a href="https://map.naver.com/p/entry/place/11635483?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=%2Fhome%3Ffrom%3Dmap%26fromPanelNum%3D1%26additionalHeight%3D76%26timestamp%3D202607112049%26locale%3Dko%26svcName%3Dmap_pcv5" target="_blank" rel="noopener noreferrer" class="detail-item">
                             <span>📍</span>
                             <div>
-                                <h4>인천 본사/공장</h4>
+                                <h4>인천 본사/공장 (네이버 플레이스 지도)</h4>
                                 <p>인천광역시 서구 사월로37번길 25 (왕길동)</p>
                             </div>
-                        </div>
+                        </a>
+                        <a href="http://www.samhyup.com/" target="_blank" rel="noopener noreferrer" class="detail-item">
+                            <span>🌐</span>
+                            <div>
+                                <h4>공식 웹사이트</h4>
+                                <p>www.samhyup.com</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 
@@ -174,21 +934,38 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="contactPerson">담당자명 <span class="required">*</span></label>
-                                <input type="text" id="contactPerson" required placeholder="예: 홍길동 과장">
+                                <input type="text" id="contactPerson" required autocomplete="name" placeholder="예: 홍길동 과장">
                             </div>
                             <div class="form-group">
                                 <label for="contactPhone">연락처 <span class="required">*</span></label>
-                                <input type="tel" id="contactPhone" required placeholder="예: 010-1234-5678">
+                                <input type="tel" id="contactPhone" required autocomplete="tel" placeholder="예: 010-1234-5678">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactEmail">이메일 주소 <span class="required">*</span></label>
+                                <input type="email" id="contactEmail" required autocomplete="email" placeholder="예: customer@company.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="fileAttachment">첨부파일 (도면/수량표 등)</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="fileAttachment" accept=".jpg,.jpeg,.png,.pdf,.dwg,.docx,.xlsx,.xls">
+                                    <span class="file-upload-btn">파일 선택</span>
+                                    <span id="fileName" class="file-name">선택된 파일 없음 (최대 10MB)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="productSelect">관심 품목 <span class="required">*</span></label>
+                            <label for="productSelect">요청 품목 <span class="required">*</span></label>
                             <select id="productSelect" required>
                                 <option value="">선택해 주세요</option>
-                                <option value="용접철망">용접철망 & 인테리어 철망</option>
-                                <option value="메쉬휀스">메쉬휀스 & 울타리 판넬</option>
-                                <option value="개비온/동물보호휀스">개비온 & 동물보호휀스</option>
-                                <option value="기타주문제작">기타 특수 규격 철망</option>
+                                <option value="용접철망">용접철망</option>
+								  <option value="인테리어용접">인테리어용접</option>
+                                <option value="동물보호망">동물보호망</option>
+                                <option value="메쉬파레트">메쉬파레트</option>
+                                <option value="일체형메쉬">일체형메쉬</option>
+                                <option value="견사망">견사망</option>
+                                <option value="개비온철망">개비온철망</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -208,7 +985,7 @@
             <div class="footer-top">
                 <div class="footer-info">
                     <h3>삼협철망<span>(주)</span></h3>
-                    <p>대표자: 김기회 | 사업자등록번호: 137-81-36424</p>
+                    <p>대표자: 손종하 | 법인등록번호: 120111-0593782</p>
                     <p>주소: 인천광역시 서구 사월로37번길 25 (왕길동)</p>
                     <p>전화: 032-563-4558 | 팩스: 032-563-4559</p>
                 </div>
@@ -225,5 +1002,14 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered successfully.', reg))
+                    .catch(err => console.error('Service Worker registration failed.', err));
+            });
+        }
+    </script>
 </body>
 </html>
