@@ -9,7 +9,7 @@
  */
 
 // Vercel 배포 주소에 맞춰 설정
-var BASE_URL = "https://samhyup.vercel.app/catalog/";
+var BASE_URL = "https://samhyup.vercel.app/";
 
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
