@@ -18,7 +18,7 @@
  */
 
 var BASE_URL = "https://samhyup.vercel.app/";
-var SS_ID    = "161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04";
+var SS_ID = "161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메뉴 생성
@@ -49,32 +49,32 @@ function getColIndex(headers, candidates) {
 // 발송 현황 확인 팝업
 // ─────────────────────────────────────────────────────────────────────────────
 function checkSendStatus() {
-  var ss    = SpreadsheetApp.openById(SS_ID);
+  var ss = SpreadsheetApp.openById(SS_ID);
   var sheet = ss.getSheetByName('company');
   if (!sheet) { SpreadsheetApp.getUi().alert('[오류] company 시트를 찾을 수 없습니다.'); return; }
 
-  var headers       = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  var emailColIdx   = getColIndex(headers, ['이메일', 'email', '메일']);
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var emailColIdx = getColIndex(headers, ['이메일', 'email', '메일']);
   var sendStatusIdx = getColIndex(headers, ['발송상태']);
-  var lastRow       = sheet.getLastRow();
-  var values        = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
+  var lastRow = sheet.getLastRow();
+  var values = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
 
   var sent = 0, errCount = 0, pending = 0, noEmail = 0;
   for (var r = 0; r < values.length; r++) {
-    var email  = emailColIdx >= 0 ? values[r][emailColIdx].toString().trim() : '';
+    var email = emailColIdx >= 0 ? values[r][emailColIdx].toString().trim() : '';
     var status = sendStatusIdx >= 0 ? values[r][sendStatusIdx].toString().trim() : '';
     if (!email || email.indexOf('@') < 0) { noEmail++; }
-    else if (status === '정상발송')            { sent++;     }
+    else if (status === '정상발송') { sent++; }
     else if (status.indexOf('발송오류') === 0) { errCount++; }
-    else                                     { pending++;  }
+    else { pending++; }
   }
 
   SpreadsheetApp.getUi().alert(
     '📊 발송 현황\n\n' +
-    '  ✅ 정상발송:    ' + sent     + '개\n' +
+    '  ✅ 정상발송:    ' + sent + '개\n' +
     '  ❌ 발송오류:    ' + errCount + '개\n' +
-    '  📋 미발송 대기: ' + pending  + '개\n' +
-    '  ⬜ 이메일 없음: ' + noEmail  + '개\n' +
+    '  📋 미발송 대기: ' + pending + '개\n' +
+    '  ⬜ 이메일 없음: ' + noEmail + '개\n' +
     '  ──────────────────\n' +
     '  전체 업체:      ' + values.length + '개'
   );
@@ -86,7 +86,7 @@ function checkSendStatus() {
 // ─────────────────────────────────────────────────────────────────────────────
 function writeMailLog(companyName, email, round, status, detail) {
   try {
-    var ss  = SpreadsheetApp.openById(SS_ID);
+    var ss = SpreadsheetApp.openById(SS_ID);
     var log = ss.getSheetByName('mail_log');
     if (!log) {
       log = ss.insertSheet('mail_log');
@@ -95,10 +95,10 @@ function writeMailLog(companyName, email, round, status, detail) {
     }
     var formattedDate = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm:ss');
     var lastRow = log.getLastRow();
-    var seq     = (lastRow <= 1) ? 1 : lastRow;
+    var seq = (lastRow <= 1) ? 1 : lastRow;
     log.appendRow(['', seq, formattedDate, companyName, email, round, status, detail, '']);
   } catch (e) {
-    try   { SpreadsheetApp.getUi().alert('로그 작성 실패: ' + e.toString()); }
+    try { SpreadsheetApp.getUi().alert('로그 작성 실패: ' + e.toString()); }
     catch (err) { Logger.log('로그에러: ' + e.toString()); }
   }
 }
@@ -107,7 +107,7 @@ function writeMailLog(companyName, email, round, status, detail) {
 // 메인: A열 체크된 업체에 제안서 발송
 // ─────────────────────────────────────────────────────────────────────────────
 function sendOutboundEmails() {
-  var ss    = SpreadsheetApp.openById(SS_ID);
+  var ss = SpreadsheetApp.openById(SS_ID);
   var sheet = ss.getSheetByName('company');
   if (!sheet) { SpreadsheetApp.getUi().alert('[오류] company 시트를 찾을 수 없습니다.'); return; }
 
@@ -115,17 +115,17 @@ function sendOutboundEmails() {
   if (lastRow < 2) { SpreadsheetApp.getUi().alert('발송할 데이터가 없습니다.'); return; }
 
   // 헤더 파싱
-  var headers       = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
   var companyColIdx = getColIndex(headers, ['회사명', '업체명', '상호', '수신처']);
-  var emailColIdx   = getColIndex(headers, ['이메일', 'email', '메일']);
-  var roundColIdx   = getColIndex(headers, ['발송대기', '발송회차', '회차']);
+  var emailColIdx = getColIndex(headers, ['이메일', 'email', '메일']);
+  var roundColIdx = getColIndex(headers, ['발송대기', '발송회차', '회차']);
   var sendStatusIdx = getColIndex(headers, ['발송상태']);  // N열
-  var sendDateIdx   = getColIndex(headers, ['발송일']);    // O열
+  var sendDateIdx = getColIndex(headers, ['발송일']);    // O열
 
   // 기본값 (헤더 감지 실패 시)
   if (companyColIdx < 0) companyColIdx = 2;  // C열
-  if (emailColIdx   < 0) emailColIdx   = 5;  // F열
-  if (roundColIdx   < 0) roundColIdx   = 12; // M열
+  if (emailColIdx < 0) emailColIdx = 5;  // F열
+  if (roundColIdx < 0) roundColIdx = 12; // M열
 
   if (sendStatusIdx < 0 || sendDateIdx < 0) {
     SpreadsheetApp.getUi().alert(
@@ -134,7 +134,7 @@ function sendOutboundEmails() {
     return;
   }
 
-  var values  = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
+  var values = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
   var targets = [];
   var skipped = [];
 
@@ -143,9 +143,9 @@ function sendOutboundEmails() {
     if (isChecked !== true && isChecked !== 'TRUE') continue;
 
     var company = values[r][companyColIdx].toString().trim() || '대표님';
-    var email   = values[r][emailColIdx].toString().trim();
-    var round   = values[r][roundColIdx].toString().trim() || '1일차';
-    var status  = values[r][sendStatusIdx].toString().trim();
+    var email = values[r][emailColIdx].toString().trim();
+    var round = values[r][roundColIdx].toString().trim() || '1일차';
+    var status = values[r][sendStatusIdx].toString().trim();
 
     // ★ 중복 발송 방지: 이미 정상발송된 행은 스킵
     if (status === '정상발송') {
@@ -170,7 +170,7 @@ function sendOutboundEmails() {
   }
 
   // 발송 전 확인창
-  var previewLines = targets.map(function(t, i) {
+  var previewLines = targets.map(function (t, i) {
     return (i + 1) + '. ' + t.company + '  →  ' + t.email;
   }).join('\n');
   var skipMsg = skipped.length > 0 ? '\n\n⚠️ 이미 발송됨(스킵): ' + skipped.length + '개' : '';
@@ -196,20 +196,27 @@ function sendOutboundEmails() {
     return;
   }
 
-  // 인라인 이미지 사전 로드 (핵심 이미지 4개만 인라인화, 나머지는 웹 주소 직접 참조)
+  // 인라인 이미지 사전 로드
   var imageCids = [
     'logo',
-    'assembled_mesh', 'mesh_pallet', 'gabion'
+    'assembled_mesh', 'mesh_pallet', 'gabion',
+    'assembled_mesh_02', 'assembled_mesh_03', 'assembled_mesh_04', 'assembled_mesh_11',
+    'assembled_mesh_06', 'assembled_mesh_07', 'assembled_mesh_12', 'assembled_mesh_09',
+    'mesh_pallet_02', 'mesh_pallet_03', 'mesh_pallet_10', 'mesh_pallet_05',
+    'mesh_pallet_06', 'mesh_pallet_07', 'mesh_pallet_08', 'mesh_pallet_09',
+    'gabion_02', 'gabion_03', 'gabion_04', 'gabion_05',
+    'gabion_06', 'gabion_07', 'gabion_08', 'gabion_09'
   ];
 
   var inlineImages = {};
   for (var i = 0; i < imageCids.length; i++) {
-    var cid    = imageCids[i];
+    var cid = imageCids[i];
     var imgUrl = '';
-    if      (cid === 'logo')           { imgUrl = BASE_URL + 'catalog/images/logo_samhyup.png';       }
+    if (cid === 'logo') { imgUrl = BASE_URL + 'catalog/images/logo_samhyup.png'; }
     else if (cid === 'assembled_mesh') { imgUrl = BASE_URL + 'catalog/gallery/assembled_mesh_01.jpg'; }
-    else if (cid === 'mesh_pallet')    { imgUrl = BASE_URL + 'catalog/gallery/mesh_pallet_01.jpg';    }
-    else if (cid === 'gabion')         { imgUrl = BASE_URL + 'catalog/gallery/gabion_01.jpg';          }
+    else if (cid === 'mesh_pallet') { imgUrl = BASE_URL + 'catalog/gallery/mesh_pallet_01.jpg'; }
+    else if (cid === 'gabion') { imgUrl = BASE_URL + 'catalog/gallery/gabion_01.jpg'; }
+    else { imgUrl = BASE_URL + 'catalog/gallery/' + cid + '.jpg'; }
     try {
       var blob = UrlFetchApp.fetch(imgUrl).getBlob();
       blob.setName(cid);
@@ -224,7 +231,7 @@ function sendOutboundEmails() {
   var todayStr = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd');
 
   for (var t = 0; t < targets.length; t++) {
-    var target           = targets[t];
+    var target = targets[t];
     var personalizedHtml = htmlTemplate.replace(/{회사명}/g, target.company);
     try {
       GmailApp.sendEmail(
@@ -234,7 +241,7 @@ function sendOutboundEmails() {
         { htmlBody: personalizedHtml, inlineImages: inlineImages }
       );
       sheet.getRange(target.rowNum, sendStatusIdx + 1).setValue('정상발송'); // N열
-      sheet.getRange(target.rowNum, sendDateIdx   + 1).setValue(todayStr);  // O열
+      sheet.getRange(target.rowNum, sendDateIdx + 1).setValue(todayStr);  // O열
       sheet.getRange(target.rowNum, 1).setValue(false);                      // A열 체크 해제
       writeMailLog(target.company, target.email, target.round, '성공', 'Gmail API 발송 완료');
       successCount++;
@@ -250,8 +257,8 @@ function sendOutboundEmails() {
 
   var resultMsg =
     '📧 발송 완료\n\n' +
-    '  ✅ 정상발송: ' + successCount    + '건\n' +
-    '  ❌ 발송오류: ' + failCount       + '건\n' +
+    '  ✅ 정상발송: ' + successCount + '건\n' +
+    '  ❌ 발송오류: ' + failCount + '건\n' +
     '  ⏭️ 중복스킵: ' + skipped.length + '건';
   if (failList.length > 0) resultMsg += '\n\n오류 업체:\n' + failList.join('\n');
   SpreadsheetApp.getUi().alert(resultMsg);
@@ -263,15 +270,15 @@ function sendOutboundEmails() {
 // ─────────────────────────────────────────────────────────────────────────────
 function doGet(e) {
   var site = e.parameter.site;
-  var cb   = e.parameter.callback;
+  var cb = e.parameter.callback;
   var data = {};
 
   if (site === 'mailling') {
-    var ss           = SpreadsheetApp.openById(SS_ID);
-    var logSheet     = ss.getSheetByName('mail_log');
+    var ss = SpreadsheetApp.openById(SS_ID);
+    var logSheet = ss.getSheetByName('mail_log');
     var companySheet = ss.getSheetByName('company');
-    var logs         = [];
-    var visits       = { success: 0, fail: 0 };
+    var logs = [];
+    var visits = { success: 0, fail: 0 };
 
     // company 시트에서 회사명 → 상세정보 맵 생성
     var companyMap = {};
@@ -281,9 +288,9 @@ function doGet(e) {
         var cName = (cRows[c][2] || '').toString().trim(); // C열 회사명
         if (cName) {
           companyMap[cName] = {
-            phone:   (cRows[c][4] || '').toString().trim(),  // E열
-            site:    (cRows[c][6] || '').toString().trim(),  // G열
-            region:  (cRows[c][7] || '').toString().trim(),  // H열
+            phone: (cRows[c][4] || '').toString().trim(),  // E열
+            site: (cRows[c][6] || '').toString().trim(),  // G열
+            region: (cRows[c][7] || '').toString().trim(),  // H열
             address: (cRows[c][8] || '').toString().trim()   // I열
           };
         }
@@ -300,17 +307,17 @@ function doGet(e) {
         var companyName = rows[i][3];
         var info = companyMap[companyName] || { phone: '', site: '', region: '', address: '' };
         logs.push({
-          id:      rows[i][1],
-          date:    rows[i][2],
+          id: rows[i][1],
+          date: rows[i][2],
           company: companyName,
-          email:   rows[i][4],
-          round:   rows[i][5],
-          status:  s,
-          detail:  rows[i][7],
-          note:    rows[i][8] || '',
-          phone:   info.phone,
-          site:    info.site,
-          region:  info.region,
+          email: rows[i][4],
+          round: rows[i][5],
+          status: s,
+          detail: rows[i][7],
+          note: rows[i][8] || '',
+          phone: info.phone,
+          site: info.site,
+          region: info.region,
           address: info.address
         });
       }
