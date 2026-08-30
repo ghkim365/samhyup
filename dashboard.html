@@ -846,7 +846,7 @@
                     <div class="site-selector-wrapper">
                         <select id="site-selector" class="site-select" onchange="switchSite(this.value)">
                             <option value="catalog">📱 모바일 카탈로그</option>
-                            <option value="main_site">🌐 공식 홈페이지 (samhyup.vercel.app)</option>
+                            <option value="main_site">🌐 공식 홈페이지 (www.samhyup.com)</option>
                             <option value="mailling">✉️ B2B 이메일 발송 현황</option>
                         </select>
                     </div>
@@ -1169,7 +1169,7 @@
             ]
         };
 
-        // 2. 공식 홈페이지 (samhyup.vercel.app) 시뮬레이터 기본 더미 데이터
+        // 2. 공식 홈페이지 (www.samhyup.com) 시뮬레이터 기본 더미 데이터
         const defaultMainSimData = {
             visits: { google_ads: 980, search: 720, direct: 310 },
             quotes: [
@@ -1328,7 +1328,7 @@
                 reportBtn.style.display = 'inline-flex';
             } else {
                 brandTitle.textContent = "삼협철망 공식홈";
-                brandSubtitle.textContent = "samhyup.vercel.app 마케팅 성과 관리자";
+                brandSubtitle.textContent = "www.samhyup.com 마케팅 성과 관리자";
                 adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (Main-9802): Active';
                 mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 견적 접수";
                 reportBtn.style.display = 'none';

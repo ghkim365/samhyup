@@ -746,6 +746,25 @@
     </div>
 </div>
 
+<!-- 날짜 선택 모달 레이아웃 추가 -->
+<div class="modal-overlay" id="date-modal-overlay">
+    <div class="date-modal">
+        <h3>📅 보고 기간 설정</h3>
+        <div class="input-row">
+            <label>시작일</label>
+            <input type="date" id="modal-start-date">
+        </div>
+        <div class="input-row">
+            <label>종료일</label>
+            <input type="date" id="modal-end-date">
+        </div>
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeDateModal()">취소</button>
+            <button class="btn-apply" onclick="applyDateSelection()">적용</button>
+        </div>
+    </div>
+</div>
+
 <div id="status-bar">📡 구글 시트에서 데이터를 불러오는 중...</div>
 <div id="gas-warn-bar">⚠️ <strong>GAS 재배포 필요</strong> — company 시트의 상세 정보(지역·전화번호·주소·사이트)가 보이지 않습니다.<br>
 구글 Apps Script 편집기에서 <code>google_apps_script_outbound.js</code>의 <code>doGet</code> 함수를 최신 코드로 교체하고 <strong>새 버전으로 배포</strong>해 주세요.</div>
@@ -948,8 +967,11 @@
         const today = new Date();
         const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 
-        document.getElementById('rpt-period').textContent = '기간: ' + (document.getElementById('input-period').value || '—');
-        document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || '—';
+        const periodInput = document.getElementById('input-period').value;
+        const reportNoInput = document.getElementById('input-report-no').value;
+
+        document.getElementById('rpt-period').textContent = '기간: ' + (periodInput && periodInput !== '클릭하여 날짜 선택' ? periodInput : fmt(today) + ' ~ ' + fmt(today));
+        document.getElementById('rpt-no').textContent = reportNoInput || ('SHR-MAIL-' + today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0'));
         document.getElementById('rpt-date').textContent = '작성일: ' + fmt(today);
         document.getElementById('rpt-manager').textContent = document.getElementById('input-manager').value || '—';
         document.getElementById('rpt-approver').textContent = document.getElementById('input-approver').value || '—';
@@ -1042,6 +1064,30 @@
 
     function renderReport(logs, visits) {
         updateReportMeta();
+
+        // 1. 로그 데이터 날짜 기준 보고 기간 추출 및 자동 기입
+        if (logs && logs.length > 0) {
+            try {
+                // 날짜 정렬하여 시작일과 종료일 계산
+                const dates = logs.map(l => new Date(l.date)).filter(d => !isNaN(d.getTime()));
+                if (dates.length > 0) {
+                    const minDate = new Date(Math.min.apply(null, dates));
+                    const maxDate = new Date(Math.max.apply(null, dates));
+                    const fmtDate = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+                    const periodText = fmtDate(minDate) + " ~ " + fmtDate(maxDate);
+                    document.getElementById('input-period').value = periodText;
+                    document.getElementById('rpt-period').textContent = '기간: ' + periodText;
+                }
+            } catch (e) {
+                console.error("날짜 자동 계산 실패:", e);
+            }
+        }
+
+        // 2. 보고서 번호 자동 기입
+        const reportNoVal = document.getElementById('input-report-no').value;
+        if (reportNoVal) {
+            document.getElementById('rpt-no').textContent = reportNoVal;
+        }
 
         // KPI
         const total = (visits.success || 0) + (visits.fail || 0);
