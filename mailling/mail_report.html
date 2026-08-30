@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -746,25 +746,6 @@
     </div>
 </div>
 
-<!-- 날짜 선택 모달 레이아웃 추가 -->
-<div class="modal-overlay" id="date-modal-overlay">
-    <div class="date-modal">
-        <h3>📅 보고 기간 설정</h3>
-        <div class="input-row">
-            <label>시작일</label>
-            <input type="date" id="modal-start-date">
-        </div>
-        <div class="input-row">
-            <label>종료일</label>
-            <input type="date" id="modal-end-date">
-        </div>
-        <div class="modal-buttons">
-            <button class="btn-cancel" onclick="closeDateModal()">취소</button>
-            <button class="btn-apply" onclick="applyDateSelection()">적용</button>
-        </div>
-    </div>
-</div>
-
 <div id="status-bar">📡 구글 시트에서 데이터를 불러오는 중...</div>
 <div id="gas-warn-bar">⚠️ <strong>GAS 재배포 필요</strong> — company 시트의 상세 정보(지역·전화번호·주소·사이트)가 보이지 않습니다.<br>
 구글 Apps Script 편집기에서 <code>google_apps_script_outbound.js</code>의 <code>doGet</code> 함수를 최신 코드로 교체하고 <strong>새 버전으로 배포</strong>해 주세요.</div>
@@ -914,7 +895,7 @@
     // =========================================
     //  CONFIG
     // =========================================
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzQ-c04bJYRktqnvvtsu7nKKRce9WxEiqXs3t1VHo95epiJKGzMAn9hOLTYsTEG4VMU/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyDmDEFfVeLKT_wgzipPwQmNGY1iSBA-vFxhBAQxzDw263Lvh2Q_Bjr6h1JXkZLItmsFQ/exec";
 
     // =========================================
     //  INIT
@@ -967,20 +948,12 @@
         const today = new Date();
         const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 
-        const periodInput = document.getElementById('input-period').value;
-        const reportNoInput = document.getElementById('input-report-no').value;
-
-        document.getElementById('rpt-period').textContent = '기간: ' + (periodInput && periodInput !== '클릭하여 날짜 선택' ? periodInput : fmt(today) + ' ~ ' + fmt(today));
-        document.getElementById('rpt-no').textContent = reportNoInput || ('SHR-MAIL-' + today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0'));
+        document.getElementById('rpt-period').textContent = '기간: ' + (document.getElementById('input-period').value || '—');
+        document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || '—';
         document.getElementById('rpt-date').textContent = '작성일: ' + fmt(today);
         document.getElementById('rpt-manager').textContent = document.getElementById('input-manager').value || '—';
         document.getElementById('rpt-approver').textContent = document.getElementById('input-approver').value || '—';
     }
-
-    // =========================================
-    //  CONFIGURATION
-    // =========================================
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyDmDEFfVeLKT_wgzipPwQmNGY1iSBA-vFxhBAQxzDw263Lvh2Q_Bjr6h1JXkZLItmsFQ/exec";
 
     // =========================================
     //  JSONP FETCH from GAS
@@ -1064,30 +1037,6 @@
 
     function renderReport(logs, visits) {
         updateReportMeta();
-
-        // 1. 로그 데이터 날짜 기준 보고 기간 추출 및 자동 기입
-        if (logs && logs.length > 0) {
-            try {
-                // 날짜 정렬하여 시작일과 종료일 계산
-                const dates = logs.map(l => new Date(l.date)).filter(d => !isNaN(d.getTime()));
-                if (dates.length > 0) {
-                    const minDate = new Date(Math.min.apply(null, dates));
-                    const maxDate = new Date(Math.max.apply(null, dates));
-                    const fmtDate = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-                    const periodText = fmtDate(minDate) + " ~ " + fmtDate(maxDate);
-                    document.getElementById('input-period').value = periodText;
-                    document.getElementById('rpt-period').textContent = '기간: ' + periodText;
-                }
-            } catch (e) {
-                console.error("날짜 자동 계산 실패:", e);
-            }
-        }
-
-        // 2. 보고서 번호 자동 기입
-        const reportNoVal = document.getElementById('input-report-no').value;
-        if (reportNoVal) {
-            document.getElementById('rpt-no').textContent = reportNoVal;
-        }
 
         // KPI
         const total = (visits.success || 0) + (visits.fail || 0);
@@ -1188,24 +1137,18 @@
     // =========================================
     //  SAMPLE DATA (fallback)
     // =========================================
-        function getSampleLogs() {
+    function getSampleLogs() {
         return [
-            { id: 1,  date: '2026-08-30 11:09:16', company: '삼협철망1',      email: 'web365@naver.com',       round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: '',                           region: '인천 계양구', address: '인천 계양구 효성동' },
-            { id: 2,  date: '2026-08-30 11:09:19', company: '삼협철망2',      email: 'samhyupm@naver.com',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: '',                           region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
-            { id: 3,  date: '2026-08-30 11:15:00', company: '삼호개발(주)',     email: 'stkang@samho.co.kr',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3322-8877', site: 'https://samho.co.kr',       region: '서울 마포구', address: '서울특별시 마포구 마포대로 12' },
-            { id: 4,  date: '2026-08-30 11:18:22', company: '동아조경(주)',     email: 'donga@daum.net',          round: '1일차', status: '실패', detail: '수신자 사서함 초과',   note: 'bounce', phone: '010-7766-5544', site: '',                           region: '인천 남동구', address: '인천광역시 남동구 예술로 100' },
-            { id: 5,  date: '2026-08-30 11:20:10', company: '유니온무역',       email: 'union@uniontrade.co.kr',  round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-8899-7788', site: 'https://uniontrade.co.kr', region: '부산 중구',   address: '부산광역시 중구 중앙대로 80' }
-        ];
-    },
-            { id: 2,  date: '2026-08-29 09:11:22', company: '한국파이프공업',     email: 'hkpipe@gmail.com',        round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com',       region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+            { id: 1,  date: '2026-08-29 09:11:04', company: '삼협철망1',      email: 'web365@naver.com',       round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: 'https://samhyun.co.kr',    region: '인천 계양구', address: '인천 계양구 효성동' },
+            { id: 2,  date: '2026-08-29 09:11:22', company: '삼협철망2',     email: 'samhyupm@naver.com',        round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: 'https://hkpipe.com',       region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
             { id: 3,  date: '2026-08-29 09:11:45', company: '대성스틸(주)',       email: 'dsung@dasung.co.kr',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '051-789-0123', site: 'https://dasung.co.kr',    region: '부산 강서구', address: '부산광역시 강서구 녹산산단로 48' },
             { id: 4,  date: '2026-08-29 09:12:02', company: '신성금속공업사',     email: 'ssmetal@naver.com',       round: '1일차', status: '실패', detail: '수신자 이메일 오류', note: 'bounce', phone: '053-321-0987', site: '',                         region: '대구 달성군', address: '대구광역시 달성군 구지면 창리 200' },
             { id: 5,  date: '2026-08-29 09:12:19', company: '현대플랜트서비스',  email: 'hps_metal@hps.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '052-290-6000', site: 'https://hps.co.kr',       region: '울산 북구',   address: '울산광역시 북구 산업로 915' },
             { id: 6,  date: '2026-08-29 09:12:38', company: '광성산업',           email: 'ks_ind@daum.net',         round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-688-5555', site: '',                         region: '경기 평택시', address: '경기도 평택시 포승읍 평택항만길 77' },
             { id: 7,  date: '2026-08-29 09:12:55', company: '동국산업(주)',       email: 'dongkuk@steel.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '02-2650-4000', site: 'https://dongkuksteel.com', region: '서울 강서구', address: '서울특별시 강서구 양천로 583' },
             { id: 8,  date: '2026-08-29 09:13:10', company: '태양금속',           email: 'taeyangm@naver.com',      round: '1일차', status: '실패', detail: 'SMTP 타임아웃',     note: '',      phone: '055-263-1234', site: '',                         region: '경남 창원시', address: '경상남도 창원시 성산구 창원대로 2200' },
-            { id: 9,  date: '2026-08-29 14:29:32', company: '(주)삼현기계',      email: 'samhyun@naver.com',       round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-123-4567', site: 'https://samhyun.co.kr',    region: '경기 안산시', address: '경기도 안산시 단원구 산단로 120' },
-            { id: 10, date: '2026-08-29 14:29:50', company: '한국파이프공업',     email: 'hkpipe@gmail.com',        round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com',       region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+            { id: 9,  date: '2026-08-29 14:29:32', company: '삼협철망1',      email: 'web365@naver.com',       round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: 'https://samhyun.co.kr',    region: '인천 계양구', address: '인천 계양구 효성동' },
+            { id: 10, date: '2026-08-29 14:29:50', company: '삼협철망2',     email: 'samhyupm@naver.com',        round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: 'https://hkpipe.com',       region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
         ];
     }
 
