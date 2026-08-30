@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼협철망 B2B 메일 발송 스케줄 및 이력 관리 구축 계획서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-light: #38bdf8;
+      --secondary: #0f172a;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --background: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      font-weight: 300;
+    }
+
+    .opinion-card {
+      background: linear-gradient(to right, #eff6ff, #f0fdf4);
+      border-left: 6px solid var(--primary-light);
+      padding: 25px;
+      border-radius: var(--radius);
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .opinion-card h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .opinion-card p {
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .section:hover {
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--background);
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .grid-card {
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .grid-card h3 {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .grid-card ul {
+      list-style-type: none;
+    }
+
+    .grid-card li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .grid-card li::before {
+      content: '•';
+      color: var(--primary-light);
+      font-weight: bold;
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 15px 0;
+      border: 1px solid #1e293b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .highlight-rule {
+      background-color: #fef3c7;
+      border-left: 4px solid var(--accent);
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .highlight-box {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-color: #fee2e2;
+      border: 1px solid #ef4444;
+      vertical-align: middle;
+      margin-right: 6px;
+      border-radius: 3px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Architecture & Design Plan</div>
+      <h1>삼협철망 B2B 메일 발송 스케줄 및 이력 관리 구축 계획서</h1>
+      <div class="subtitle">구글 스프레드시트 연동형 발송 이력 스케줄링 및 경과 관리 자동화 설계</div>
+    </header>
+
+    <div class="opinion-card">
+      <h2>💡 에이전트 의견 및 권장 방향</h2>
+      <p>
+        대흥정밀 구축 노하우를 바탕으로, 삼협철망에도 <strong>"별도의 이력 관리(로그) 시트를 생성하여 데이터를 누적하는 구조"</strong>를 제안합니다.<br>
+        메인 <code>company</code> 시트에서는 수식(MAXIFS, COUNTIF, TODAY)을 사용하여 최종 발송일과 발송 횟수, 경과일수를 자동으로 계산해 보여주고, 실제 메일 발송 시에는 Google Apps Script(GAS)를 통해 <code>mail_log</code> 시트에 지속적으로 로그 데이터를 축적해 나갑니다.
+      </p>
+    </div>
+
+    <!-- 1단계: 시트 설계 -->
+    <div class="section">
+      <div class="section-title">📊 1. 스프레드시트 구조 설계</div>
+      
+      <h3>[메인 시트: company] 구조 변경 및 수식 적용</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>열 번호</th>
+            <th>컬럼명</th>
+            <th>설명 / 역할</th>
+            <th>적용할 수식 또는 제어 방식</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>M열</strong></td>
+            <td>발송대기</td>
+            <td>현재 회차 발송 대상 여부 (체크박스 또는 대기 기입)</td>
+            <td>직접 선택 혹은 스케줄러 자동 제어</td>
+          </tr>
+          <tr>
+            <td><strong>N열</strong></td>
+            <td>발송상태</td>
+            <td>메일 발송 작업 진행 상태</td>
+            <td>GAS가 발송 후 "성공" 또는 "실패" 기록</td>
+          </tr>
+          <tr>
+            <td><strong>O열</strong></td>
+            <td>최종 발송일</td>
+            <td>해당 업체에 마지막으로 메일을 발송한 날짜</td>
+            <td><code>=IFERROR(MAXIFS(mail_log!C:C, mail_log!D:D, C2), "")</code><br><span style="font-size:0.8rem; color:var(--text-muted);">(회사명 C2 기준 가장 최근 로그의 발송일자(mail_log!C:C) 매칭)</span></td>
+          </tr>
+          <tr>
+            <td><strong>P열</strong></td>
+            <td>발송경과</td>
+            <td>최종 발송일로부터 오늘까지 지난 일수</td>
+            <td><code>=IF(ISBLANK(O2), "", TODAY() - O2)</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-rule">
+        <strong>🎨 셀 색상 강조 자동화 (조건부 서식 설정 규칙)</strong><br>
+        10일차 도래 시 눈에 띄게 셀 색상을 변경할 수 있도록 다음과 같이 조건부 서식을 지정합니다.<br>
+        <span class="highlight-box"></span> <strong>규칙:</strong> <code>P열 >= 10</code> 인 경우 셀 배경색을 연한 오렌지/빨간색 계열로 채우기 적용.
+      </div>
+
+      <h3 style="margin-top:20px;">[신규 로그 시트: mail_log] 구조</h3>
+      <p>메일이 성공적으로 발송될 때마다 행이 추가되는 로그 시트입니다.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>A열 (체크)</th>
+            <th>B열 (연번)</th>
+            <th>C열 (발송일자)</th>
+            <th>D열 (회사명)</th>
+            <th>E열 (이메일 주소)</th>
+            <th>F열 (발송회차)</th>
+            <th>G열 (발송상태)</th>
+            <th>H열 (세부결과)</th>
+            <th>I열 (비고)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td>1</td>
+            <td>2026-08-29 14:00:00</td>
+            <td>삼협철망 테스트</td>
+            <td>test@samhyupmesh.com</td>
+            <td>1일차</td>
+            <td>성공</td>
+            <td>Gmail API 발송 완료</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2단계: GAS 로직 보완 계획 -->
+    <div class="section">
+      <div class="section-title">⚙️ 2. Google Apps Script (GAS) 구현 코드</div>
+      <p>삼협철망의 스프레드시트에 연동할 신규 아웃바운드 자동화 스크립트 핵심 로직입니다.</p>
+      
+      <div class="code-block">
+var SS_ID = "YOUR_SPREADSHEET_ID_HERE"; // 삼협철망 스프레드시트 ID로 설정
+
+function writeMailLog(companyName, email, round, status, detail) {
+  try {
+    var ss = SpreadsheetApp.openById(SS_ID);
+    var log = ss.getSheetByName("mail_log");
+    if (!log) {
+      log = ss.insertSheet("mail_log");
+      log.appendRow(["체크","연번","발송일자","회사명","이메일 주소","발송회차","발송상태","세부결과","비고"]);
+      log.getRange("A1:I1").setFontWeight("bold").setBackground("#f1f5f9");
+    }
+    var formattedDate = Utilities.formatDate(new Date(), "Asia/Seoul", "yyyy-MM-dd HH:mm:ss");
+    var lastRow = log.getLastRow();
+    var seq = (lastRow <= 1) ? 1 : lastRow;
+    log.appendRow(["", seq, formattedDate, companyName, email, round, status, detail, ""]);
+  } catch(e) {
+    Logger.log("로그에러: " + e.toString());
+  }
+}
+      </div>
+    </div>
+
+    <!-- 3단계: 향후 진행 타임라인 -->
+    <div class="section">
+      <div class="section-title">📅 3. 다음 작업 시 진행할 타임라인</div>
+      <div class="grid">
+        <div class="grid-card">
+          <h3>1단계: 시트 설정 & 수식 입력</h3>
+          <ul>
+            <li>삼협철망 스프레드시트에 <code>mail_log</code> 시트 신규 생성</li>
+            <li><code>company</code> 시트에 M~Q열 구성 및 조건부 서식(10일 이상 시 빨간색 채우기) 규칙 적용</li>
+          </ul>
+        </div>
+        <div class="grid-card">
+          <h3>2단계: Apps Script 업데이트</h3>
+          <ul>
+            <li>메일 발송 시 <code>mail_log</code>에 로그를 자동 기록하는 삼협 전용 GAS 스크립트 작성 및 반영</li>
+            <li>GmailApp SMTP 발송 테스트 및 수신 네이버 메일함 연동 확인</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 삼협철망 B2B Sales Automation. Designed by Antigravity AI.</p>
+    </footer>
+  </div>
+</body>
+</html>

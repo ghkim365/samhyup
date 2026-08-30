@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼협철망 | B2B 아웃바운드 메일 발송 현황 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- html2canvas for image export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* ============================
+           DESIGN TOKENS
+        ============================ */
+        :root {
+            --navy:       #1C2B4A;   /* 주 네이비 */
+            --navy-deep:  #111B31;   /* 진한 네이비 */
+            --gold:       #B8962A;   /* 포인트 골드 */
+            --gold-light: #F5EDD3;   /* 연한 골드 배경 */
+            --success:    #2D6A4F;   /* 수멀 녹색 */
+            --fail:       #9B2335;   /* 수멀 붉색 */
+            --text:       #1A1A2E;
+            --text-mid:   #4A5568;
+            --text-light: #718096;
+            --border:     #DDE1E7;
+            --border-light: #EAEDF1;
+            --bg-screen:  #EEF0F4;
+            --bg-soft:    #F7F8FA;
+
+            /* aliases for backward compat */
+            --brand:        var(--navy);
+            --brand-light:  #2E4A82;
+            --accent:       var(--gold);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-screen);
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        /* --- 컨트롤 패널 --- */
+        .control-panel {
+            max-width: 900px;
+            margin: 0 auto 24px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .control-panel h2 {
+            width: 100%;
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .control-panel p {
+            width: 100%;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: -6px;
+        }
+
+        .ctrl-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ctrl-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-mid);
+            letter-spacing: 0.3px;
+        }
+
+        .ctrl-group input,
+        .ctrl-group select {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12.5px;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.15s;
+            background: #fff;
+        }
+
+        .ctrl-group input:focus,
+        .ctrl-group select:focus {
+            border-color: var(--navy);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        /* 평면 고급 버튼 - 그라디언트 없음 */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+            font-family: 'Noto Sans KR', sans-serif;
+            white-space: nowrap;
+            letter-spacing: 0;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+        }
+        .btn-primary:hover { background: var(--navy-deep); }
+
+        .btn-export-pdf {
+            background: #fff;
+            color: #7B1D1D;
+            border-color: #C0392B;
+        }
+        .btn-export-pdf:hover { background: #FEF2F2; }
+
+        .btn-export-img {
+            background: #fff;
+            color: #4C1D95;
+            border-color: #6B21A8;
+        }
+        .btn-export-img:hover { background: #F5F3FF; }
+
+        .btn-print {
+            background: #fff;
+            color: var(--text-mid);
+            border-color: var(--border);
+        }
+        .btn-print:hover { background: var(--bg-soft); }
+
+        .btn-sample {
+            background: #fff;
+            color: var(--text-mid);
+            border-color: var(--border);
+        }
+        .btn-sample:hover { background: var(--bg-soft); }
+
+        /* 배너류 */
+        #gas-warn-bar {
+            max-width: 900px;
+            margin: -14px auto 16px;
+            padding: 9px 16px;
+            background: #FFFBEB;
+            border-left: 3px solid var(--gold);
+            border-radius: 0 6px 6px 0;
+            font-size: 11.5px;
+            color: #78350F;
+            font-weight: 500;
+            display: none;
+            line-height: 1.6;
+        }
+
+        #status-bar {
+            max-width: 900px;
+            margin: -14px auto 16px;
+            padding: 9px 16px;
+            background: #F0F4FF;
+            border-left: 3px solid var(--navy);
+            border-radius: 0 6px 6px 0;
+            font-size: 12px;
+            color: var(--navy);
+            font-weight: 500;
+            display: none;
+        }
+
+        /* ============================
+           A4 보고서
+        ============================ */
+        #report-wrapper { max-width: 900px; margin: 0 auto; }
+
+        .a4-page {
+            width: 794px;
+            min-height: 1123px;
+            background: #fff;
+            margin: 0 auto;
+            padding: 44px 48px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            border-radius: 3px;
+            position: relative;
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: var(--text);
+        }
+
+        /* --- 헤더 --- */
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--navy);
+            margin-bottom: 22px;
+        }
+
+        .report-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .report-logo-badge {
+            max-width: 140px;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .report-logo-badge img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 44px;
+            object-fit: contain;
+        }
+
+        .report-logo-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.3px;
+        }
+
+        .report-logo-text p {
+            font-size: 10.5px;
+            color: var(--text-light);
+            margin-top: 1px;
+        }
+
+        .report-title-area { text-align: right; }
+
+        .report-doc-type {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .report-main-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .report-period {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 3px;
+        }
+
+        /* --- 메타 정보 바 --- */
+        .meta-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .meta-item {
+            background: var(--bg-soft);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 10px 12px;
+            border-left: 3px solid var(--border);
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .meta-item .meta-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .meta-item .meta-sub {
+            font-size: 9.5px;
+            color: var(--text-light);
+            margin-top: 1px;
+        }
+
+        /* --- 섹션 타이틀 --- */
+        .section-title {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-left: 3px solid var(--gold);
+            padding-left: 9px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        /* --- KPI 카드 --- */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            border: 1px solid var(--border-light);
+            border-radius: 7px;
+            padding: 13px 15px;
+            background: var(--bg-soft);
+            border-left: 3px solid var(--navy);
+        }
+
+        .kpi-card.k-success { border-left-color: var(--success); }
+        .kpi-card.k-fail    { border-left-color: var(--fail); }
+        .kpi-card.k-rate    { border-left-color: var(--gold); }
+
+        .kpi-card-label {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .kpi-card-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .kpi-card.k-success .kpi-card-value { color: var(--success); }
+        .kpi-card.k-fail    .kpi-card-value { color: var(--fail); }
+        .kpi-card.k-rate    .kpi-card-value { color: var(--gold); }
+
+        .kpi-card-sub {
+            font-size: 9.5px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* --- 회차열 --- */
+        .round-summary {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .round-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-mid);
+        }
+
+        .round-pill .round-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .round-pill .round-count {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        /* --- 테이블 --- */
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10.5px;
+        }
+
+        .log-table thead tr {
+            background: var(--navy);
+            color: #fff;
+        }
+
+        .log-table thead th {
+            padding: 8px 9px;
+            font-weight: 600;
+            text-align: left;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .log-table tbody tr {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .log-table tbody tr:last-child { border-bottom: none; }
+
+        .log-table tbody tr:nth-child(4n+3),
+        .log-table tbody tr:nth-child(4n+4) {
+            background: var(--bg-soft);
+        }
+
+        .log-table tbody td {
+            padding: 7px 9px;
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        /* 상태 배지 */
+        .status-badge {
+            display: inline-block;
+            padding: 1px 7px;
+            border-radius: 3px;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .status-badge.success {
+            background: #D4EDDA;
+            color: var(--success);
+            border: 1px solid #A8D5B5;
+        }
+
+        .status-badge.fail {
+            background: #FAD7DC;
+            color: var(--fail);
+            border: 1px solid #E8A8B2;
+        }
+
+        /* 회차 배지 */
+        .round-badge {
+            display: inline-block;
+            background: var(--gold-light);
+            color: #7A5C00;
+            border: 1px solid #DEC97A;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 9.5px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- 회사 상세정보 행 --- */
+        .company-detail-row td {
+            padding: 3px 9px 7px 9px !important;
+            background: #FAFBFC !important;
+            border-bottom: 1px solid var(--border-light) !important;
+        }
+
+        .detail-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+
+        /* 단일 스타일 칩 - 무지개 없음 */
+        .info-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 9.5px;
+            font-weight: 400;
+            white-space: nowrap;
+            background: #F1F3F5;
+            border: 1px solid #D8DCE2;
+            color: var(--text-mid);
+        }
+
+        .info-chip.site a {
+            color: var(--navy);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .info-chip .chip-icon {
+            font-size: 9px;
+            opacity: 0.6;
+        }
+
+        /* --- 푸터 --- */
+        .report-footer {
+            margin-top: 28px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-footer-left {
+            font-size: 9.5px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .report-footer-left strong {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1px;
+        }
+
+
+
+
+
+
+        .report-footer-right {
+            text-align: right;
+            font-size: 9.5px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .confidential-badge {
+            display: inline-block;
+            border: 1px solid var(--text-light);
+            color: var(--text-light);
+            border-radius: 3px;
+            padding: 1px 7px;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        /* 워터마크 제거 */
+        .watermark { display: none; }
+
+        /* 인쇄 */
+        @media print {
+            body { background: #fff !important; padding: 0 !important; }
+            .control-panel, #status-bar, #gas-warn-bar, .print-hide { display: none !important; }
+            #report-wrapper { max-width: 100% !important; }
+            .a4-page {
+                width: 100% !important;
+                min-height: auto !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 18mm 16mm !important;
+                margin: 0 !important;
+            }
+            @page { size: A4 portrait; margin: 0; }
+        }
+
+        /* 스피너 */
+        .spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* 날짜 선택 모달 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .date-modal {
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            width: 320px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid var(--border);
+        }
+
+        .date-modal h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 16px;
+            border-bottom: 1.5px solid var(--navy);
+            padding-bottom: 8px;
+        }
+
+        .date-modal .input-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .date-modal label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-mid);
+        }
+
+        .date-modal input[type="date"] {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .date-modal .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .date-modal button {
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .date-modal .btn-apply {
+            background: var(--navy);
+            color: #fff;
+        }
+        .date-modal .btn-apply:hover { background: var(--navy-deep); }
+
+        .date-modal .btn-cancel {
+            background: #fff;
+            color: var(--text-mid);
+            border-color: var(--border);
+        }
+        .date-modal .btn-cancel:hover { background: var(--bg-soft); }
+    </style>
+</head>
+<body>
+
+<!-- ===================== CONTROL PANEL ===================== -->
+<div class="control-panel print-hide">
+    <h2>📋 B2B 메일 발송 현황 보고서 생성기</h2>
+    <p>Google Sheets mail_log 시트의 실제 발송 데이터를 A4 보고서로 출력합니다.</p>
+
+    <div class="ctrl-group">
+        <label>보고 기간</label>
+        <input type="text" id="input-period" placeholder="클릭하여 날짜 선택" style="width: 240px; cursor: pointer;" readonly>
+    </div>
+
+    <div class="ctrl-group">
+        <label>담당자</label>
+        <input type="text" id="input-manager" placeholder="예: 김철수 과장" style="width: 140px;">
+    </div>
+
+    <div class="ctrl-group">
+        <label>결재자</label>
+        <input type="text" id="input-approver" placeholder="예: 이대표 대표" style="width: 140px;">
+    </div>
+
+    <div class="ctrl-group">
+        <label>보고서 번호</label>
+        <input type="text" id="input-report-no" placeholder="자동 생성" style="width: 160px;">
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" onclick="loadGASData()">
+            🔄 시트에서 데이터 불러오기
+        </button>
+        <button class="btn btn-sample" onclick="loadSamplePreview()">
+            🧪 샘플 미리보기
+        </button>
+        <button class="btn btn-export-pdf" onclick="exportPDF()">
+            📄 PDF 저장
+        </button>
+        <button class="btn btn-export-img" onclick="exportImage()">
+            🖼️ 이미지 저장
+        </button>
+        <button class="btn btn-print" onclick="window.print()">
+            🖨️ 인쇄하기
+        </button>
+    </div>
+</div>
+
+<div id="status-bar">📡 구글 시트에서 데이터를 불러오는 중...</div>
+<div id="gas-warn-bar">⚠️ <strong>GAS 재배포 필요</strong> — company 시트의 상세 정보(지역·전화번호·주소·사이트)가 보이지 않습니다.<br>
+구글 Apps Script 편집기에서 <code>google_apps_script_outbound.js</code>의 <code>doGet</code> 함수를 최신 코드로 교체하고 <strong>새 버전으로 배포</strong>해 주세요.</div>
+
+<!-- ===================== A4 REPORT PAGE ===================== -->
+<div id="report-wrapper">
+    <div class="a4-page" id="a4-report">
+
+        <!-- Watermark -->
+        <div class="watermark">SAMHYUP</div>
+
+        <!-- Report Header -->
+        <div class="report-header">
+            <div class="report-logo-area">
+                <div class="report-logo-badge"><img src="../assets/samhyup_logo.png" alt="삼협철망" style="height:100%;object-fit:contain;"></div>
+                <div class="report-logo-text">
+                    <h1>삼협철망</h1>
+                    <p>SAMHYUP MESH Co., Ltd.</p>
+                </div>
+            </div>
+            <div class="report-title-area">
+                <div class="report-doc-type">B2B Outbound Report</div>
+                <div class="report-main-title">메일 발송 현황 보고서</div>
+                <div class="report-period" id="rpt-period">기간: —</div>
+            </div>
+        </div>
+
+        <!-- Meta Info -->
+        <div class="meta-bar">
+            <div class="meta-item">
+                <label>보고서 번호</label>
+                <div class="meta-val" style="font-size:13px;" id="rpt-no">—</div>
+                <div class="meta-sub" id="rpt-date">작성일: —</div>
+            </div>
+            <div class="meta-item">
+                <label>담당자</label>
+                <div class="meta-val" style="font-size:15px;" id="rpt-manager">—</div>
+                <div class="meta-sub">작성 책임자</div>
+            </div>
+            <div class="meta-item">
+                <label>결재자</label>
+                <div class="meta-val" style="font-size:15px;" id="rpt-approver">—</div>
+                <div class="meta-sub">최종 승인자</div>
+            </div>
+            <div class="meta-item">
+                <label>데이터 소스</label>
+                <div class="meta-val" style="font-size:11px; margin-top: 4px;">Google Sheets</div>
+                <div class="meta-sub">builder-samhyup_data / mail_log</div>
+            </div>
+        </div>
+
+        <!-- KPI Summary -->
+        <div class="section-title">📊 발송 성과 요약</div>
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="kpi-card-label">총 발송 건수</div>
+                <div class="kpi-card-value" id="kpi-total">—</div>
+                <div class="kpi-card-sub">성공 + 실패 합산</div>
+            </div>
+            <div class="kpi-card k-success">
+                <div class="kpi-card-label">발송 성공</div>
+                <div class="kpi-card-value" id="kpi-success">—</div>
+                <div class="kpi-card-sub">Gmail API 발송 완료</div>
+            </div>
+            <div class="kpi-card k-fail">
+                <div class="kpi-card-label">발송 실패</div>
+                <div class="kpi-card-value" id="kpi-fail">—</div>
+                <div class="kpi-card-sub">재발송 또는 확인 필요</div>
+            </div>
+        </div>
+
+        <!-- Round Distribution -->
+        <div class="section-title">📬 발송 회차별 현황</div>
+        <div class="round-summary" id="round-summary">
+            <div class="round-pill">
+                <span class="round-dot"></span>
+                <span>데이터 없음</span>
+            </div>
+        </div>
+
+        <!-- Log Table -->
+        <div class="section-title">📋 발송 상세 내역</div>
+        <table class="log-table" id="log-table">
+            <thead>
+                <tr>
+                    <th style="width:26px;">#</th>
+                    <th style="width:38px;">연번</th>
+                    <th style="width:112px;">발송 일시</th>
+                    <th style="width:95px;">회사명</th>
+                    <th style="width:60px;">지역</th>
+                    <th style="width:130px;">이메일 주소</th>
+                    <th style="width:52px;">발송 회차</th>
+                    <th style="width:56px;">상태</th>
+                    <th>세부 결과 · 연락처 · 사이트</th>
+                </tr>
+            </thead>
+            <tbody id="log-tbody">
+                <tr>
+                    <td colspan="9" style="text-align:center; padding: 40px; color: var(--text-light);">
+                        ⬆️ 상단의 "시트에서 데이터 불러오기" 버튼을 클릭하세요
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Footer -->
+        <div class="report-footer">
+            <div class="report-footer-left">
+                <strong>삼협철망 (주)</strong>
+                용접철망·휀스 전문 제조기업<br>
+                📞 영업부 문의: 이메일 발송 관련 이슈는 담당자에게 연락 바랍니다
+            </div>
+            <div class="report-footer-right">
+                <span class="confidential-badge">CONFIDENTIAL</span><br>
+                본 보고서는 내부 영업 자료입니다.<br>
+                무단 배포 및 외부 공개를 금합니다.
+            </div>
+        </div>
+
+    </div><!-- /a4-page -->
+</div><!-- /report-wrapper -->
+
+<!-- 날짜 선택 팝업 모달 -->
+<div class="modal-overlay" id="date-modal-overlay">
+    <div class="date-modal">
+        <h3>📅 보고 기간 설정</h3>
+        
+        <div class="input-row">
+            <label>시작일</label>
+            <input type="date" id="modal-start-date">
+        </div>
+
+        <div class="input-row">
+            <label>종료일</label>
+            <input type="date" id="modal-end-date">
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-cancel" onclick="closeDateModal()">취소</button>
+            <button class="btn-apply" onclick="applyDateSelection()">적용</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // =========================================
+    //  CONFIG
+    // =========================================
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzQ-c04bJYRktqnvvtsu7nKKRce9WxEiqXs3t1VHo95epiJKGzMAn9hOLTYsTEG4VMU/exec";
+
+    // =========================================
+    //  INIT
+    // =========================================
+    window.addEventListener('DOMContentLoaded', () => {
+        // 기본값 채우기 (시작일: 2026-08-01, 종료일: 오늘)
+        const today = new Date();
+        const fmtDash = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        
+        document.getElementById('modal-start-date').value = "2026-08-01";
+        document.getElementById('modal-end-date').value = fmtDash(today);
+        
+        // 초기 텍스트 포맷 변환 대입
+        applyDateText();
+
+        document.getElementById('input-report-no').value = `SHR-MAIL-${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+        updateReportMeta();
+
+        // 입력창 클릭 시 모달 열기 바인딩
+        document.getElementById('input-period').addEventListener('click', openDateModal);
+    });
+
+    // 모달 제어 함수
+    function openDateModal() {
+        document.getElementById('date-modal-overlay').classList.add('open');
+    }
+
+    function closeDateModal() {
+        document.getElementById('date-modal-overlay').classList.remove('open');
+    }
+
+    function applyDateText() {
+        const startVal = document.getElementById('modal-start-date').value;
+        const endVal = document.getElementById('modal-end-date').value;
+        
+        if (startVal && endVal) {
+            const startFmt = startVal.replace(/-/g, '.');
+            const endFmt = endVal.replace(/-/g, '.');
+            document.getElementById('input-period').value = `${startFmt} ~ ${endFmt}`;
+        }
+    }
+
+    function applyDateSelection() {
+        applyDateText();
+        updateReportMeta();
+        closeDateModal();
+    }
+
+    function updateReportMeta() {
+        const today = new Date();
+        const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+
+        document.getElementById('rpt-period').textContent = '기간: ' + (document.getElementById('input-period').value || '—');
+        document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || '—';
+        document.getElementById('rpt-date').textContent = '작성일: ' + fmt(today);
+        document.getElementById('rpt-manager').textContent = document.getElementById('input-manager').value || '—';
+        document.getElementById('rpt-approver').textContent = document.getElementById('input-approver').value || '—';
+    }
+
+    // =========================================
+    //  CONFIGURATION
+    // =========================================
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyDmDEFfVeLKT_wgzipPwQmNGY1iSBA-vFxhBAQxzDw263Lvh2Q_Bjr6h1JXkZLItmsFQ/exec";
+
+    // =========================================
+    //  JSONP FETCH from GAS
+    // =========================================
+    function fetchJSONP(url, callbackName) {
+        return new Promise((resolve, reject) => {
+            const cbName = `${callbackName}_${Date.now()}`;
+            let done = false;
+            const timer = setTimeout(() => {
+                if (!done) { done = true; reject(new Error('timeout')); cleanup(); }
+            }, 10000);
+            window[cbName] = (data) => {
+                if (!done) { done = true; clearTimeout(timer); resolve(data); cleanup(); }
+            };
+            function cleanup() {
+                delete window[cbName];
+                if (script.parentNode) script.parentNode.removeChild(script);
+            }
+            const script = document.createElement('script');
+            script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${cbName}`;
+            script.onerror = () => { if (!done) { done = true; clearTimeout(timer); reject(new Error('script error')); cleanup(); } };
+            document.body.appendChild(script);
+        });
+    }
+
+    let reportData = null; // 전역 캐시
+
+    async function loadGASData() {
+        updateReportMeta();
+        const bar = document.getElementById('status-bar');
+        bar.style.display = 'block';
+        bar.textContent = '📡 구글 시트에서 데이터를 불러오는 중...';
+
+        try {
+            const gasData = await fetchJSONP(`${GAS_URL}?site=mailling`, 'rpt_cb');
+
+            // GAS가 반환하는 { visits, logs } 구조 변환
+            const logs = gasData.logs || [];
+            const visits = gasData.visits || { success: 0, fail: 0 };
+
+            reportData = { visits, logs };
+            renderReport(logs, visits);
+
+            bar.textContent = `✅ 데이터 로드 완료 — 총 ${logs.length}건 (성공: ${visits.success}, 실패: ${visits.fail})`;
+            bar.style.background = '#f0fdf4';
+            bar.style.borderColor = '#10b981';
+            bar.style.color = '#065f46';
+
+            // company 정보 누락 감지 (GAS 구버전)
+            const hasCompanyInfo = logs.some(l => l.phone || l.region || l.address || l.site);
+            if (!hasCompanyInfo && logs.length > 0) {
+                document.getElementById('gas-warn-bar').style.display = 'block';
+            }
+        } catch (err) {
+            bar.textContent = `⚠️ 구글 시트 연동 실패: ${err.message} — 샘플 데이터로 미리보기합니다.`;
+            bar.style.background = '#fff7ed';
+            bar.style.borderColor = '#f59e0b';
+            bar.style.color = '#92400e';
+            // 샘플 데이터 폴백
+            const sampleLogs = getSampleLogs();
+            const sampleVisits = { success: sampleLogs.filter(l => l.status === '성공').length, fail: sampleLogs.filter(l => l.status === '실패').length };
+            renderReport(sampleLogs, sampleVisits);
+        }
+    }
+
+    // 샘플 데이터 즉시 미리보기
+    function loadSamplePreview() {
+        updateReportMeta();
+        const bar = document.getElementById('status-bar');
+        bar.style.display = 'block';
+        bar.textContent = '🧪 샘플 데이터로 보고서를 미리보기합니다.';
+        bar.style.background = '#f0fdf4';
+        bar.style.borderColor = '#10b981';
+        bar.style.color = '#065f46';
+        document.getElementById('gas-warn-bar').style.display = 'none';
+        const sampleLogs = getSampleLogs();
+        const sampleVisits = { success: sampleLogs.filter(l => l.status === '성공').length, fail: sampleLogs.filter(l => l.status === '실패').length };
+        reportData = { visits: sampleVisits, logs: sampleLogs };
+        renderReport(sampleLogs, sampleVisits);
+    }
+
+    function renderReport(logs, visits) {
+        updateReportMeta();
+
+        // KPI
+        const total = (visits.success || 0) + (visits.fail || 0);
+        document.getElementById('kpi-total').textContent = total + '건';
+        document.getElementById('kpi-success').textContent = (visits.success || 0) + '건';
+        document.getElementById('kpi-fail').textContent = (visits.fail || 0) + '건';
+
+        // Round distribution
+        const roundMap = {};
+        logs.forEach(log => {
+            const r = log.round || '기타';
+            if (!roundMap[r]) roundMap[r] = { total: 0, success: 0 };
+            roundMap[r].total++;
+            if (log.status === '성공') roundMap[r].success++;
+        });
+
+        const dotColors = ['#1a3a6b', '#2563eb', '#7c3aed', '#0891b2', '#10b981', '#f59e0b'];
+        const roundHTML = Object.entries(roundMap).map(([round, cnt], i) =>
+            `<div class="round-pill">
+                <span class="round-dot" style="background:${dotColors[i % dotColors.length]}"></span>
+                <span>${round}</span>
+                <span class="round-count">${cnt.total}건</span>
+                <span style="font-size:10px; color: var(--success);">(성공 ${cnt.success}건)</span>
+            </div>`
+        ).join('');
+        document.getElementById('round-summary').innerHTML = roundHTML || '<div class="round-pill"><span class="round-dot"></span><span>데이터 없음</span></div>';
+
+        // Table
+        const tbody = document.getElementById('log-tbody');
+        if (logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color: var(--text-light);">발송 데이터가 없습니다.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = logs.map((log, idx) => {
+            const isSuccess = log.status === '성공';
+            const badge = isSuccess
+                ? '<span class="status-badge success">성공</span>'
+                : '<span class="status-badge fail">실패</span>';
+            const dateStr = formatDate(log.date);
+            const detail = [log.detail, log.note].filter(Boolean).join(' | ') || '—';
+
+            // 상세 정보 칩 생성
+            const chips = [];
+            if (log.phone)   chips.push(`<span class="info-chip phone"><span class="chip-icon">📞</span>${escHtml(log.phone)}</span>`);
+            if (log.region)  chips.push(`<span class="info-chip region"><span class="chip-icon">📍</span>${escHtml(log.region)}</span>`);
+            if (log.address) chips.push(`<span class="info-chip address"><span class="chip-icon">🏢</span>${escHtml(log.address)}</span>`);
+            if (log.site)    chips.push(`<span class="info-chip site"><span class="chip-icon">🌐</span><a href="${escHtml(log.site)}" target="_blank">${escHtml(log.site.replace(/^https?:\/\//, ''))}</a></span>`);
+
+            const hasChips = chips.length > 0;
+
+            // 메인 행
+            const mainRow = `<tr>
+                <td style="color: var(--text-light); font-size:10px;">${idx + 1}</td>
+                <td style="font-weight:600;">${log.id || idx + 1}</td>
+                <td style="font-size:10px; color: var(--text-light);">${dateStr}</td>
+                <td style="font-weight:600; font-size:11px;">${escHtml(log.company || '—')}</td>
+                <td style="font-size:10px; color: var(--text-light);">${escHtml(log.region || '—')}</td>
+                <td style="font-size:10px; color: var(--text-light);">${escHtml(log.email || '—')}</td>
+                <td><span class="round-badge">${escHtml(log.round || '—')}</span></td>
+                <td>${badge}</td>
+                <td style="font-size:10px; color: var(--text-light);">${detail}</td>
+            </tr>`;
+
+            // 상세 정보 서브 행 (있을 때만)
+            const subRow = hasChips
+                ? `<tr class="company-detail-row">
+                    <td></td>
+                    <td colspan="8">
+                        <div class="detail-chips">${chips.join('')}</div>
+                    </td>
+                </tr>`
+                : '';
+
+            return mainRow + subRow;
+        }).join('');
+    }
+
+    // XSS 방지용 이스케이프
+    function escHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function formatDate(raw) {
+        if (!raw) return '—';
+        try {
+            const d = new Date(raw);
+            if (isNaN(d.getTime())) return String(raw);
+            return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+        } catch(e) { return String(raw); }
+    }
+
+    // =========================================
+    //  SAMPLE DATA (fallback)
+    // =========================================
+        function getSampleLogs() {
+        return [
+            { id: 1,  date: '2026-08-30 11:09:16', company: '삼협철망1',      email: 'web365@naver.com',       round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: '',                           region: '인천 계양구', address: '인천 계양구 효성동' },
+            { id: 2,  date: '2026-08-30 11:09:19', company: '삼협철망2',      email: 'samhyupm@naver.com',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: '',                           region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
+            { id: 3,  date: '2026-08-30 11:15:00', company: '삼호개발(주)',     email: 'stkang@samho.co.kr',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3322-8877', site: 'https://samho.co.kr',       region: '서울 마포구', address: '서울특별시 마포구 마포대로 12' },
+            { id: 4,  date: '2026-08-30 11:18:22', company: '동아조경(주)',     email: 'donga@daum.net',          round: '1일차', status: '실패', detail: '수신자 사서함 초과',   note: 'bounce', phone: '010-7766-5544', site: '',                           region: '인천 남동구', address: '인천광역시 남동구 예술로 100' },
+            { id: 5,  date: '2026-08-30 11:20:10', company: '유니온무역',       email: 'union@uniontrade.co.kr',  round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-8899-7788', site: 'https://uniontrade.co.kr', region: '부산 중구',   address: '부산광역시 중구 중앙대로 80' }
+        ];
+    },
+            { id: 2,  date: '2026-08-29 09:11:22', company: '한국파이프공업',     email: 'hkpipe@gmail.com',        round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com',       region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+            { id: 3,  date: '2026-08-29 09:11:45', company: '대성스틸(주)',       email: 'dsung@dasung.co.kr',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '051-789-0123', site: 'https://dasung.co.kr',    region: '부산 강서구', address: '부산광역시 강서구 녹산산단로 48' },
+            { id: 4,  date: '2026-08-29 09:12:02', company: '신성금속공업사',     email: 'ssmetal@naver.com',       round: '1일차', status: '실패', detail: '수신자 이메일 오류', note: 'bounce', phone: '053-321-0987', site: '',                         region: '대구 달성군', address: '대구광역시 달성군 구지면 창리 200' },
+            { id: 5,  date: '2026-08-29 09:12:19', company: '현대플랜트서비스',  email: 'hps_metal@hps.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '052-290-6000', site: 'https://hps.co.kr',       region: '울산 북구',   address: '울산광역시 북구 산업로 915' },
+            { id: 6,  date: '2026-08-29 09:12:38', company: '광성산업',           email: 'ks_ind@daum.net',         round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-688-5555', site: '',                         region: '경기 평택시', address: '경기도 평택시 포승읍 평택항만길 77' },
+            { id: 7,  date: '2026-08-29 09:12:55', company: '동국산업(주)',       email: 'dongkuk@steel.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '02-2650-4000', site: 'https://dongkuksteel.com', region: '서울 강서구', address: '서울특별시 강서구 양천로 583' },
+            { id: 8,  date: '2026-08-29 09:13:10', company: '태양금속',           email: 'taeyangm@naver.com',      round: '1일차', status: '실패', detail: 'SMTP 타임아웃',     note: '',      phone: '055-263-1234', site: '',                         region: '경남 창원시', address: '경상남도 창원시 성산구 창원대로 2200' },
+            { id: 9,  date: '2026-08-29 14:29:32', company: '(주)삼현기계',      email: 'samhyun@naver.com',       round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-123-4567', site: 'https://samhyun.co.kr',    region: '경기 안산시', address: '경기도 안산시 단원구 산단로 120' },
+            { id: 10, date: '2026-08-29 14:29:50', company: '한국파이프공업',     email: 'hkpipe@gmail.com',        round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com',       region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+        ];
+    }
+
+    // =========================================
+    //  EXPORT: PDF (jsPDF + html2canvas)
+    // =========================================
+    async function exportPDF() {
+        if (!reportData) {
+            alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
+            return;
+        }
+        updateReportMeta();
+        const btn = event.currentTarget;
+        btn.innerHTML = '<span class="spinner"></span> PDF 생성 중...';
+        btn.disabled = true;
+
+        try {
+            const el = document.getElementById('a4-report');
+            const canvas = await html2canvas(el, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+                windowWidth: el.scrollWidth,
+                windowHeight: el.scrollHeight
+            });
+
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+            const pdfW = pdf.internal.pageSize.getWidth();
+            const pdfH = pdf.internal.pageSize.getHeight();
+            const imgW = canvas.width;
+            const imgH = canvas.height;
+            const ratio = pdfW / imgW;
+            const scaledH = imgH * ratio;
+
+            // 여러 페이지 지원
+            let yPos = 0;
+            while (yPos < scaledH) {
+                if (yPos > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, -yPos, pdfW, scaledH);
+                yPos += pdfH;
+            }
+
+            const today = new Date();
+            const fname = `삼협철망_메일발송보고서_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.pdf`;
+            pdf.save(fname);
+        } catch (err) {
+            alert('PDF 생성 중 오류가 발생했습니다: ' + err.message);
+        } finally {
+            btn.innerHTML = '📄 PDF 저장';
+            btn.disabled = false;
+        }
+    }
+
+    // =========================================
+    //  EXPORT: IMAGE (html2canvas)
+    // =========================================
+    async function exportImage() {
+        if (!reportData) {
+            alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
+            return;
+        }
+        updateReportMeta();
+        const btn = event.currentTarget;
+        btn.innerHTML = '<span class="spinner"></span> 이미지 생성 중...';
+        btn.disabled = true;
+
+        try {
+            const el = document.getElementById('a4-report');
+            const canvas = await html2canvas(el, {
+                scale: 2.5,        // 고해상도
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+                windowWidth: el.scrollWidth,
+                windowHeight: el.scrollHeight
+            });
+
+            // PNG 다운로드
+            const link = document.createElement('a');
+            const today = new Date();
+            link.download = `삼협철망_메일발송보고서_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        } catch (err) {
+            alert('이미지 생성 중 오류가 발생했습니다: ' + err.message);
+        } finally {
+            btn.innerHTML = '🖼️ 이미지 저장';
+            btn.disabled = false;
+        }
+    }
+
+    // 입력값 변경 시 실시간 메타 반영
+    ['input-period', 'input-manager', 'input-approver', 'input-report-no'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateReportMeta);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+# ✉️ Gmail(지메일)을 활용한 B2B 제안서 HTML 템플릿 테스트 발송 가이드
+
+본 문서는 삼협철망 B2B 용접철망 제안서 HTML 템플릿을 Gmail 계정(`samhyupmesh@gmail.com`)에서 네이버 메일(`samhyupm@naver.com`)으로 SMTP 연동을 통해 테스트 발송하는 세팅 방법과 스크립트 실행 절차를 상세히 설명합니다.
+
+---
+
+## 1. Gmail 외부 SMTP 연동을 위한 '앱 비밀번호' 발급 (필수)
+
+구글의 보안 정책 상 일반 비밀번호로는 외부 프로그램(파이썬 스크립트 등)에서 메일을 발송할 수 없습니다. 따라서 **16자리의 영문 일회용 '앱 비밀번호'**를 먼저 발급받아야 합니다.
+
+### ⚠️ 필수 선행 작업: 2단계 인증 켜기
+계정에 2단계 인증이 설정되어 있지 않으면 앱 비밀번호 메뉴가 나타나지 않습니다.
+1. [Google 2단계 인증 설정 페이지](https://myaccount.google.com/signinoptions/two-step-verification)에 접속합니다.
+2. 안내에 따라 2단계 인증을 **사용(설정)**으로 변경합니다.
+
+---
+
+### 🔑 앱 비밀번호 생성 및 복사 방법
+
+1. 브라우저에서 **[Google 앱 비밀번호 생성 페이지](https://myaccount.google.com/apppasswords)**에 바로 접속합니다.
+   * *반드시 발송용 계정인 `samhyupmesh@gmail.com`으로 로그인되어 있는지 확인해 주세요.*
+2. **앱 이름** 입력란에 원하는 이름(예: `Samhyup Test Email`)을 입력합니다.
+3. 우측의 **`[생성]`** 버튼을 클릭합니다.
+4. 화면에 팝업창이 뜨며 **노란색 박스 안에 16자리 영문 코드**(예: `ripm mtne oool rjci`)가 표시됩니다.
+5. 이 16자리 코드를 마우스로 드래그하여 복사한 뒤 메모장 등에 임시로 저장해 둡니다. (띄어쓰기는 무시하고 입력해도 괜찮습니다.)
+6. **`[완료]`**를 누르고 브라우저를 닫습니다.
+
+---
+
+## 2. 테스트 발송 방법 (가장 간편한 방법)
+
+이제 복잡하게 명령어를 직접 치실 필요가 없습니다! 더블 클릭만으로 메일이 발송되는 단축 실행 파일을 만들어 두었습니다.
+
+1. **`D:\Antigravity\builder-samhyup-sales\`** 폴더로 이동합니다.
+2. 폴더 내부에 있는 **`send_test.bat`** 파일을 더블 클릭하여 실행합니다.
+3. 최초 실행 시에는 **16자리 Gmail 앱 비밀번호**를 입력한 뒤 엔터(Enter)를 치면 됩니다.
+4. 비밀번호를 입력하면 바로 아래에 다음과 같은 안내가 나옵니다:
+   ```text
+   입력한 비밀번호를 다음 발송을 위해 저장하시겠습니까? (Y/N):
+   ```
+   **`Y`**(혹은 그냥 엔터)를 입력하면 비밀번호가 PC 내부에 안전하게 저장됩니다.
+5. **두 번째 실행부터는:** 비밀번호를 묻지 않고 `send_test.bat`를 더블 클릭하자마자 즉시 이미지를 포함하여 테스트 메일이 자동 전송됩니다.
+
+---
+
+## 3. 메일 발송 정보 요약
+
+| 항목 | 정보 |
+| :--- | :--- |
+| **발신 메일 (Sender)** | `samhyupmesh@gmail.com` (Gmail) |
+| **수신 메일 (Receiver)** | `samhyupm@naver.com` (Naver) |
+| **적용 템플릿 경로** | `D:\Antigravity\builder-samhyup-sales\catalog\templates\samhyup_proposal.html` |
+| **연동 SMTP 서버** | `smtp.gmail.com` (포트: 465, SSL 보안 연결) |
+| **바로 실행 파일** | `D:\Antigravity\builder-samhyup-sales\send_test.bat` |
+| **비밀번호 저장 경로** | `C:\Users\fix\.gemini\antigravity\scratch\gmail_config.json` |
+

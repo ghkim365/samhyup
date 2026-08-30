@@ -1,26 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>삼협철망(주) | B2B 마케팅 & 실시간 견적 모니터링 대시보드</title>
+    <title>삼협철망 | B2B 마케팅 & 실시간 견적 모니터링 대시보드</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --glass-bg: rgba(17, 25, 40, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #94a3b8;
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --accent: #f97316;
-            --accent-glow: rgba(249, 115, 22, 0.5);
-            --success: #10b981;
-            --danger: #ef4444;
+            --bg-color: #EEF0F4;
+            --panel-bg: #FFFFFF;
+            --border-color: #DDE1E7;
+            --border-light: #EAEDF1;
+            
+            --navy: #1C2B4A;
+            --navy-deep: #111B31;
+            --gold: #B8962A;
+            --gold-light: #F5EDD3;
+            
+            --text-primary: #1A1A2E;
+            --text-secondary: #4A5568;
+            --text-light: #718096;
+            
+            --primary: var(--navy);
+            --primary-glow: rgba(28, 43, 74, 0.1);
+            --accent: var(--gold);
+            --accent-glow: rgba(184, 150, 42, 0.1);
+            
+            --success: #2D6A4F;
+            --danger: #9B2335;
             --font-main: 'Inter', 'Noto Sans KR', sans-serif;
             --font-title: 'Outfit', 'Inter', 'Noto Sans KR', sans-serif;
         }
@@ -33,10 +43,6 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
-            background-attachment: fixed;
             color: var(--text-primary);
             font-family: var(--font-main);
             min-height: 100vh;
@@ -44,20 +50,18 @@
             padding-bottom: 50px;
         }
 
-        /* Glassmorphism utility */
+        /* Glassmorphism 대신 깔끔하고 명확한 비즈니스 패널 형태로 교체 */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
 
         .glass-panel:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.1);
+            border-color: var(--navy);
+            box-shadow: 0 4px 15px rgba(28, 43, 74, 0.06);
         }
 
         /* Layout Container */
@@ -71,12 +75,16 @@
         header {
             margin-top: 30px;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
 
         .header-logo-group {
@@ -95,35 +103,40 @@
         .logo-symbol {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 10px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-family: var(--font-title);
-            font-size: 20px;
-            box-shadow: 0 0 15px var(--primary-glow);
+            border-radius: 6px;
+        }
+
+        .logo-symbol img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .logo-text h1 {
             font-family: var(--font-title);
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
+            color: var(--navy);
             letter-spacing: -0.5px;
         }
 
         .logo-text p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 2px;
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 1px;
         }
 
         /* Mode Selector Toggle buttons */
         .mode-selector {
             display: flex;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #EEF0F4;
+            border: 1px solid var(--border-color);
             padding: 4px;
             border-radius: 30px;
             align-items: center;
@@ -146,13 +159,14 @@
         }
 
         .mode-btn:hover {
-            color: #fff;
+            color: var(--navy);
+            background: rgba(28,43,74,0.08);
         }
 
         .mode-btn.active {
-            background: linear-gradient(135deg, var(--primary), #2563eb);
+            background: var(--navy);
             color: #fff;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 10px rgba(28,43,74,0.25);
         }
 
         /* Target Site Selector */
@@ -163,10 +177,10 @@
         }
 
         .site-select {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
+            color: var(--navy);
             padding: 8px 14px;
             font-size: 12.5px;
             font-weight: 600;
@@ -177,26 +191,28 @@
         }
 
         .site-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 8px var(--primary-glow);
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(28,43,74,0.12);
         }
 
         .connection-status {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .status-badge {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 14px;
+            background: #F3F5F8;
+            padding: 7px 13px;
             border-radius: 30px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
         }
 
         .status-indicator {
@@ -212,72 +228,90 @@
             animation: pulse 2s infinite;
         }
 
+        /* Google Sheets 바로가기 버튼 */
+        .btn-gsheet-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #1a6639;
+            background: #E8F5EE;
+            border: 1px solid #A8D5B8;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-gsheet-link:hover {
+            background: #1a6639;
+            color: #fff;
+            border-color: #1a6639;
+            box-shadow: 0 3px 10px rgba(26, 102, 57, 0.25);
+            transform: translateY(-1px);
+        }
+
         @keyframes pulse {
             0% { transform: scale(0.9); opacity: 0.6; }
             50% { transform: scale(1.1); opacity: 1; }
             100% { transform: scale(0.9); opacity: 0.6; }
         }
 
-        /* KPI Bento Grid */
+        /* KPI Card Styles */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
         .kpi-card {
             padding: 24px;
-            position: relative;
-            overflow: hidden;
+            border-left: 4px solid var(--navy) !important;
         }
 
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--primary);
+        .kpi-card.ads {
+            border-left-color: var(--gold) !important;
         }
 
-        .kpi-card.ads::before {
-            background: var(--accent);
-        }
-
-        .kpi-card.cvr::before {
-            background: var(--success);
+        .kpi-card.cvr {
+            border-left-color: var(--success) !important;
         }
 
         .kpi-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .kpi-title span {
+            font-size: 18px;
+            opacity: 0.8;
         }
 
         .kpi-value {
-            font-size: 36px;
-            font-weight: 700;
             font-family: var(--font-title);
-            margin-bottom: 8px;
-            background: linear-gradient(to right, #ffffff, #e2e8f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.1;
         }
 
         .kpi-subtitle {
-            font-size: 12px;
-            color: var(--text-secondary);
+            font-size: 11.5px;
+            color: var(--text-light);
+            margin-top: 6px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .trend-up {
@@ -285,12 +319,17 @@
             font-weight: 600;
         }
 
-        /* Main Grid: Charts & Simulator */
+        .trend-down {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* Main Grid Layout */
         .main-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 30px;
+            gap: 20px;
+            align-items: start;
         }
 
         @media (max-width: 1024px) {
@@ -299,23 +338,15 @@
             }
         }
 
+        /* Chart card styles */
         .chart-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .chart-section {
-                grid-template-columns: 1fr;
-            }
         }
 
         .chart-card {
             padding: 24px;
-            min-height: 340px;
-            display: flex;
-            flex-direction: column;
         }
 
         .chart-header {
@@ -323,176 +354,192 @@
         }
 
         .chart-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
         }
 
         .chart-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+            font-size: 11.5px;
+            color: var(--text-light);
         }
 
         .chart-container {
-            flex-grow: 1;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 280px;
+            width: 100%;
         }
 
-        /* Simulator Card */
+        /* Simulator card styles */
         .simulator-card {
             padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            border-top: 4px solid var(--gold) !important;
         }
 
         .sim-title-area {
             margin-bottom: 20px;
         }
 
+        .sim-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
         .sim-row {
-            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .sim-label {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+        }
+
+        .sim-label span:last-child {
+            color: var(--navy);
+            font-weight: 700;
         }
 
         .sim-input-wrapper {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 8px 12px;
-        }
-
-        .sim-input-wrapper input {
-            background: transparent;
-            border: none;
-            color: #fff;
             width: 100%;
-            font-family: var(--font-title);
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-        }
-
-        .sim-unit {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-left: 8px;
         }
 
         .sim-results {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            margin-top: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .sim-result-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .sim-result-row:last-child {
-            margin-bottom: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 8px;
-            font-weight: 600;
+            font-size: 11.5px;
+            color: var(--text-secondary);
         }
 
         .sim-result-val {
-            font-family: var(--font-title);
-            color: #fff;
+            font-weight: 700;
+            color: var(--navy);
         }
 
         .sim-result-val.highlight {
-            color: var(--accent);
-            font-size: 16px;
+            color: var(--gold);
+            font-size: 13px;
         }
 
-        /* Lead Table Section */
-        .leads-section {
-            padding: 24px;
+        /* Log / Data Section card styles */
+        .data-section {
+            margin-top: 48px;
         }
 
-        .leads-header {
+        .data-card {
+            padding: 28px 32px;
+        }
+
+        .data-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .leads-title-group h2 {
-            font-size: 18px;
+        .data-title {
+            font-size: 15px;
             font-weight: 700;
+            color: var(--navy);
         }
 
-        .leads-title-group p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .action-buttons {
+        .data-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
         }
 
-        .btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
+        /* Button design - 플랫 비즈니스 스타일 */
+        .btn-action {
             padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+        .btn-action:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+            background: var(--bg-soft);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #2563eb);
-            border: none;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        .btn-action.active {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
         }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
+        .btn-action.active:hover {
+            background: var(--navy-deep);
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
+            background: #FFF5F5;
+            border: 1px solid #FEB2B2;
+            color: var(--danger);
         }
 
         .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: rgba(239, 68, 68, 0.4);
+            background: #FED7D7;
+            border-color: #E53E3E;
+        }
+
+        /* Leads Table Section */
+        .leads-section {
+            margin-top: 48px;
+            padding: 28px 32px;
+        }
+
+        .leads-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .leads-title-group h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .leads-title-group p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         /* Responsive Table styling */
@@ -505,20 +552,21 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         th {
-            padding: 14px 16px;
+            padding: 11px 16px;
             color: var(--text-secondary);
-            font-weight: 500;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--navy);
+            font-size: 11px;
+            background: var(--bg-soft);
         }
 
         td {
-            padding: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border-light);
             color: var(--text-primary);
         }
 
@@ -527,12 +575,12 @@
         }
 
         tr {
-            transition: background-color 0.2s;
+            transition: background-color 0.15s;
             cursor: pointer;
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--bg-soft);
         }
 
         .badge-source {
@@ -545,30 +593,30 @@
         }
 
         .badge-source.ads {
-            background: rgba(249, 115, 22, 0.15);
-            color: #fdba74;
-            border: 1px solid rgba(249, 115, 22, 0.3);
+            background: rgba(184, 150, 42, 0.12);
+            color: #92700E;
+            border: 1px solid rgba(184, 150, 42, 0.3);
         }
 
         .badge-source.search {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(28, 43, 74, 0.1);
+            color: var(--navy);
+            border: 1px solid rgba(28, 43, 74, 0.2);
         }
 
         .badge-source.direct {
-            background: rgba(148, 163, 184, 0.15);
-            color: #cbd5e1;
-            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: #F0F2F5;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
         }
 
         .badge-product {
-            background: rgba(255, 255, 255, 0.05);
-            color: #e2e8f0;
+            background: #EEF0F4;
+            color: var(--text-primary);
             padding: 4px 8px;
             border-radius: 6px;
             font-size: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         .date-col {
@@ -787,10 +835,10 @@
             <header class="glass-panel">
                 <div class="header-logo-group">
                     <div class="header-logo">
-                        <div class="logo-symbol">S</div>
+                        <div class="logo-symbol"><img src="assets/samhyup_logo.png" alt="삼협철망" style="width:100%;height:100%;object-fit:contain;"></div>
                         <div class="logo-text">
-                            <h1 id="brand-title">삼협철망(주)</h1>
-                            <p id="brand-subtitle">B2B 모바일 카탈로그 모니터링 관리자</p>
+                            <h1 id="brand-title">삼협철망</h1>
+                            <p id="brand-subtitle">용접철망·휀스 카탈로그 모니터링 관리자</p>
                         </div>
                     </div>
 
@@ -798,7 +846,8 @@
                     <div class="site-selector-wrapper">
                         <select id="site-selector" class="site-select" onchange="switchSite(this.value)">
                             <option value="catalog">📱 모바일 카탈로그</option>
-                            <option value="main_site">🌐 공식 홈페이지 (samhyup.com)</option>
+                            <option value="main_site">🌐 공식 홈페이지 (samhyup.vercel.app)</option>
+                            <option value="mailling">✉️ B2B 이메일 발송 현황</option>
                         </select>
                     </div>
 
@@ -822,19 +871,34 @@
                 <div class="connection-status">
                     <div class="status-badge" id="badge-google-ads">
                         <span class="status-indicator active"></span>
-                        Google Ads 연동 (AW-750842470): Active
+                        Google Ads 연동 (samhyup 651-167-5293): Active
                     </div>
                     <div class="status-badge">
                         <span class="status-indicator active"></span>
                         Google GA4 연동: Connected
                     </div>
+                    <a href="https://docs.google.com/spreadsheets/d/161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04/edit?pli=1&gid=1031257647#gid=1031257647"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       id="btn-gsheet-link"
+                       class="btn-gsheet-link"
+                       title="Google Sheets 데이터 원본 열기">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                        Google Sheets
+                    </a>
                 </div>
             </header>
 
             <!-- KPI Grid -->
             <section class="kpi-grid">
                 <div class="glass-panel kpi-card">
-                    <div class="kpi-title">
+                    <div class="kpi-title" id="kpi-title-1">
                         총 방문 세션수
                         <span>👤</span>
                     </div>
@@ -845,23 +909,23 @@
                 </div>
                 
                 <div class="glass-panel kpi-card ads">
-                    <div class="kpi-title">
+                    <div class="kpi-title" id="kpi-title-2">
                         누적 접수 견적수
                         <span>✉️</span>
                     </div>
                     <div class="kpi-value" id="kpi-quotes">-</div>
-                    <div class="kpi-subtitle">
+                    <div class="kpi-subtitle" id="kpi-subtitle-2">
                         최근 24시간 내 <span class="trend-up" id="kpi-quotes-today">0건</span> 추가 접수됨
                     </div>
                 </div>
 
                 <div class="glass-panel kpi-card cvr">
-                    <div class="kpi-title">
+                    <div class="kpi-title" id="kpi-title-3">
                         평균 견적 전환율 (CVR)
                         <span>🎯</span>
                     </div>
                     <div class="kpi-value" id="kpi-cvr">-%</div>
-                    <div class="kpi-subtitle">
+                    <div class="kpi-subtitle" id="kpi-subtitle-3">
                         총 방문 대비 견적 전환 성공 비율
                     </div>
                 </div>
@@ -875,7 +939,7 @@
                     <div class="glass-panel chart-card">
                         <div class="chart-header">
                             <div class="chart-title" id="chart-visits-title">마케팅 유입 채널 분석</div>
-                            <div class="chart-desc">Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중</div>
+                            <div class="chart-desc" id="chart-visits-desc">Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중</div>
                         </div>
                         <div class="chart-container">
                             <canvas id="sourceChart"></canvas>
@@ -885,8 +949,8 @@
                     <!-- Chart 2: 품목별 견적 분포 -->
                     <div class="glass-panel chart-card">
                         <div class="chart-header">
-                            <div class="chart-title">요청 품목 선호도</div>
-                            <div class="chart-desc">견적 요청이 접수된 제품별 분포 분석</div>
+                            <div class="chart-title" id="chart-product-title">요청 품목 선호도</div>
+                            <div class="chart-desc" id="chart-product-desc">견적 요청이 접수된 가공 서비스별 분포 분석</div>
                         </div>
                         <div class="chart-container">
                             <canvas id="productChart"></canvas>
@@ -945,9 +1009,12 @@
                 <div class="leads-header">
                     <div class="leads-title-group">
                         <h2 id="table-mode-title">실시간 접수 견적 피드</h2>
-                        <p id="table-mode-desc">스마트폰 간편 견적서 및 이메일 링크를 통해 유입된 실시간 견적 접수 목록</p>
+                        <p id="table-mode-desc">파이프가공 서비스 문의를 통해 접수된 실시간 견적 목록</p>
                     </div>
                     <div class="action-buttons">
+                        <button class="btn btn-primary" id="btn-report-view" onclick="openMailReport()" style="display: none; background: linear-gradient(135deg, #7c3aed, #5b21b6); border: none; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">
+                            📋 보고서 출력
+                        </button>
                         <button class="btn btn-primary" id="btn-mock-generate" onclick="generateMockQuote()">
                             ⚡ 시뮬레이션: 가상 견적 접수
                         </button>
@@ -966,7 +1033,7 @@
                                 <th>회사/현장명</th>
                                 <th>담당자</th>
                                 <th>연락처</th>
-                                <th>요청 품목</th>
+                                <th>가공 서비스</th>
                                 <th>유입 경로</th>
                             </tr>
                         </thead>
@@ -1009,7 +1076,7 @@
                         <p id="modal-email">-</p>
                     </div>
                     <div class="info-item">
-                        <label>요청 품목</label>
+                        <label>가공 서비스</label>
                         <p><span class="badge-product" id="modal-product">-</span></p>
                     </div>
                     <div class="info-item">
@@ -1032,9 +1099,9 @@
     <script>
         // [중요] 구글 스프레드시트 연동용 앱스 스크립트 웹 앱 URL을 배포 후 아래 빈칸에 붙여넣으세요.
         // 예: "https://script.google.com/macros/s/AKfycb.../exec"
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwdvHIlVa80e-JNZFnF9cqJYrDQfMg2DUxSyF_tIN5yy0SWiGnUMprGaGEDj9rDZ1kJTQ/exec";
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyDmDEFfVeLKT_wgzipPwQmNGY1iSBA-vFxhBAQxzDw263Lvh2Q_Bjr6h1JXkZLItmsFQ/exec";
 
-        let currentSite = 'catalog';   // 'catalog' or 'main_site'
+        let currentSite = 'catalog';   // 'catalog', 'main_site', or 'mailling'
         let dashboardMode = 'realtime'; // 'realtime' or 'simulator'
         let analyticsData = null;
         let sourceChart = null;
@@ -1042,69 +1109,69 @@
 
         // 1. 모바일 카탈로그 시뮬레이터 기본 더미 데이터
         const defaultSimData = {
-            visits: { google_ads: 324, search: 215, direct: 98 },
+            visits: { google_ads: 287, search: 183, direct: 76 },
             quotes: [
                 {
                     id: 1,
                     date: "2026-07-10T10:15:30Z",
-                    company: "(주)대성토건",
+                    company: "(주)삼호개발",
                     name: "김민우 과장",
                     phone: "010-3344-5566",
-                    email: "mw.kim@daesung.co.kr",
+                    email: "mw.kim@samho.co.kr",
                     product: "용접철망",
-                    specs: "#8 (3.2mm) 150x150 1200장 시공용 단가 문의",
+                    specs: "#8 (3.2mm) 150x150 규격 500장 단가 문의",
                     source: "google_ads"
                 },
                 {
                     id: 2,
                     date: "2026-07-10T14:22:10Z",
-                    company: "한성조경",
+                    company: "태영건설현장",
                     name: "이재혁 대표",
                     phone: "010-9988-7766",
-                    email: "hansung@naver.com",
-                    product: "동물보호망",
-                    specs: "동물보호휀스 H1.2m 아연도금망 250m 분량 단가 및 배송일정",
+                    email: "taeyoung@naver.com",
+                    product: "메쉬파레트",
+                    specs: "접이식 메쉬파레트 대형 (1000x800x840) 50개 단가 요청",
                     source: "search"
                 },
                 {
                     id: 3,
                     date: "2026-07-11T09:05:45Z",
-                    company: "(주)우리아이앤씨",
+                    company: "동아조경(주)",
                     name: "박준형 팀장",
                     phone: "010-1122-3344",
-                    email: "jhpark@woori.com",
-                    product: "메쉬파레트",
-                    specs: "표준 규격 1000x800x850 (바퀴 장착 옵션 포함) 50개 단가 문의",
+                    email: "jhpark@donga.com",
+                    product: "개비온철망",
+                    specs: "하천 사면 옹벽 보호용 조립식 개비온 200개 제작 단가 문의",
                     source: "direct"
                 },
                 {
                     id: 4,
                     date: "2026-07-11T16:40:00Z",
-                    company: "태영산업",
+                    company: "중앙토건",
                     name: "최성호 차장",
                     phone: "010-5566-7788",
-                    email: "shchoi@taeyoung.co.kr",
-                    product: "일체형메쉬",
-                    specs: "천정 인테리어용 플랫 용접 메쉬 1200x2400 150장",
+                    email: "shchoi@jungang.co.kr",
+                    product: "동물보호망",
+                    specs: "PVC 녹색 코팅 철망 H1.5m 휀스망 300미터 단가 문의",
                     source: "google_ads"
                 },
                 {
                     id: 5,
                     date: "2026-07-12T08:30:15Z",
-                    company: "인천남동공단 철강센터",
+                    company: "영남휀스",
                     name: "정수진 대리",
                     phone: "010-4455-6677",
-                    email: "sjjeong@steelcenter.co.kr",
-                    product: "개비온철망",
-                    specs: "법면 옹벽용 개비온 80개 단가 및 화물 배송료 문의",
+                    email: "sjjeong@youngnam.co.kr",
+                    product: "디자인휀스",
+                    specs: "전원주택 메쉬디자인휀스 H1.2m 백색 50경간 자재 단가 문의",
                     source: "search"
                 }
             ]
         };
 
-        // 2. 공식 홈페이지 (samhyup.com) 시뮬레이터 기본 더미 데이터
+        // 2. 공식 홈페이지 (samhyup.vercel.app) 시뮬레이터 기본 더미 데이터
         const defaultMainSimData = {
-            visits: { google_ads: 1240, search: 895, direct: 412 },
+            visits: { google_ads: 980, search: 720, direct: 310 },
             quotes: [
                 {
                     id: 101,
@@ -1164,12 +1231,77 @@
             ]
         };
 
+        // 3. B2B 이메일 발송 현황 시뮬레이터 기본 더미 데이터
+        const defaultMailSimData = {
+            visits: { success: 42, fail: 3, pending: 12 },
+            quotes: [
+                {
+                    id: 201,
+                    date: "2026-08-26T09:15:00Z",
+                    company: "삼협철망 테스트",
+                    name: "test@samhyup.com",
+                    phone: "1일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "비고: 신규 주소 테스트 성공",
+                    source: "success"
+                },
+                {
+                    id: 202,
+                    date: "2026-08-26T10:30:00Z",
+                    company: "(주)삼오기계",
+                    name: "samoo@samoo.co.kr",
+                    phone: "1일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "",
+                    source: "success"
+                },
+                {
+                    id: 203,
+                    date: "2026-08-26T13:12:00Z",
+                    company: "우주테크",
+                    name: "wrong_email_address",
+                    phone: "1일차",
+                    email: "실패",
+                    product: "이메일 주소 형식 오류",
+                    specs: "비고: 주소 오기입 확인 요망",
+                    source: "fail"
+                },
+                {
+                    id: 204,
+                    date: "2026-08-26T14:45:00Z",
+                    company: "한성철강",
+                    name: "sales@hansung.com",
+                    phone: "9일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "",
+                    source: "success"
+                },
+                {
+                    id: 205,
+                    date: "2026-08-26T16:20:00Z",
+                    company: "현대정밀",
+                    name: "hd@hd-precision.co.kr",
+                    phone: "9일차",
+                    email: "실패",
+                    product: "수신인 사서함 용량 초과",
+                    specs: "비고: 유선 연락 필요",
+                    source: "fail"
+                }
+            ]
+        };
+
         // 로컬스토리지 데이터 초기 세팅
         if (!localStorage.getItem('samhyup_sim_analytics')) {
             localStorage.setItem('samhyup_sim_analytics', JSON.stringify(defaultSimData));
         }
         if (!localStorage.getItem('samhyup_main_sim_analytics')) {
             localStorage.setItem('samhyup_main_sim_analytics', JSON.stringify(defaultMainSimData));
+        }
+        if (!localStorage.getItem('samhyup_mailling_sim_analytics')) {
+            localStorage.setItem('samhyup_mailling_sim_analytics', JSON.stringify(defaultMailSimData));
         }
 
         // 1. 대상 사이트 전환 함수
@@ -1179,19 +1311,36 @@
             const brandTitle = document.getElementById('brand-title');
             const brandSubtitle = document.getElementById('brand-subtitle');
             const adsBadge = document.getElementById('badge-google-ads');
+            const mockGenBtn = document.getElementById('btn-mock-generate');
+            const reportBtn = document.getElementById('btn-report-view');
 
             if (site === 'catalog') {
-                brandTitle.textContent = "삼협철망(주)";
-                brandSubtitle.textContent = "B2B 모바일 카탈로그 모니터링 관리자";
-                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (AW-750842470): Active';
+                brandTitle.textContent = "삼협철망";
+                brandSubtitle.textContent = "용접철망·휀스 카탈로그 모니터링 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (samhyup 651-167-5293): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 견적 접수";
+                reportBtn.style.display = 'none';
+            } else if (site === 'mailling') {
+                brandTitle.textContent = "삼협철망 B2B";
+                brandSubtitle.textContent = "아웃바운드 메일 발송 현황 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Sheets 연동 (mail_log): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 발송 로그 생성";
+                reportBtn.style.display = 'inline-flex';
             } else {
-                brandTitle.textContent = "삼협철망(주) 공식홈";
-                brandSubtitle.textContent = "samhyup.com 마케팅 성과 관리자";
+                brandTitle.textContent = "삼협철망 공식홈";
+                brandSubtitle.textContent = "samhyup.vercel.app 마케팅 성과 관리자";
                 adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (Main-9802): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 견적 접수";
+                reportBtn.style.display = 'none';
             }
 
             // 모드 초기화 후 UI 새로고침
             updateDashboardUI();
+        }
+
+        // 보고서 페이지 새 탭으로 오픈
+        function openMailReport() {
+            window.open('mailling/mail_report.html', '_blank');
         }
 
         // 2. 모드 전환 함수 (실시간 LIVE vs 시뮬레이터)
@@ -1201,8 +1350,6 @@
             const btnRealtime = document.getElementById('mode-realtime');
             const btnSim = document.getElementById('mode-simulator');
             const mockGenBtn = document.getElementById('btn-mock-generate');
-            const tableTitle = document.getElementById('table-mode-title');
-            const tableDesc = document.getElementById('table-mode-desc');
 
             if (mode === 'realtime') {
                 btnRealtime.classList.add('active');
@@ -1211,9 +1358,6 @@
                 mockGenBtn.disabled = true;
                 mockGenBtn.style.opacity = '0.4';
                 mockGenBtn.style.cursor = 'not-allowed';
-                
-                tableTitle.textContent = "실시간 접수 견적 피드 (LIVE)";
-                tableDesc.textContent = "선택된 사이트에서 수집된 순수 실시간 견적 접수 목록";
             } else {
                 btnRealtime.classList.remove('active');
                 btnSim.classList.add('active');
@@ -1221,9 +1365,6 @@
                 mockGenBtn.disabled = false;
                 mockGenBtn.style.opacity = '1';
                 mockGenBtn.style.cursor = 'pointer';
-                
-                tableTitle.textContent = "데모 시뮬레이터 견적 피드";
-                tableDesc.textContent = "테스트용으로 셋업된 가상 유입 데이터 및 접수 내역";
             }
 
             updateDashboardUI();
@@ -1249,6 +1390,22 @@
                         analyticsData = JSON.parse(JSON.stringify(defaultSimData));
                     }
                 }
+            } else if (currentSite === 'mailling') {
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_mailling_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { success: 0, fail: 0, pending: 0 }, quotes: [] };
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_mailling_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultMailSimData));
+                    }
+                }
             } else {
                 // 공식 홈페이지 (main_site)
                 if (dashboardMode === 'realtime') {
@@ -1270,13 +1427,28 @@
             }
         }
 
-        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응)
+        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응, 5초 타임아웃)
         function fetchJSONP(url, callbackName) {
             return new Promise((resolve, reject) => {
                 const uniqueCallbackName = `${callbackName}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+                let done = false;
+                
+                // 5초 타임아웃: GAS URL이 잘못되거나 응답 없을 시 즉시 폴백
+                const timer = setTimeout(() => {
+                    if (!done) {
+                        done = true;
+                        reject(new Error('JSONP timeout after 5s'));
+                        cleanup();
+                    }
+                }, 5000);
+                
                 window[uniqueCallbackName] = (data) => {
-                    resolve(data);
-                    cleanup();
+                    if (!done) {
+                        done = true;
+                        clearTimeout(timer);
+                        resolve(data);
+                        cleanup();
+                    }
                 };
                 
                 function cleanup() {
@@ -1289,8 +1461,12 @@
                 const script = document.createElement('script');
                 script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${uniqueCallbackName}`;
                 script.onerror = (err) => {
-                    reject(err);
-                    cleanup();
+                    if (!done) {
+                        done = true;
+                        clearTimeout(timer);
+                        reject(err);
+                        cleanup();
+                    }
                 };
                 document.body.appendChild(script);
             });
@@ -1298,8 +1474,13 @@
 
         // Render metrics to UI
         function updateDashboardUI() {
-            if (GAS_WEB_APP_URL && GAS_WEB_APP_URL.startsWith('http') && dashboardMode === 'realtime') {
-                // 구글 시트에서 실시간 데이터 로드 (CORS가 없는 JSONP 방식 사용)
+            // GAS URL이 설정되지 않았거나 더미(TODO 포함)인 경우 즉시 로컬 폴백
+            const gasReady = GAS_WEB_APP_URL &&
+                GAS_WEB_APP_URL.startsWith('http') &&
+                !GAS_WEB_APP_URL.includes('TODO');
+
+            if (gasReady && dashboardMode === 'realtime') {
+                // 구글 시트에서 실시간 데이터 로드 (JSONP 방식, 5초 타임아웃)
                 const fetchUrl = `${GAS_WEB_APP_URL}?site=${currentSite}`;
                 
                 // 로딩 상태 표시
@@ -1308,16 +1489,38 @@
                 
                 fetchJSONP(fetchUrl, 'gas_callback')
                     .then(data => {
-                        analyticsData = data;
+                        // [핵심] GAS가 반환하는 { visits, logs } 구조를
+                        // 대시보드가 기대하는 { visits, quotes } 구조로 변환
+                        if (currentSite === 'mailling' && data.logs) {
+                            analyticsData = {
+                                visits: data.visits || { success: 0, fail: 0, pending: 0 },
+                                quotes: data.logs.map(log => ({
+                                    id: log.id,
+                                    date: String(log.date),   // Date 객체 → 문자열 강제 변환
+                                    company: log.company,
+                                    name: log.email,          // 수신 이메일 → name 필드에 매핑
+                                    phone: log.round,         // 발송회차 → phone 필드에 매핑
+                                    email: log.status,        // 발송상태(성공/실패) → email 필드에 매핑
+                                    product: log.detail,      // 세부결과 → product 필드에 매핑
+                                    specs: log.note,          // 비고 → specs 필드에 매핑
+                                    source: log.status === '성공' ? 'success' : 'fail'
+                                }))
+                            };
+                            // 실시간 데이터를 로컬스토리지에도 캐시 (오프라인 대비)
+                            localStorage.setItem('samhyup_mailling_analytics', JSON.stringify(analyticsData));
+                        } else {
+                            analyticsData = data;
+                        }
                         renderDashboardData();
                     })
                     .catch(err => {
-                        console.error('Error fetching data from GAS via JSONP:', err);
-                        // 에러 시 로컬스토리지 폴백
+                        console.error('GAS 연동 실패 (로컬 폴백 적용):', err);
+                        // 에러/타임아웃 시 로컬스토리지 폴백
                         loadLocalData();
                         renderDashboardData();
                     });
             } else {
+                // GAS URL 미설정 or 시뮬레이터 모드 → 즉시 로컬 데이터 표시
                 loadLocalData();
                 renderDashboardData();
             }
@@ -1325,25 +1528,93 @@
 
         // UI 데이터 그리기 핵심 로직
         function renderDashboardData() {
-            const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
-            const totalQuotes = analyticsData.quotes.length;
-            const cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(2) : '0.00';
+            let totalVisits = 0;
+            let totalQuotes = 0;
+            let cvr = "0.00";
 
-            document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString();
-            document.getElementById('kpi-quotes').textContent = totalQuotes.toLocaleString();
-            document.getElementById('kpi-cvr').textContent = cvr + '%';
+            if (currentSite === 'mailling') {
+                document.getElementById('kpi-title-1').innerHTML = '총 발송 메일수 <span>✉️</span>';
+                document.getElementById('kpi-title-2').innerHTML = '성공 / 실패 건수 <span>✅</span>';
+                document.getElementById('kpi-title-3').innerHTML = '발송 성공률 <span>🎯</span>';
+                
+                document.getElementById('chart-visits-title').textContent = '메일 발송 결과 비율';
+                document.getElementById('chart-visits-desc').textContent = '성공 및 실패 발송 로그의 비율 분석';
+                document.getElementById('chart-product-title').textContent = '회차별 메일 발송 현황';
+                document.getElementById('chart-product-desc').textContent = '회차별(1일차, 9일차 등) 이메일 발송 성공 분포';
+                
+                document.getElementById('table-mode-title').textContent = dashboardMode === 'realtime' ? "실시간 메일 발송 로그 피드 (LIVE)" : "데모 메일 발송 로그 피드";
+                document.getElementById('table-mode-desc').textContent = "구글 스프레드시트 mail_log 시트와 실시간 연동된 이력";
 
-            // Google Ads visits percentage
-            const adsPercentage = totalVisits > 0 ? ((analyticsData.visits.google_ads / totalVisits) * 100).toFixed(1) : '0';
-            document.getElementById('kpi-visits-ratio').textContent = `Google Ads 광고 유입 ${adsPercentage}%`;
+                totalVisits = (analyticsData.visits.success || 0) + (analyticsData.visits.fail || 0);
+                totalQuotes = analyticsData.quotes.filter(q => q.email === '성공').length;
+                cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(1) : '0.0';
 
-            // Calculate quotes from today
-            const now = new Date();
-            const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-            const todayQuotesCount = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
-            document.getElementById('kpi-quotes-today').textContent = `${todayQuotesCount}건`;
+                document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString() + ' 건';
+                document.getElementById('kpi-quotes').textContent = `${analyticsData.visits.success || 0} / ${analyticsData.visits.fail || 0}`;
+                document.getElementById('kpi-cvr').textContent = cvr + '%';
+                document.getElementById('kpi-visits-ratio').textContent = `대기 메일 잔여: ${analyticsData.visits.pending || 0}건`;
 
-            // Render table
+                const now = new Date();
+                const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const todayMails = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
+                document.getElementById('kpi-subtitle-2').innerHTML = `최근 24시간 내 <span class="trend-up">${todayMails}건</span> 발송 완료됨`;
+                document.getElementById('kpi-subtitle-3').textContent = '발송 성공 대비 실패율 분석 지표';
+            } else {
+                document.getElementById('kpi-title-1').innerHTML = '총 방문 세션수 <span>👤</span>';
+                document.getElementById('kpi-title-2').innerHTML = '누적 접수 견적수 <span>✉️</span>';
+                document.getElementById('kpi-title-3').innerHTML = '평균 견적 전환율 (CVR) <span>🎯</span>';
+                
+                document.getElementById('chart-visits-title').textContent = '마케팅 유입 채널 분석';
+                document.getElementById('chart-visits-desc').textContent = 'Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중';
+                document.getElementById('chart-product-title').textContent = '요청 품목 선호도';
+                document.getElementById('chart-product-desc').textContent = '견적 요청이 접수된 가공 서비스별 분포 분석';
+                
+                document.getElementById('table-mode-title').textContent = dashboardMode === 'realtime' ? "실시간 접수 견적 피드 (LIVE)" : "데모 시뮬레이터 견적 피드";
+                document.getElementById('table-mode-desc').textContent = "파이프가공 서비스 문의를 통해 접수된 실시간 견적 목록";
+
+                totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+                totalQuotes = analyticsData.quotes.length;
+                cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(2) : '0.00';
+
+                document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString();
+                document.getElementById('kpi-quotes').textContent = totalQuotes.toLocaleString();
+                document.getElementById('kpi-cvr').textContent = cvr + '%';
+
+                const adsPercentage = totalVisits > 0 ? ((analyticsData.visits.google_ads / totalVisits) * 100).toFixed(1) : '0';
+                document.getElementById('kpi-visits-ratio').textContent = `Google Ads 광고 유입 ${adsPercentage}%`;
+
+                const now = new Date();
+                const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const todayQuotesCount = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
+                document.getElementById('kpi-subtitle-2').innerHTML = `최근 24시간 내 <span class="trend-up">${todayQuotesCount}건</span> 추가 접수됨`;
+                document.getElementById('kpi-subtitle-3').textContent = '총 방문 대비 견적 전환 성공 비율';
+            }
+
+            // Render table headers dynamically
+            const tableHeader = document.querySelector('#leads-table thead tr');
+            if (currentSite === 'mailling') {
+                tableHeader.innerHTML = `
+                    <th>ID</th>
+                    <th>발송 일시</th>
+                    <th>회사명</th>
+                    <th>수신 이메일</th>
+                    <th>발송 회차</th>
+                    <th>발송 상태</th>
+                    <th>세부결과 / 비고</th>
+                `;
+            } else {
+                tableHeader.innerHTML = `
+                    <th>ID</th>
+                    <th>접수 일시</th>
+                    <th>회사/현장명</th>
+                    <th>담당자</th>
+                    <th>연락처</th>
+                    <th>가공 서비스</th>
+                    <th>유입 경로</th>
+                `;
+            }
+
+            // Render table body
             const tbody = document.getElementById('leads-body');
             const emptyState = document.getElementById('table-empty');
             tbody.innerHTML = '';
@@ -1366,24 +1637,40 @@
                         minute: '2-digit'
                     });
 
-                    let sourceBadge = '';
-                    if (quote.source === 'google_ads') {
-                        sourceBadge = '<span class="badge-source ads">Google Ads</span>';
-                    } else if (quote.source === 'search') {
-                        sourceBadge = '<span class="badge-source search">Search</span>';
+                    if (currentSite === 'mailling') {
+                        let statusBadge = quote.email === '성공' ? 
+                            '<span class="badge-source ads" style="background: var(--success); color: #fff;">성공</span>' : 
+                            '<span class="badge-source direct" style="background: var(--danger); color: #fff;">실패</span>';
+                        
+                        tr.innerHTML = `
+                            <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
+                            <td class="date-col">${dateStr}</td>
+                            <td style="font-weight: 500;">${quote.company}</td>
+                            <td>${quote.name}</td>
+                            <td><span class="badge-product" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">${quote.phone}</span></td>
+                            <td>${statusBadge}</td>
+                            <td style="font-size: 13px; color: var(--text-secondary);">${quote.product}${quote.specs ? ' | ' + quote.specs : ''}</td>
+                        `;
                     } else {
-                        sourceBadge = '<span class="badge-source direct">Direct</span>';
-                    }
+                        let sourceBadge = '';
+                        if (quote.source === 'google_ads') {
+                            sourceBadge = '<span class="badge-source ads">Google Ads</span>';
+                        } else if (quote.source === 'search') {
+                            sourceBadge = '<span class="badge-source search">Search</span>';
+                        } else {
+                            sourceBadge = '<span class="badge-source direct">Direct</span>';
+                        }
 
-                    tr.innerHTML = `
-                        <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
-                        <td class="date-col">${dateStr}</td>
-                        <td style="font-weight: 500;">${quote.company}</td>
-                        <td>${quote.name}</td>
-                        <td style="font-size: 13px; color: var(--text-secondary);">${quote.phone}</td>
-                        <td><span class="badge-product">${quote.product}</span></td>
-                        <td>${sourceBadge}</td>
-                    `;
+                        tr.innerHTML = `
+                            <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
+                            <td class="date-col">${dateStr}</td>
+                            <td style="font-weight: 500;">${quote.company}</td>
+                            <td>${quote.name}</td>
+                            <td style="font-size: 13px; color: var(--text-secondary);">${quote.phone}</td>
+                            <td><span class="badge-product">${quote.product}</span></td>
+                            <td>${sourceBadge}</td>
+                        `;
+                    }
                     tbody.appendChild(tr);
                 });
             }
@@ -1396,26 +1683,40 @@
 
         // Initialize and Update Chart.js
         function updateCharts() {
-            const sourceData = [
-                analyticsData.visits.google_ads,
-                analyticsData.visits.search,
-                analyticsData.visits.direct
+            let labels_src = ['Google Ads', '검색 (Organic)', '직접 유입 (Direct)'];
+            let colors_src = ['#f97316', '#3b82f6', '#64748b'];
+            let sourceData = [
+                analyticsData.visits.google_ads || 0,
+                analyticsData.visits.search || 0,
+                analyticsData.visits.direct || 0
             ];
 
+            if (currentSite === 'mailling') {
+                const successCount = analyticsData.quotes.filter(q => q.email === '성공').length;
+                const failCount = analyticsData.quotes.filter(q => q.email === '실패').length;
+                const pendingCount = analyticsData.visits.pending || 0;
+                labels_src = ['발송 성공', '발송 실패', '대기'];
+                colors_src = ['#10b981', '#ef4444', '#64748b'];
+                sourceData = [successCount, failCount, pendingCount];
+            }
+
             if (sourceChart) {
+                sourceChart.data.labels = labels_src;
                 sourceChart.data.datasets[0].data = sourceData;
+                sourceChart.data.datasets[0].backgroundColor = colors_src;
                 sourceChart.update();
             } else {
                 const ctx = document.getElementById('sourceChart').getContext('2d');
                 sourceChart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Google Ads', '검색 (Organic)', '직접 유입 (Direct)'],
+                        labels: labels_src,
                         datasets: [{
                             data: sourceData,
-                            backgroundColor: ['#f97316', '#3b82f6', '#64748b'],
+                            backgroundColor: colors_src,
                             borderWidth: 0,
-                            hoverOffset: 4
+                            hoverOffset: 6,
+                            cutout: '75%'
                         }]
                     },
                     options: {
@@ -1424,7 +1725,7 @@
                         plugins: {
                             legend: {
                                 position: 'bottom',
-                                labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+                                labels: { color: '#94a3b8', font: { family: 'Inter', size: 11, weight: '500' } }
                             }
                         }
                     }
@@ -1432,26 +1733,44 @@
             }
 
             // Product popularity chart (Bar)
-            const productCounts = {
-                '용접철망': 0,
-                '인테리어용접': 0,
-                '동물보호망': 0,
-                '메쉬파레트': 0,
-                '일체형메쉬': 0,
-                '견사망': 0,
-                '개비온철망': 0
-            };
+            let labels = [];
+            let data = [];
+            let datasetLabel = '견적 건수';
 
-            analyticsData.quotes.forEach(q => {
-                if (productCounts[q.product] !== undefined) {
-                    productCounts[q.product]++;
-                }
-            });
-
-            const labels = Object.keys(productCounts);
-            const data = Object.values(productCounts);
+            if (currentSite === 'mailling') {
+                datasetLabel = '발송 건수';
+                const roundCounts = { '1일차': 0, '9일차': 0, '10일차': 0 };
+                analyticsData.quotes.forEach(q => {
+                    const r = q.phone || '기타';
+                    if (roundCounts[r] === undefined) {
+                        roundCounts[r] = 0;
+                    }
+                    roundCounts[r]++;
+                });
+                labels = Object.keys(roundCounts);
+                data = Object.values(roundCounts);
+            } else {
+                const productCounts = {
+                    '파이프벤딩': 0,
+                    '파이프스웨이징': 0,
+                    '파이프인발': 0,
+                    '파이프축관': 0,
+                    '파이프확관': 0,
+                    '파이프주문제작': 0,
+                    '복합가공': 0
+                };
+                analyticsData.quotes.forEach(q => {
+                    if (productCounts[q.product] !== undefined) {
+                        productCounts[q.product]++;
+                    }
+                });
+                labels = Object.keys(productCounts);
+                data = Object.values(productCounts);
+            }
 
             if (productChart) {
+                productChart.data.labels = labels;
+                productChart.data.datasets[0].label = datasetLabel;
                 productChart.data.datasets[0].data = data;
                 productChart.update();
             } else {
@@ -1461,7 +1780,7 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: '견적 건수',
+                            label: datasetLabel,
                             data: data,
                             backgroundColor: 'rgba(59, 130, 246, 0.75)',
                             borderColor: '#3b82f6',
@@ -1501,11 +1820,14 @@
             const clicks = Math.round(budget / cpc);
             document.getElementById('result-clicks').textContent = clicks.toLocaleString() + ' 회';
 
-            const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
-            const currentCvr = totalVisits > 0 ? (analyticsData.quotes.length / totalVisits) : 0.02;
+            let currentCvr = 0.02;
+            if (currentSite !== 'mailling') {
+                const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+                currentCvr = totalVisits > 0 ? (analyticsData.quotes.length / totalVisits) : 0.02;
+            }
             
             const expectedLeads = Math.max(1, Math.round(clicks * currentCvr));
-            document.getElementById('result-leads').textContent = expectedLeads.toLocaleString() + ' 건';
+            document.getElementById('result-leads').textContent = expectedLeads.toLocaleString() + (currentSite === 'mailling' ? ' 건(메일)' : ' 건');
 
             const cpa = Math.round(budget / expectedLeads);
             document.getElementById('result-cpa').textContent = cpa.toLocaleString() + ' 원';
@@ -1515,19 +1837,63 @@
         function generateMockQuote() {
             if (dashboardMode === 'realtime') return; // Prevent writing to live database
 
-            const companies = ['(주)태진토건', '일우철강', '명성펜스산업', '영남건설자재', '중앙디자인', '서원종합건설', '한국조경자재'];
+            if (currentSite === 'mailling') {
+                const companies = ['삼협철망', '우주로봇', '한성철강', '동성테크', '신화금속', '삼우기계', '경남제작소'];
+                const emails = ['buyer@samhyup.com', 'contact@ujurobot.co.kr', 'hssteel@naver.com', 'dstek@daum.net', 'shmetal@sh.com', 'info@samoo.co.kr', 'sales@kngroup.com'];
+                const rounds = ['1일차', '9일차', '10일차'];
+                const statuses = ['성공', '실패'];
+                const details = ['Gmail API 발송 완료', 'SMTP connection timeout', '수신인 이메일 사서함 용량 초과'];
+                const notes = ['비고 없음', '재발송 필요', '휴폐업 업체 확인'];
+
+                const compIdx = Math.floor(Math.random() * companies.length);
+                const company = companies[compIdx];
+                const email = emails[compIdx];
+                const round = rounds[Math.floor(Math.random() * rounds.length)];
+                const status = Math.random() > 0.15 ? '성공' : '실패'; // 85% success rate
+                const detail = status === '성공' ? details[0] : details[Math.floor(Math.random() * (details.length - 1)) + 1];
+                const note = Math.random() > 0.5 ? notes[Math.floor(Math.random() * notes.length)] : '';
+
+                loadLocalData();
+
+                if (status === '성공') analyticsData.visits.success++;
+                else analyticsData.visits.fail++;
+
+                if (analyticsData.visits.pending > 0) {
+                    analyticsData.visits.pending--;
+                }
+
+                const nextId = analyticsData.quotes.length > 0 ? Math.max(...analyticsData.quotes.map(q => q.id)) + 1 : 201;
+                const newLog = {
+                    id: nextId,
+                    date: new Date().toISOString(),
+                    company: company,
+                    name: email,
+                    phone: round,
+                    email: status,
+                    product: detail,
+                    specs: note,
+                    source: status === '성공' ? 'success' : 'fail'
+                };
+
+                analyticsData.quotes.push(newLog);
+                localStorage.setItem('samhyup_mailling_sim_analytics', JSON.stringify(analyticsData));
+                updateDashboardUI();
+                return;
+            }
+
+            const companies = ['(주)태진산업', '일우기계', '명성파이프', '영남제관', '중앙금속', '서원정밀', '한국파이프'];
             const names = ['강준우 과장', '임지은 대리', '최동식 부장', '오영호 대표', '윤서아 실장', '서태수 팀장'];
             const phones = ['010-2345-6789', '010-8765-4321', '010-5678-1234', '010-4321-8765', '010-9876-5432'];
             const emails = ['buyer@taejin.com', 'ilwoo@naver.com', 'msfence@daum.net', 'ynconst@gmail.com', 'design@center.com'];
-            const products = ['용접철망', '인테리어용접', '동물보호망', '메쉬파레트', '일체형메쉬', '견사망', '개비온철망'];
+            const products = ['파이프벤딩', '파이프스웨이징', '파이프인발', '파이프축관', '파이프확관', '파이프주문제작', '복합가공'];
             const specs = [
-                '#10 (2.6mm) 100x100mm 1500장 견적 및 경기 김포 배송 일정 문의',
-                '인테리어 분체도장 메쉬망 600x1200 40장 블랙 주문제작 가격 회신 요망',
-                '동물보호망 2.0Ø 녹색분체 H1.5m 300m 단가 비교 요청드립니다',
-                '접이식 메쉬파레트 표준형 (중형) 30개 가격 확인 바랍니다',
-                '일체형 메쉬 천장 판넬 아연도금 200장 납기일 확인 바람',
-                '조립식 대형 견사망 주문 제작 규격 (2m x 3m) 5세트 견적 의뢰',
-                '개비온 조경 옹벽용 철망태 1m*1m*1m 50개 단가 메일 송부 요청'
+                'Ø50.8 T2.0 탄소강 파이프 벤딩 90° 200개 단가 및 납기 문의',
+                'Ø38.1 스테인리스 파이프 스웨이징 단부 축관 500개 견적 요청',
+                'Ø25.4 탄소강 냉간 인발 정밀 성형 공차 ±0.05mm 300개 문의',
+                'Ø60.3 T3.0 테이퍼 축관 가공 100개 단가 회신 바랍니다',
+                'Ø76.1 알루미늄 플레어형 확관 가공 150개 납기 문의',
+                '도면 기준 비규격 복합가공(벤딩+축관) 50개 주문제작 견적',
+                'Ø101.6 T4.0 탄소강 벤딩 45° + 확관 복합가공 30개 문의'
             ];
             const sources = ['google_ads', 'search', 'direct'];
 
@@ -1540,7 +1906,7 @@
             const spec = specs[prodIdx];
             const source = sources[Math.floor(Math.random() * sources.length)];
 
-            loadData();
+            loadLocalData();
             
             const additionalVisits = Math.floor(Math.random() * 10) + 5;
             for(let i = 0; i < additionalVisits; i++) {
@@ -1572,6 +1938,26 @@
 
         // Reset Data
         function resetAnalytics() {
+            if (currentSite === 'mailling') {
+                const targetRealKey = 'samhyup_mailling_analytics';
+                const targetSimKey = 'samhyup_mailling_sim_analytics';
+                const defaultSimObj = defaultMailSimData;
+
+                if (dashboardMode === 'realtime') {
+                    if (confirm('실제 메일 발송 로그 데이터를 초기화하시겠습니까?')) {
+                        const cleanData = { visits: { success: 0, fail: 0, pending: 0 }, quotes: [] };
+                        localStorage.setItem(targetRealKey, JSON.stringify(cleanData));
+                        updateDashboardUI();
+                    }
+                } else {
+                    if (confirm('메일 시뮬레이터 데모 데이터를 초기 상태로 리셋하시겠습니까?')) {
+                        localStorage.setItem(targetSimKey, JSON.stringify(defaultSimObj));
+                        updateDashboardUI();
+                    }
+                }
+                return;
+            }
+
             const targetRealKey = currentSite === 'catalog' ? 'samhyup_analytics' : 'samhyup_main_analytics';
             const targetSimKey = currentSite === 'catalog' ? 'samhyup_sim_analytics' : 'samhyup_main_sim_analytics';
             const defaultSimObj = currentSite === 'catalog' ? defaultSimData : defaultMainSimData;
@@ -1654,18 +2040,67 @@
             const quote = analyticsData.quotes.find(q => q.id === id);
             if (!quote) return;
 
-            document.getElementById('modal-company').textContent = quote.company;
-            document.getElementById('modal-name').textContent = quote.name;
-            document.getElementById('modal-phone').textContent = quote.phone;
-            document.getElementById('modal-email').textContent = quote.email;
-            document.getElementById('modal-product').textContent = quote.product;
-            document.getElementById('modal-specs').textContent = quote.specs;
-
-            let sourceText = '';
-            if (quote.source === 'google_ads') sourceText = '🟢 Google Ads 광고 유입';
-            else if (quote.source === 'search') sourceText = '🔵 검색엔진 (Organic Search) 유입';
-            else sourceText = '⚪ 직접 방문 (Direct)';
-            document.getElementById('modal-source').textContent = sourceText;
+            if (currentSite === 'mailling') {
+                document.querySelector('.modal-title').textContent = "메일 발송 이력 상세 보기";
+                document.querySelector('.info-grid').innerHTML = `
+                    <div class="info-item">
+                        <label>회사명</label>
+                        <p>${quote.company}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>수신 이메일</label>
+                        <p>${quote.name}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>발송 회차</label>
+                        <p>${quote.phone}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>발송 상태</label>
+                        <p>${quote.email === '성공' ? '🟢 성공' : '🔴 실패'}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>세부 결과</label>
+                        <p>${quote.product}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>비고</label>
+                        <div class="specs-display-box">${quote.specs || '비고 없음'}</div>
+                    </div>
+                `;
+            } else {
+                document.querySelector('.modal-title').textContent = "견적 요청 상세 보기";
+                document.querySelector('.info-grid').innerHTML = `
+                    <div class="info-item">
+                        <label>회사/현장명</label>
+                        <p id="modal-company">${quote.company}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>담당자</label>
+                        <p id="modal-name">${quote.name}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>연락처</label>
+                        <p id="modal-phone">${quote.phone}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>이메일</label>
+                        <p id="modal-email">${quote.email}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>가공 서비스</label>
+                        <p><span class="badge-product" id="modal-product">${quote.product}</span></p>
+                    </div>
+                    <div class="info-item">
+                        <label>유입 경로</label>
+                        <p id="modal-source">${quote.source === 'google_ads' ? '🟢 Google Ads 광고 유입' : quote.source === 'search' ? '🔵 검색엔진 유입' : '⚪ 직접 방문'}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>희망 규격 및 요청 수량</label>
+                        <div class="specs-display-box" id="modal-specs">${quote.specs}</div>
+                    </div>
+                `;
+            }
 
             document.getElementById('quoteModal').classList.add('active');
         }
@@ -1680,13 +2115,13 @@
         // Initial setup check
         window.addEventListener('DOMContentLoaded', () => {
             // 과거 구형 더미 데이터 1회성 강제 리셋 (실시간 데이터 오염 방지)
-            if (!localStorage.getItem('samhyup_analytics_cleared')) {
+            if (!localStorage.getItem('samhyup_analytics_cleared_v2')) {
                 const cleanData = {
                     visits: { google_ads: 0, search: 0, direct: 0 },
                     quotes: []
                 };
                 localStorage.setItem('samhyup_analytics', JSON.stringify(cleanData));
-                localStorage.setItem('samhyup_analytics_cleared', 'true');
+                localStorage.setItem('samhyup_analytics_cleared_v2', 'true');
             }
 
             if (sessionStorage.getItem('samhyup_admin_auth') === 'true') {
