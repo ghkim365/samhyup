@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/catalog/index.html" },
+    { "source": "/styles.css", "destination": "/catalog/styles.css" },
+    { "source": "/app.js", "destination": "/catalog/app.js" },
+    { "source": "/sw.js", "destination": "/catalog/sw.js" },
+    { "source": "/manifest.json", "destination": "/catalog/manifest.json" },
+    { "source": "/images/:path*", "destination": "/catalog/images/:path*" },
+    { "source": "/gallery/:path*", "destination": "/catalog/gallery/:path*" },
+    { "source": "/templates/:path*", "destination": "/catalog/templates/:path*" }
+  ]
+}
