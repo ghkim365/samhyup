@@ -1,0 +1,22 @@
+{
+  "name": "삼협철망 | B2B 모바일 간편 견적",
+  "short_name": "삼협철망",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0284C7",
+  "icons": [
+    {
+      "src": "images/logo_samhyup_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logo_samhyup_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

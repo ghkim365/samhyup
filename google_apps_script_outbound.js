@@ -206,10 +206,10 @@ function sendOutboundEmails() {
   for (var i = 0; i < imageCids.length; i++) {
     var cid    = imageCids[i];
     var imgUrl = '';
-    if      (cid === 'logo')           { imgUrl = BASE_URL + 'catalog/images/logo_samhyup.png';       }
-    else if (cid === 'assembled_mesh') { imgUrl = BASE_URL + 'catalog/gallery/assembled_mesh_01.jpg'; }
-    else if (cid === 'mesh_pallet')    { imgUrl = BASE_URL + 'catalog/gallery/mesh_pallet_01.jpg';    }
-    else if (cid === 'gabion')         { imgUrl = BASE_URL + 'catalog/gallery/gabion_01.jpg';          }
+    if      (cid === 'logo')           { imgUrl = BASE_URL + 'images/logo_samhyup.png';       }
+    else if (cid === 'assembled_mesh') { imgUrl = BASE_URL + 'gallery/assembled_mesh_01.jpg'; }
+    else if (cid === 'mesh_pallet')    { imgUrl = BASE_URL + 'gallery/mesh_pallet_01.jpg';    }
+    else if (cid === 'gabion')         { imgUrl = BASE_URL + 'gallery/gabion_01.jpg';          }
     try {
       var blob = UrlFetchApp.fetch(imgUrl).getBlob();
       blob.setName(cid);
