@@ -357,19 +357,19 @@
 
   <!-- Tab Controls (대흥정밀 / Fursys-Store 미러) -->
   <div class="plan-tab-nav">
-    <button type="button" class="plan-tab-btn active" onclick="switchPlanTab('tab-history')">
+    <button type="button" class="plan-tab-btn active" onclick="switchPlanTab('tab-history', this)">
       📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~21)
     </button>
-    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-deploy')">
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-deploy', this)">
       ☁️ 2. Cloudflare Pages 배포 매뉴얼 (2026-11-20 인프라 이전)
     </button>
-    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-mail')">
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-mail', this)">
       📬 3. B2B 이메일 발송 자동화 및 템플릿·도메인 관리
     </button>
-    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-fax')">
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-fax', this)">
       📠 4. B2B 팩스 대량 발송 운영 체계 &amp; 센드랩스 연동
     </button>
-    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-sop')">
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-sop', this)">
       📖 5. B2B 정기 발송 표준운영절차 (SOP)
     </button>
   </div>
@@ -796,106 +796,7 @@
           class="task-memo-input" id="ph12-live-gas-memo"></li>
     </ul>
   </div>
-
-  <script>
-    const prefix = 'samhyup_plan_2026_';
-    const defaults = {
-      'ph21-sidebar-dashboard': { checked: true, date: '2026-11-23', memo: '130px 사이드바 & 4-Grid KPI 완료' },
-      'ph21-auth-modal-clean': { checked: true, date: '2026-11-23', memo: '화이트 클린 모달 & 8px 백드롭 블러 완료' },
-      'ph21-reports-1020px': { checked: true, date: '2026-11-23', memo: '1020px Pretendard & Base64 로고 리뉴얼' },
-      'ph21-github-deploy': { checked: true, date: '2026-11-23', memo: 'ghkim365/samhyup GitHub 배포 완료' },
-      'ph21-fail-safe-backup': { checked: true, date: '2026-11-23', memo: 'COM 백업 및 안전 타임스탬프 보관 완료' },
-      'ph15-cid-fix': { checked: true, date: '2026-10-26', memo: 'Vercel CDN 절대 URL 교체로 액박 완전 해소' },
-      'ph15-proposal-v2': { checked: true, date: '2026-10-26', memo: 'v2 정기 리마인드 템플릿 및 미리보기 완비' },
-      'ph15-seasonal-greeting': { checked: true, date: '2026-10-26', memo: '4계절 맞춤 안부 인사 실시간 치환' },
-      'ph15-auto-split-gas': { checked: true, date: '2026-10-26', memo: 'v1/v2 자동 분기 및 M열 회차 관리' },
-      'ph15-round2-selector': { checked: true, date: '2026-10-26', memo: '2회차 대상 원클릭 선택 메뉴 탑재' },
-
-      'ph14-stitch-import': { checked: true, date: '2026-10-25', memo: '구글 스티치 7p A4 레이아웃 적용' },
-      'ph14-logo-assets': { checked: true, date: '2026-10-25', memo: '정품 로고 및 실사 39종 매핑' },
-      'ph14-photo-aspect': { checked: true, date: '2026-10-25', memo: '황금비 4:3 / 16:10 복원 완료' },
-      'ph14-factual-integrity': { checked: true, date: '2026-10-25', memo: '팩트 무결성 및 타이틀 가독성 개선' },
-      'ph14-print-pdf': { checked: true, date: '2026-10-25', memo: 'A4 인쇄 & PDF 다운로드 연동' },
-      'ph13-fax-view': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 연동 완료' },
-      'ph13-fax-report': { checked: true, date: '2026-10-13', memo: 'fax/fax_report.html 구축 완료' },
-      'ph13-gas-handler': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 배포 완료' },
-      'ph13-competitor-filter': { checked: true, date: '2026-10-13', memo: 'V열 제외 155건 처리 완료' },
-      'ph13-brand-logo': { checked: true, date: '2026-10-13', memo: '카탈로그 정품 SH 심볼 일체화 완료' },
-      'ph1-hero': { checked: true, date: '2026-08-29', memo: '삼협철망 헤드라인 구성 완료' },
-      'ph1-catalog': { checked: true, date: '2026-08-29', memo: '제품 카탈로그 그리드 배치 완료' },
-      'ph1-specs': { checked: true, date: '2026-08-29', memo: '망눈/선경 규격표 완비' },
-      'ph1-quoteform': { checked: true, date: '2026-08-29', memo: 'Formspree 연동 완료' },
-      'ph1-call-link': { checked: true, date: '2026-08-29', memo: '전화 바로연결 세팅' },
-      'ph1-seo': { checked: true, date: '2026-08-29', memo: '네이버/구글 서치콘솔 수집 완료' },
-      'ph2-gas-setup': { checked: true, date: '2026-08-30', memo: 'google_apps_script_outbound.js 구축' },
-      'ph2-maillog': { checked: true, date: '2026-08-30', memo: 'mail_log 시트 생성 및 기록 연동' },
-      'ph2-templates': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal.html 템플릿 제안서 완료' },
-      'ph2-preview': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal_preview.html 제공' },
-      'ph3-account-split': { checked: true, date: '2026-09-01', memo: 'Gmail 발송 / Naver 수신 세팅' },
-      'ph3-bounce-sync': { checked: true, date: '2026-09-02', memo: 'syncMailLogToCompany() 반송 반영 완료' },
-      'ph4-crawl-clean': { checked: true, date: '2026-09-04', memo: '전국 철망 수요처 타깃 DB 정제 완료' },
-      'ph4-address-enrich': { checked: true, date: '2026-09-04', memo: '주소 보강 스크립트 실행 완료' },
-      'ph4-target-ppt': { checked: true, date: '2026-09-04', memo: '수요처 발굴 보고서 PDF/PPTX 작성' },
-      'ph5-utm-setup': { checked: true, date: '2026-09-04', memo: 'UTM 파라미터 세팅 완료' },
-      'ph6-dashboard-ui': { checked: true, date: '2026-09-04', memo: '검색/필터/페이징 dashboard.html 탑재' },
-      'ph6-report-tabs': { checked: true, date: '2026-09-04', memo: 'mail_report.html 탭분리 및 차트 시각화' },
-      'ph6-tainted-cors': { checked: true, date: '2026-09-04', memo: 'Tainted Canvas CORS 로고 해결' },
-      'ph7-vercel': { checked: true, date: '2026-08-30', memo: 'vercel.json 연속 배포 완료' },
-      'ph7-pwa': { checked: true, date: '2026-08-30', memo: 'manifest.json & sw.js 등록 완료' },
-      'ph8-wbs-docs': { checked: true, date: '2026-09-04', memo: 'WBS 계획서 최신화 완료' },
-      'ph8-tech-guide': { checked: true, date: '2026-09-14', memo: 'B2B 리드 기술 가이드 작성' },
-      'ph8-docx-report': { checked: true, date: '2026-10-04', memo: 'samhyup_fax_work_report_20261004.docx 작성' },
-      'ph9-fax-service': { checked: true, date: '2026-09-28', memo: '샌드랩스 건당 25 Cash 분석 완료' },
-      'ph9-gsheet-faxlog': { checked: true, date: '2026-09-28', memo: 'fax_log 시트 생성 완료' },
-      'ph9-company-channel': { checked: true, date: '2026-09-28', memo: 'company U열 영업채널 드롭다운 세팅' },
-      'ph9-mail-sync': { checked: true, date: '2026-09-28', memo: '메일 성공 업체 U열 메일 반영' },
-      'ph9-fax-crawl': { checked: true, date: '2026-09-28', memo: '100% 검증 팩스번호 T열 완비' },
-      'ph10-mail-schedule': { checked: true, date: '2026-10-01', memo: '월 2회 (1일/15일) 정기발송 개편' },
-      'ph10-fax-pivot': { checked: true, date: '2026-10-01', memo: '메일 반송 N열 실패 -> U열 팩스 피벗' },
-      'ph10-blog-macro': { checked: true, date: '2026-10-01', memo: '네이버 블로그 매크로 위험 방침 수립' },
-      'ph10-blog-target': { checked: false, date: '', memo: '수작업 맞춤 블로그 포스팅 진행 예정' },
-      'ph11-staggered-strategy': { checked: true, date: '2026-10-02', memo: '주 1회 월요일 14개사 분산 발송 확정' },
-      'ph11-a4-fit': { checked: true, date: '2026-09-30', memo: 'fax_proposal_a4.html A4 1페이지 최적화' },
-      'ph11-rounds-setup': { checked: true, date: '2026-10-03', memo: '9개 회차(팩스1일~9일) 추출 스크립트 완비' },
-      'ph11-batch1-launch': { checked: false, date: '', memo: '10월 6일 1차 (팩스1일) 14개사 개시 예정' },
-      'ph12-batch-exec': { checked: false, date: '', memo: '팩스 2~9차 주차별 정기 발송 예정' },
-      'ph12-live-gas': { checked: false, date: '', memo: '대시보드 실시간 라이브 연동 테스트 예정' }
-    };
-
-    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
-    checkboxes.forEach(cb => {
-      const def = defaults[cb.id] || {};
-      const dateInput = document.getElementById(cb.id + '-date');
-      const memoInput = document.getElementById(cb.id + '-memo');
-
-      const savedCheck = localStorage.getItem(prefix + cb.id);
-      const savedDate = localStorage.getItem(prefix + cb.id + '_date');
-      const savedMemo = localStorage.getItem(prefix + cb.id + '_memo');
-
-      const isChecked = def.checked ? true : (savedCheck !== null ? savedCheck === 'true' : false);
-      const dateVal = def.date ? def.date : (savedDate !== null ? savedDate : '');
-      const memoVal = def.memo ? def.memo : (savedMemo !== null ? savedMemo : '');
-
-      cb.checked = isChecked;
-      if (isChecked) cb.closest('.task-item').classList.add('completed');
-      if (dateInput && dateVal) dateInput.value = dateVal;
-      if (memoInput && memoVal) memoInput.value = memoVal;
-
-      cb.addEventListener('change', () => {
-        localStorage.setItem(prefix + cb.id, cb.checked);
-        cb.closest('.task-item').classList.toggle('completed', cb.checked);
-      });
-    });
-  </script>
-
-  </div>
-
-
-    <!-- ================================================================= -->
-    <!-- [탭 2] Cloudflare & Vercel 등록·배포 완벽 매뉴얼 및 인프라 전환 일지 -->
-    <!-- ================================================================= -->
-    <div
-  </div>
+  </div><!-- /#tab-history -->
 
   <!-- ============================================================== -->
   <!-- TAB 2: Cloudflare Pages 배포 매뉴얼 & 인프라 전환 일지 -->
@@ -1375,7 +1276,7 @@ var seasonalGreeting = (month >= 3 && month <= 5) ? "따뜻한 봄기운과 함�
 </div><!-- /.container -->
 
 <script>
-  function switchPlanTab(tabId) {
+  function switchPlanTab(tabId, el) {
     // 1. Reset all buttons
     var buttons = document.querySelectorAll('.plan-tab-btn');
     for (var i = 0; i < buttons.length; i++) {
@@ -1389,10 +1290,14 @@ var seasonalGreeting = (month >= 3 && month <= 5) ? "따뜻한 봄기운과 함�
     }
 
     // 3. Activate target button & pane
-    if (event && event.currentTarget) {
-      event.currentTarget.classList.add('active');
+    if (el) {
+      el.classList.add('active');
+    } else if (window.event && window.event.currentTarget) {
+      window.event.currentTarget.classList.add('active');
     } else {
-      var targetBtn = Array.from(buttons).find(b => b.getAttribute('onclick').includes(tabId));
+      var targetBtn = Array.from(buttons).find(function(b) {
+        return b.getAttribute('onclick') && b.getAttribute('onclick').indexOf(tabId) !== -1;
+      });
       if (targetBtn) targetBtn.classList.add('active');
     }
 
