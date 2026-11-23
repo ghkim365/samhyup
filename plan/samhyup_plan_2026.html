@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼협철망 B2B 마케팅 &amp; 인프라 마스터 플랜 2026</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --primary: #1C2B4A;
+      --primary-light: #2C3E6A;
+      --accent: #2563EB;
+      --accent-light: #3B82F6;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --border-dark: #CBD5E1;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 30px 20px;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    
+    /* Header - Clean Light Theme */
+    .header-panel {
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid var(--border);
+      padding: 26px 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .header-title h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1C2B4A;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title p {
+      color: #64748B;
+      font-size: 13.5px;
+    }
+    .header-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .header-btn {
+      background: #F8FAFC;
+      color: #334155;
+      border: 1.5px solid #CBD5E1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-btn:hover {
+      background: #E2E8F0;
+      color: #0F172A;
+      transform: translateY(-1px);
+    }
+    .header-btn.primary {
+      background: #2563EB;
+      color: #FFFFFF;
+      border-color: #2563EB;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+    .header-btn.primary:hover {
+      background: #1D4ED8;
+      color: #FFFFFF;
+    }
+
+    /* Tab Navigation Styles (Fursys-Store / DHSteel Mirror) */
+    .plan-tab-nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #E2E8F0;
+      padding-bottom: 0;
+      flex-wrap: wrap;
+    }
+    .plan-tab-btn {
+      padding: 13px 22px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #64748B;
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .plan-tab-btn:hover {
+      background: #E2E8F0;
+      color: #0F172A;
+    }
+    .plan-tab-btn.active {
+      background: #FFFFFF;
+      color: #2563EB;
+      border-color: #2563EB #2563EB #FFFFFF;
+      border-top: 3.5px solid #2563EB;
+      margin-bottom: -2px;
+      font-weight: 800;
+      box-shadow: 0 -4px 10px rgba(37, 99, 235, 0.08);
+    }
+    
+    .plan-tab-pane {
+      display: none;
+    }
+    .plan-tab-pane.active {
+      display: block;
+    }
+
+    /* Cards & Content */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1.5px solid #F1F5F9;
+      padding-bottom: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .badge-primary { background: #E0E7FF; color: #3730A3; }
+    .badge-success { background: #DCFCE7; color: #166534; }
+    .badge-warning { background: #FEF3C7; color: #92400E; }
+    .badge-info { background: #E0F2FE; color: #075985; }
+
+    /* Tables */
+    table.data-table, table.wbs-table, table.meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px 0;
+      font-size: 13.5px;
+    }
+    table.data-table th, table.data-table td,
+    table.wbs-table th, table.wbs-table td,
+    table.meta-table th, table.meta-table td {
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    table.data-table th, table.wbs-table th, table.meta-table th {
+      background-color: #F8FAFC;
+      color: #334155;
+      font-weight: 700;
+    }
+    table.data-table tr:hover td, table.wbs-table tr:hover td {
+      background-color: #F8FAFC;
+    }
+
+    /* Checklist */
+    ul.checklist {
+      list-style: none;
+      margin: 12px 0;
+    }
+    ul.checklist li, .task-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+    .task-item.completed {
+      background: #F8FAFC;
+    }
+    .task-item.completed .task-text {
+      color: #64748B;
+    }
+    .task-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .task-text {
+      flex: 1;
+    }
+    .task-date-input, .task-memo-input {
+      padding: 4px 8px;
+      border: 1px solid #CBD5E1;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #475569;
+    }
+    .task-date-input { width: 125px; }
+    .task-memo-input { width: 280px; }
+
+    /* Tip Boxes & Code */
+    .tip-box {
+      background: #F0F9FF;
+      border-left: 4px solid #0284C7;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #0369A1;
+      margin: 14px 0;
+      line-height: 1.6;
+    }
+    .tip-box.green {
+      background: #F0FDF4;
+      border-left-color: #16A34A;
+      color: #15803D;
+    }
+    .tip-box.yellow {
+      background: #FEFCE8;
+      border-left-color: #CA8A04;
+      color: #854D0E;
+    }
+    code {
+      font-family: "JetBrains Mono", Consolas, monospace;
+      background: #F1F5F9;
+      color: #2563EB;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    pre {
+      background: #F8FAFC;
+      color: #1E293B;
+      border: 1px solid #E2E8F0;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 12.5px;
+      overflow-x: auto;
+      margin: 14px 0;
+      line-height: 1.5;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .stat-card .label {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .stat-card .val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-card .desc {
+      font-size: 11.5px;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header-panel">
+    <div class="header-title">
+      <h1>🏭 삼협철망 B2B 마케팅 &amp; 인프라 마스터 플랜 2026</h1>
+      <p>Cloudflare Pages 이전 완료 • 용접철망/개비온/메쉬파레트 아웃바운드(메일/팩스) 자동화 및 인프라 통합 관제</p>
+    </div>
+    <div class="header-links">
+      <a href="https://samhyup.pages.dev" target="_blank" class="header-btn primary">🌐 대시보드 바로가기 ↗</a>
+      <a href="https://samhyup.pages.dev/catalog/index_catalog.html" target="_blank" class="header-btn">📱 e-카탈로그 ↗</a>
+      <a href="https://samhyup.pages.dev/catalog/index_brochure.html" target="_blank" class="header-btn">📄 기업 브로슈어 ↗</a>
+      <a href="https://samhyup.pages.dev/mailling/mail_report.html" target="_blank" class="header-btn">✉️ 메일 리포트 ↗</a>
+    </div>
+  </div>
+
+  <!-- Key Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="label">웹 인프라 상태</div>
+      <div class="val" style="color:#2563EB;">Cloudflare</div>
+      <div class="desc">samhyup.pages.dev (Vercel 탈피)</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">독립 배포 패키지</div>
+      <div class="val">61.3 MB</div>
+      <div class="desc">270개 파일 (dist_deploy 초경량화)</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">B2B 이메일 도메인 연동</div>
+      <div class="val" style="color:#10B981;">100%</div>
+      <div class="desc">템플릿/스크립트 133개소 전환 완료</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">B2B 팩스 분산 발송 체계</div>
+      <div class="val" style="color:#059669;">9개 회차</div>
+      <div class="desc">샌드랩스 대량 팩스 엔진 연동 완료</div>
+    </div>
+  </div>
+
+  <!-- Tab Controls (대흥정밀 / Fursys-Store 미러) -->
+  <div class="plan-tab-nav">
+    <button type="button" class="plan-tab-btn active" onclick="switchPlanTab('tab-history')">
+      📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~21)
+    </button>
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-deploy')">
+      ☁️ 2. Cloudflare Pages 배포 매뉴얼 (2026-11-20 인프라 이전)
+    </button>
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-mail')">
+      📬 3. B2B 이메일 발송 자동화 및 템플릿·도메인 관리
+    </button>
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-fax')">
+      📠 4. B2B 팩스 대량 발송 운영 체계 &amp; 센드랩스 연동
+    </button>
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-sop')">
+      📖 5. B2B 정기 발송 표준운영절차 (SOP)
+    </button>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TAB 1: 통합 작업 계획 & 이력 (Phase 1 ~ 20) -->
+  <!-- ============================================================== -->
+  <div id="tab-history" class="plan-tab-pane active">
+        <!-- PHASE 21 (NEW - 2026-11-23) -->
+    <div class="card" style="border: 2px solid #2563EB;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;"><span class="badge badge-primary">PHASE 21</span> 관리자 대시보드 130px 사이드바 UI/UX 전면 개편 &amp; 메일·팩스 리포트 1020px 표준화 및 GitHub 프로덕션 배포</h2>
+        <span style="font-size:12px; color:#2563EB; font-weight:700;">2026-11-23 완료</span>
+      </div>
+      <div class="tip-box green" style="margin-top:12px;">
+        • <strong>관리자 대시보드 130px 좌측 사이드바 구조 전면 개편</strong>: 대흥정밀 완성 규격과 100% 동일한 130px 슬림 사이드바(8대 내비게이션, 삼협철망 로고, 시스템 정상 인디케이터) 및 상단 탑바(동적 4대 채널 셀렉터, Google Ads 배지, 퀵 액션 알약 버튼) 완비<br>
+        • <strong>KPI 4구역 반응형 카드 그리드 &amp; 양방향 차트·실시간 로그 피드</strong>: 총 발송수/성공·실패/성공률/반송 모니터링 카드, 발송 결과 도넛 차트 &amp; 회차별 막대그래프, 검색/필터/페이징이 탑재된 실시간 메일·견적 로그 테이블 구축<br>
+        • <strong>관리자 인증 모달(#authOverlay) 라이트 클린 글래스모피즘 일원화</strong>: 순백색 16px 카드, 58px 스쿼클 로고, #CBD5E1 화이트 인풋, 딥 네이비 인증 버튼, 2열 알약형 퀵 버튼 및 8px 백드롭 블러 투과 적용으로 어두운 먹통 현상 완전 해결<br>
+        • <strong>B2B 메일·팩스 리포트 2종(mail_report, fax_report) 1020px 표준 규격 리뉴얼</strong>: 컨테이너 1020px 통일, Pretendard 웹폰트 적용, 본문 폰트 12~13.5px 확대, thead/td 줄바꿈 방지(nowrap), Base64 인라인 로고 임베딩 및 원본 타임스탬프 안전 백업(20261123_backup) 완료<br>
+        • <strong>GitHub 원격 저장소(ghkim365/samhyup) 프로덕션 배포 및 Cloudflare Pages 연동</strong>: dist_deploy 배포 패키지 최신화 및 GitHub main 브랜치 커밋 &amp; 푸시 완료
+      </div>
+      <ul class="checklist">
+        <li class="task-item completed"><input type="checkbox" id="ph21-sidebar-dashboard" checked><span class="task-text"><strong>[대시보드 UI/UX]</strong> 대흥정밀 130px 사이드바, 4구역 KPI 그리드, 양방향 차트 및 실시간 로그 테이블 전면 구축</span><input type="date" class="task-date-input" id="ph21-sidebar-dashboard-date" value="2026-11-23"><input type="text" class="task-memo-input" id="ph21-sidebar-dashboard-memo" value="130px 사이드바 &amp; 4-Grid KPI 완료"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph21-auth-modal-clean" checked><span class="task-text"><strong>[인증 모달]</strong> 순백색 카드, 58px 스쿼클 로고, 화이트 인풋, 딥 네이비 인증 버튼 및 8px 백드롭 블러 일원화</span><input type="date" class="task-date-input" id="ph21-auth-modal-clean-date" value="2026-11-23"><input type="text" class="task-memo-input" id="ph21-auth-modal-clean-memo" value="화이트 클린 모달 &amp; 8px 백드롭 블러 완료"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph21-reports-1020px" checked><span class="task-text"><strong>[리포트 2종]</strong> mail_report &amp; fax_report 1020px 확장, Pretendard 웹폰트, nowrap 테이블 및 Base64 로고 탑재</span><input type="date" class="task-date-input" id="ph21-reports-1020px-date" value="2026-11-23"><input type="text" class="task-memo-input" id="ph21-reports-1020px-memo" value="1020px Pretendard &amp; Base64 로고 리뉴얼"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph21-github-deploy" checked><span class="task-text"><strong>[GitHub 배포]</strong> ghkim365/samhyup main 브랜치 배포 및 Cloudflare Pages 실시간 연동 완비</span><input type="date" class="task-date-input" id="ph21-github-deploy-date" value="2026-11-23"><input type="text" class="task-memo-input" id="ph21-github-deploy-memo" value="ghkim365/samhyup GitHub 배포 완료"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph21-fail-safe-backup" checked><span class="task-text"><strong>[안전 백업]</strong> 로컬 타임스탬프 원본 보관 및 H:\Antigravity\backup_com 무결성 Robocopy 미러링</span><input type="date" class="task-date-input" id="ph21-fail-safe-backup-date" value="2026-11-23"><input type="text" class="task-memo-input" id="ph21-fail-safe-backup-memo" value="COM 백업 및 안전 타임스탬프 보관 완료"></li>
+      </ul>
+    </div>
+
+<!-- PHASE 20 (NEW - 2026-11-20) -->
+    <div class="card" style="border: 2px solid #2563EB;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;"><span class="badge badge-primary">PHASE 20</span> 이메일 이미지 Cloudflare 133개소 전수 전환 &amp; 대시보드 UI/UX·플랜문서 대흥정밀 스타일 개편</h2>
+        <span style="font-size:12px; color:#2563EB; font-weight:700;">2026-11-20 완료</span>
+      </div>
+      <div class="tip-box green" style="margin-top:12px;">
+        • <strong>이메일 발송 이미지 Cloudflare 133개소 전수 전환</strong>: 제안서 템플릿(<code>samhyup_proposal.html</code>, <code>v2</code> 등) 및 GAS 스크립트 내 모든 <code>samhyup.vercel.app</code> 이미지·링크를 <code>https://samhyup.pages.dev</code>로 일괄 갱신 완료<br>
+        • <strong>Cloudflare 리다이렉트 룰(/gallery, /images 200 Rewrite) 완비</strong>: <code>_redirects</code>에 <code>/gallery/*</code> 및 <code>/images/*</code> 자동 200 리라이트 탑재로 이미지 액박 원천 차단<br>
+        • <strong>플로팅 에러 리포트 버튼 대흥정밀 스타일 개편</strong>: 라운드 필 버튼(<code>border-radius: 50px</code>), 정밀 벡터 SVG 메일 아이콘, 삼협철망 시그니처 앰버골드(<code>#D97706</code>) 뱃지 적용<br>
+        • <strong>상단 퀵 버튼 SVG 아이콘 적용</strong>: OS별 이모지 깨짐(두부 현상) 방지를 위해 정밀 SVG 폰/문서 아이콘 적용<br>
+        • <strong>작업 정리 문서(Master Plan) 대흥정밀 5-Tab 모던 UI 전면 개편</strong>: Pretendard 폰트, 통계 그리드, 탭 네비게이션, 체크리스트 로컬스토리지 영구 보존 연동
+      </div>
+      <ul class="checklist">
+        <li class="task-item"><input type="checkbox" id="ph20-email-cf-domain"><span class="task-text"><strong>[이메일 도메인]</strong> 메일 템플릿 및 Apps Script 내 133개소 Cloudflare 도메인 일괄 전환</span><input type="date" class="task-date-input" id="ph20-email-cf-domain-date"><input type="text" class="task-memo-input" id="ph20-email-cf-domain-memo"></li>
+        <li class="task-item"><input type="checkbox" id="ph20-err-btn-ui"><span class="task-text"><strong>[대시보드 UI]</strong> 대흥정밀 스타일 필 버튼 &amp; 정밀 SVG 아이콘 및 앰버골드 뱃지 탑재</span><input type="date" class="task-date-input" id="ph20-err-btn-ui-date"><input type="text" class="task-memo-input" id="ph20-err-btn-ui-memo"></li>
+        <li class="task-item"><input type="checkbox" id="ph20-plan-ui-redesign"><span class="task-text"><strong>[플랜 문서]</strong> 대흥정밀 5-Tab 마스터 플랜 모던 UI/UX 전면 개편 적용 완료</span><input type="date" class="task-date-input" id="ph20-plan-ui-redesign-date"><input type="text" class="task-memo-input" id="ph20-plan-ui-redesign-memo"></li>
+        <li class="task-item"><input type="checkbox" id="ph19-cf-production-live"><span class="task-text"><strong>[프로덕션 배포]</strong> samhyup.pages.dev 270개 파일 정상 배포 및 글로벌 CDN 실시간 오픈</span><input type="date" class="task-date-input" id="ph19-cf-production-live-date"><input type="text" class="task-memo-input" id="ph19-cf-production-live-memo"></li>
+        <li class="task-item"><input type="checkbox" id="ph19-dashboard-ui-polish"><span class="task-text"><strong>[UI 컬러 정돈]</strong> 카탈로그 저채도, 브로슈어 고대비, 에러 리포트 네이비 배경 적용</span><input type="date" class="task-date-input" id="ph19-dashboard-ui-polish-date"><input type="text" class="task-memo-input" id="ph19-dashboard-ui-polish-memo"></li>
+        <li class="task-item"><input type="checkbox" id="ph19-clean-duplicate"><span class="task-text"><strong>[파일 정리]</strong> 루트 중복 index_catalog 영구 삭제 및 catalog/ 파일명 체계 단일화</span><input type="date" class="task-date-input" id="ph19-clean-duplicate-date"><input type="text" class="task-memo-input" id="ph19-clean-duplicate-memo"></li>
+      </ul>
+    </div>
+
+<div class="card">
+    <h1>🏭 삼협철망 B2B 영업 자동화 WBS 계획서 (2026)</h1>
+    <p>본 계획서는 <strong>삼협철망</strong>(용접철망, 와이어메쉬, 메쉬파레트, 인테리어용접, 일체형메쉬, 견사망, 개비온철망, 동물보호휀스 전문 제조 및 2차가공 / ※ 능곡망·크림프망 취급
+      안함)의 B2B 아웃바운드 영업 및 팩스 통합 마케팅 시스템 구축 프로젝트의 전체 일정, 과제 현황 및 실행 세부사항을 관리하는 마스터 WBS 문서입니다.</p>
+
+    <table class="meta-table">
+      <tr>
+        <th>프로젝트명</th>
+        <td>삼협철망 B2B 영업 자동화 및 대량 팩스 통합 아웃바운드 구축</td>
+        <th>작성일자</th>
+        <td>2026-10-25 (최신화)</td>
+      </tr>
+      <tr>
+        <th>사업장 / 브랜드</th>
+        <td>삼협철망 (Samhyup Steel Wire Mesh)</td>
+        <th>총괄 책임</th>
+        <td>Ghkim / Antigravity AI Team</td>
+      </tr>
+      <tr>
+        <th>웹사이트 / 대시보드</th>
+        <td><a href="https://samhyup.vercel.app/" target="_blank">samhyup.vercel.app</a> | <a href="../dashboard.html"
+            target="_blank">관리자 대시보드</a></td>
+        <th>구글 시트 ID</th>
+        <td><code>161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04</code></td>
+      </tr>
+    </table>
+
+    <h2>📊 현황 요약</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="num">15개</div>
+        <div class="label">총 추진 PHASE</div>
+      </div>
+      <div class="summary-card">
+        <div class="num" style="color: #166534;">13개</div>
+        <div class="label">완료 PHASE</div>
+      </div>
+      <div class="summary-card">
+        <div class="num" style="color: #d97706;">2개</div>
+        <div class="label">진행 중 / 집행 예정</div>
+      </div>
+      <div class="summary-card">
+        <div class="num" style="color: #2563eb;">98%</div>
+        <div class="label">전체 공정 달성률</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="card">
+    <h2>1️⃣ PHASE 1 — 모바일 카탈로그 사이트 구축 (samhyup.vercel.app)</h2>
+    <div class="info-box">
+      💡 삼협철망의 제품 라인업(용접철망, 와이어메쉬, 메쉬파레트, 인테리어용접, 일체형메쉬, 견사망, 개비온철망, 동물보호휀스)과 견적 문의 폼을 담은 반응형 모바일 카탈로그 모듈입니다.
+    </div>
+
+    <h3>📌 1-1. 페이지 구조 · 콘텐츠</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph1-hero"><span class="task-text"><strong>[완료]</strong> 메인 히어로 섹션
+          및 40년 전통 철망 공장직영 헤드라인 구성</span><input type="date" class="task-date-input" id="ph1-hero-date"><input
+          type="text" class="task-memo-input" id="ph1-hero-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph1-catalog"><span class="task-text"><strong>[완료]</strong> 주요 생산
+          품목 카탈로그(용접철망, 와이어메쉬, 메쉬파레트, 인테리어용접, 견사망, 개비온철망 등) 카드 그리드 배치</span><input type="date" class="task-date-input"
+          id="ph1-catalog-date"><input type="text" class="task-memo-input" id="ph1-catalog-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph1-specs"><span class="task-text"><strong>[완료]</strong> 품목별 망눈
+          규격 및 선경(Wire Dia) 제원 표 구성</span><input type="date" class="task-date-input" id="ph1-specs-date"><input
+          type="text" class="task-memo-input" id="ph1-specs-memo"></li>
+    </ul>
+
+    <h3>📌 1-2. 폼 기능 · UX</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph1-quoteform"><span class="task-text"><strong>[완료]</strong>
+          Formspree 연동 온라인 견적 문의 폼 및 필수 항목 검증 구현</span><input type="date" class="task-date-input"
+          id="ph1-quoteform-date"><input type="text" class="task-memo-input" id="ph1-quoteform-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph1-call-link"><span class="task-text"><strong>[완료]</strong> 모바일
+          전용 대표전화(031-987-6789) 원클릭 통화 연결 버튼 세팅</span><input type="date" class="task-date-input"
+          id="ph1-call-link-date"><input type="text" class="task-memo-input" id="ph1-call-link-memo"></li>
+    </ul>
+
+    <h3>📌 1-3. SEO</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph1-seo"><span class="task-text"><strong>[완료]</strong> 네이버/구글
+          서치콘솔 검색 수집 등록 및 OpenGraph 메타태그 적용</span><input type="date" class="task-date-input" id="ph1-seo-date"><input
+          type="text" class="task-memo-input" id="ph1-seo-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="card">
+    <h2>2️⃣ PHASE 2 — B2B 아웃바운드 이메일 자동화</h2>
+    <div class="info-box">
+      💡 Google Apps Script(GAS) 기반으로 삼협철망 타깃 리드 대상 자동 이메일 제안서 발송 및 구글 시트 연동을 수행합니다.
+    </div>
+
+    <h3>📌 2-1. GAS 자동화 스크립트</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph2-gas-setup"><span class="task-text"><strong>[완료]</strong>
+          <code>catalog/google_apps_script_outbound.js</code> GAS 아웃바운드 발송 모듈 구축</span><input type="date"
+          class="task-date-input" id="ph2-gas-setup-date"><input type="text" class="task-memo-input"
+          id="ph2-gas-setup-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph2-maillog"><span class="task-text"><strong>[완료]</strong>
+          <code>mail_log</code> 시트 생성 및 행 단위 발송 성공/실패 이력 실시간 기록</span><input type="date" class="task-date-input"
+          id="ph2-maillog-date"><input type="text" class="task-memo-input" id="ph2-maillog-memo"></li>
+    </ul>
+
+    <h3>📌 2-2. HTML 제안서 템플릿</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph2-templates"><span class="task-text"><strong>[완료]</strong>
+          <code>catalog/templates/samhyup_proposal.html</code> 삼협철망 B2B 대표 제안서 템플릿 제작</span><input type="date"
+          class="task-date-input" id="ph2-templates-date"><input type="text" class="task-memo-input"
+          id="ph2-templates-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph2-preview"><span class="task-text"><strong>[완료]</strong>
+          <code>catalog/templates/samhyup_proposal_preview.html</code> 모바일/웹 미리보기 페이지 제공</span><input type="date"
+          class="task-date-input" id="ph2-preview-date"><input type="text" class="task-memo-input"
+          id="ph2-preview-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="card">
+    <h2>3️⃣ PHASE 3 — 이메일 인프라 이원화 (Gmail 발송 / Naver 수신)</h2>
+    <div class="info-box">
+      💡 Gmail API 1일 발송 한도(100건)에 맞춘 안정적 릴레이와 반송(Bounce) 처리, 네이버 수신 계정 분리 운영 환경입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph3-account-split"><span class="task-text"><strong>[완료]</strong>
+          아웃바운드 발송 전용 계정과 고객 문의 수신용 네이버 메일 연결</span><input type="date" class="task-date-input"
+          id="ph3-account-split-date"><input type="text" class="task-memo-input" id="ph3-account-split-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph3-bounce-sync"><span class="task-text"><strong>[완료]</strong> 반송
+          메일(Bounce) 감지 및 <code>syncMailLogToCompany()</code> 함수로 <code>company</code> 시트에 반송 상태 반영</span><input
+          type="date" class="task-date-input" id="ph3-bounce-sync-date"><input type="text" class="task-memo-input"
+          id="ph3-bounce-sync-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="card">
+    <h2>4️⃣ PHASE 4 — 인바운드 리드 수집 자동화 (Python 크롤링 & DB 정제)</h2>
+    <div class="info-box">
+      💡 전국 건재상, 철물점, 휀스 설치, 철망 수요처 타깃 업체를 정밀 수집하고 결측치를 자동 보강한 마스터 DB 구축입니다.
+    </div>
+
+    <h3>📌 4-1. DB 정제 및 전국 수집</h3>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph4-crawl-clean"><span class="task-text"><strong>[완료]</strong> 기존
+          수집 업체 정제 및 전국 지역별 철망 수요처 타깃 크롤링 확장</span><input type="date" class="task-date-input"
+          id="ph4-crawl-clean-date"><input type="text" class="task-memo-input" id="ph4-crawl-clean-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph4-address-enrich"><span class="task-text"><strong>[완료]</strong>
+          주소 및 지역 결측치 자동 보강 스크립트 실행 (`workflow/address_enrichment_report.pptx`)</span><input type="date"
+          class="task-date-input" id="ph4-address-enrich-date"><input type="text" class="task-memo-input"
+          id="ph4-address-enrich-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph4-target-ppt"><span class="task-text"><strong>[완료]</strong> 수요처
+          발굴 및 지역확대 기획 보고서 작성 (`삼협철망_수요처_발굴_및_지역확대_계획.pdf`, PPTX)</span><input type="date" class="task-date-input"
+          id="ph4-target-ppt-date"><input type="text" class="task-memo-input" id="ph4-target-ppt-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="card">
+    <h2>5️⃣ PHASE 5 — Google Ads / Naver 검색광고 연동</h2>
+    <div class="info-box">
+      💡 온라인 유입 리드 분석 및 검색광고 UTM 파라미터 연동으로 키워드별 전환 성과를 추적합니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph5-utm-setup"><span class="task-text"><strong>[완료]</strong>
+          네이버/구글 검색광고 UTM 파라미터 구축 및 전환 추적 연동 (`workflow/naver_ad_utm_setup.md`)</span><input type="date"
+          class="task-date-input" id="ph5-utm-setup-date"><input type="text" class="task-memo-input"
+          id="ph5-utm-setup-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 6 -->
+  <div class="card">
+    <h2>6️⃣ PHASE 6 — 관리자 대시보드 (dashboard.html & mail_report.html)</h2>
+    <div class="info-box">
+      💡 실시간 키워드 검색, 성공/실패 필터, 페이지네이션 및 발송/반송 분석 시각화 탭을 제공하는 라이트 테마 모니터링 모듈입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph6-dashboard-ui"><span class="task-text"><strong>[완료]</strong>
+          <code>dashboard.html</code> 검색 바, 상태 필터 (성공/실패), 페이지네이션 (10/25/50/전체) 및 라이트 테마 반영</span><input type="date"
+          class="task-date-input" id="ph6-dashboard-ui-date"><input type="text" class="task-memo-input"
+          id="ph6-dashboard-ui-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph6-report-tabs"><span class="task-text"><strong>[완료]</strong>
+          <code>mailling/mail_report.html</code> 탭 분리 ([발송 현황] vs [처리 결과 / 반송 분석]), Canvas 도넛/바 차트 구현</span><input
+          type="date" class="task-date-input" id="ph6-report-tabs-date"><input type="text" class="task-memo-input"
+          id="ph6-report-tabs-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph6-tainted-cors"><span class="task-text"><strong>[완료]</strong>
+          Tainted Canvas CORS 오류 방지를 위한 인라인 Base64 로고 탑재 및 PDF/이미지 저장 기능 정상화</span><input type="date"
+          class="task-date-input" id="ph6-tainted-cors-date"><input type="text" class="task-memo-input"
+          id="ph6-tainted-cors-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 7 -->
+  <div class="card">
+    <h2>7️⃣ PHASE 7 — 배포 및 운영 (Vercel & PWA)</h2>
+    <div class="info-box">
+      💡 Vercel 클라우드 호스팅 기반 자동 배포 환경 및 PWA 모바일 앱 설치 환경 구축입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph7-vercel"><span class="task-text"><strong>[완료]</strong>
+          <code>vercel.json</code> 설정 및 Vercel 서비스 자동 연속 배포 등록</span><input type="date" class="task-date-input"
+          id="ph7-vercel-date"><input type="text" class="task-memo-input" id="ph7-vercel-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph7-pwa"><span class="task-text"><strong>[완료]</strong> PWA 모바일
+          아이콘 및 Service Worker 환경 구축 (`manifest.json`, `sw.js`)</span><input type="date" class="task-date-input"
+          id="ph7-pwa-date"><input type="text" class="task-memo-input" id="ph7-pwa-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 8 -->
+  <div class="card">
+    <h2>8️⃣ PHASE 8 — 기획 문서 및 보고서 산출물</h2>
+    <div class="info-box">
+      💡 시스템 사양서, 기술 가이드 및 월간 이행보고서(docx) 산출물 일괄 관리입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph8-wbs-docs"><span class="task-text"><strong>[완료]</strong> WBS
+          계획서 문서 (`samhyup_plan_2026.html`, `samhyup_plan_2026.md`) 관리</span><input type="date" class="task-date-input"
+          id="ph8-wbs-docs-date"><input type="text" class="task-memo-input" id="ph8-wbs-docs-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph8-tech-guide"><span class="task-text"><strong>[완료]</strong> B2B
+          리드 수집 및 예외 처리 기술 가이드 작성</span><input type="date" class="task-date-input" id="ph8-tech-guide-date"><input
+          type="text" class="task-memo-input" id="ph8-tech-guide-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph8-docx-report"><span class="task-text"><strong>[완료]</strong> 표준
+          서식(맑은 고딕, 10pt/14pt/12pt) 적용 Word 이행 보고서 작성 (`samhyup_fax_work_report_20261004.docx`)</span><input type="date"
+          class="task-date-input" id="ph8-docx-report-date"><input type="text" class="task-memo-input"
+          id="ph8-docx-report-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 9 -->
+  <div class="card">
+    <h2>9️⃣ PHASE 9 — 샌드랩스 B2B 대량 팩스 영업 및 검증 DB 관리 (2026-09-28)</h2>
+    <div class="info-box">
+      💡 샌드랩스 팩스 서비스 가입, 구글 시트 `fax_log` 시트 추가 및 `company` U열(`영업채널`) 드롭다운 관리 체계 수립입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph9-fax-service"><span class="task-text"><strong>[완료
+            2026-09-28]</strong> 샌드랩스 팩스 서비스 가입 및 비용 분석 (건당 25 Cash 세팅)</span><input type="date" class="task-date-input"
+          id="ph9-fax-service-date"><input type="text" class="task-memo-input" id="ph9-fax-service-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph9-gsheet-faxlog"><span class="task-text"><strong>[완료
+            2026-09-28]</strong> 구글 시트 <code>fax_log</code> 시트 생성 및 이력 모니터링 연동 구조 완료</span><input type="date"
+          class="task-date-input" id="ph9-gsheet-faxlog-date"><input type="text" class="task-memo-input"
+          id="ph9-gsheet-faxlog-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph9-company-channel"><span class="task-text"><strong>[완료
+            2026-09-28]</strong> <code>company</code> 시트 U열 <code>영업채널</code> [메일, 팩스, 메일+팩스, 제외] 드롭다운 등록</span><input
+          type="date" class="task-date-input" id="ph9-company-channel-date"><input type="text" class="task-memo-input"
+          id="ph9-company-channel-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph9-mail-sync"><span class="task-text"><strong>[완료
+            2026-09-28]</strong> 기존 메일 발송 성공 업체 대상 U열 <code>영업채널</code> "메일" 일괄 동기화 및 M열(발송대기) '메일 정기' 적용</span><input
+          type="date" class="task-date-input" id="ph9-mail-sync-date"><input type="text" class="task-memo-input"
+          id="ph9-mail-sync-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph9-fax-crawl"><span class="task-text"><strong>[완료
+            2026-09-28]</strong> 메일 실패/미발송 업체 대상 100% 검증 기준 팩스번호 수집 (공식 출처 파싱) 및 T열(팩스) 업데이트</span><input type="date"
+          class="task-date-input" id="ph9-fax-crawl-date"><input type="text" class="task-memo-input"
+          id="ph9-fax-crawl-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 10 -->
+  <div class="card">
+    <h2>🔟 PHASE 10 — 영업채널 개편(월 2회 이메일 + 팩스 전환) 및 타깃 블로그 전략 (2026-10-01)</h2>
+    <div class="info-box">
+      💡 메일 발송 검증 성공 업체 대상 월 2회(1일/15일) 정기 발송으로 개편하고, 이메일 반송/미응답 업체는 팩스 영업 채널로 전환합니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph10-mail-schedule"><span class="task-text"><strong>[완료
+            2026-10-01]</strong> 메일 성공 검증 업체 대상 발송 일정 개편 (매주 → 매월 1일, 15일 월 2회 정기발송)</span><input type="date"
+          class="task-date-input" id="ph10-mail-schedule-date"><input type="text" class="task-memo-input"
+          id="ph10-mail-schedule-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph10-fax-pivot"><span class="task-text"><strong>[완료
+            2026-10-01]</strong> 메일 반송/실패 업체 팩스 영업 채널 전환 (N열 '실패' -> U열 '팩스', M열 '팩스1일' 동기화)</span><input type="date"
+          class="task-date-input" id="ph10-fax-pivot-date"><input type="text" class="task-memo-input"
+          id="ph10-fax-pivot-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph10-blog-macro"><span class="task-text"><strong>[완료
+            2026-10-01]</strong> 네이버 블로그 자동 매크로 프로그램 금지 방침 수립 (계정 정지/강퇴/저품질 위험 방지)</span><input type="date"
+          class="task-date-input" id="ph10-blog-macro-date"><input type="text" class="task-memo-input"
+          id="ph10-blog-macro-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph10-blog-target"><span class="task-text"><strong>[완료
+            2026-10-04]</strong> 네이버 블로그 포스팅 마스터 시스템 구축 (`sales/blog/samhyup_blog_master.html`,
+          `삼협철망_B2B_블로그_홍보원고_종합.docx`, 6개 공식 블로그 공지 및 주력 품목 원고 반영)</span><input type="date" class="task-date-input"
+          id="ph10-blog-target-date"><input type="text" class="task-memo-input" id="ph10-blog-target-memo"></li>
+    </ul>
+  </div>
+
+  <!-- PHASE 11 -->
+  <div class="card">
+    <h2>1️⃣1️⃣ PHASE 11 — 샌드랩스 B2B 팩스 9개 회차(팩스1일~팩스9일) 분산 발송 (2026-10-06 개시)</h2>
+    <div class="info-box">
+      💡 118개 팩스 영업 업체를 대상으로 수신처 피로도 최소화 및 업무 효율화를 위해 매주 월요일 오전 14개사씩 9개 회차(팩스1일~팩스9일) 2개월 분산 발송을 추진합니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph11-staggered-strategy"><span class="task-text"><strong>[완료
+            2026-10-02]</strong> 팩스 영업 제안 2개월(8~9주) 주간 분산 발송 전략 확정 (주 1회 월요일 오전 14개사 일괄 접수)</span><input type="date"
+          class="task-date-input" id="ph11-staggered-strategy-date"><input type="text" class="task-memo-input"
+          id="ph11-staggered-strategy-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph11-a4-fit"><span class="task-text"><strong>[완료
+            2026-09-30]</strong> <code>sales/fax_proposal_a4.html</code> A4 딱 1페이지 규격 최적화 (@page margin 6mm, container
+          padding, 1-page perfect fit)</span><input type="date" class="task-date-input" id="ph11-a4-fit-date"><input
+          type="text" class="task-memo-input" id="ph11-a4-fit-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph11-rounds-setup"><span class="task-text"><strong>[완료
+            2026-10-03]</strong> 구글 시트 M열 9개 회차(<code>팩스1일</code>~<code>팩스9일</code>) 분할 지정 및 접수용 엑셀/CSV 일괄 추출 스크립트 구축
+          (`sales/export_all_fax_batches.py`)</span><input type="date" class="task-date-input"
+          id="ph11-rounds-setup-date"><input type="text" class="task-memo-input" id="ph11-rounds-setup-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph11-batch1-launch"><span class="task-text">10월 6일(화)
+          1차(<code>팩스1일</code>) 14개사 샌드랩스 대량 팩스 발송 개시 및 <code>fax_log</code> 이력 기록</span><input type="date"
+          class="task-date-input" id="ph11-batch1-launch-date"><input type="text" class="task-memo-input"
+          id="ph11-batch1-launch-memo"></li>
+    </ul>
+  </div>
+
+  
+  <!-- PHASE 13 (2026-10-13 추가) -->
+  <div class="card" style="border-left: 4px solid #10b981;">
+    <h2 style="color:#047857;">1️⃣3️⃣ PHASE 13 — 팩스 모니터링 뷰·보고서 완비 & 동종 업체 발송 제외 필터링 (2026-10-13 완료)</h2>
+    <div class="info-box" style="background:#ecfdf5; border-left-color:#10b981; color:#065f46;">
+      💡 대흥정밀과 동일한 팩스 모니터링 인프라 이식: 대시보드 팩스 뷰 구축, 팩스 전용 보고서(fax/fax_report.html) 신설, 동종 업체 155곳 발송 제외 처리 완료.
+    </div>
+    <ul class="plain">
+      <li class="task-item completed"><input type="checkbox" id="ph13-fax-view" checked><span class="task-text"><strong>[완료 2026-10-13]</strong> 대시보드(<code>dashboard.html</code>) B2B 팩스 전용 모니터링 뷰 탑재 (KPI 통계 카드, 결과 비율 도넛 차트, 팩스 로그 피드, 샌드랩스 바로가기)</span><input type="date" class="task-date-input" id="ph13-fax-view-date" value="2026-10-13"><input type="text" class="task-memo-input" id="ph13-fax-view-memo" value="GAS site=fax 연동"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph13-fax-report" checked><span class="task-text"><strong>[완료 2026-10-13]</strong> 팩스 전용 공식 보고서 페이지(<code>fax/fax_report.html</code>) 구축 (A4 인쇄, PDF 저장, CORS 방지 SVG 로고 및 Blob 고해상도 PNG 저장 지원)</span><input type="date" class="task-date-input" id="ph13-fax-report-date" value="2026-10-13"><input type="text" class="task-memo-input" id="ph13-fax-report-memo" value="fax/fax_report.html"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph13-gas-handler" checked><span class="task-text"><strong>[완료 2026-10-13]</strong> Google Apps Script(<code>google_apps_script_outbound.js</code>) <code>site=fax</code> API 핸들러 추가 완료 (fax_log 시트 실시간 읽기 지원)</span><input type="date" class="task-date-input" id="ph13-gas-handler-date" value="2026-10-13"><input type="text" class="task-memo-input" id="ph13-gas-handler-memo" value="GAS 배포 소스 반영"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph13-competitor-filter" checked><span class="task-text"><strong>[완료 2026-10-13]</strong> 동종 업체 발송 제외 필터링 완료: <code>company</code> 시트 C열(회사명) 중 '철망', '와이어메쉬', '메쉬', '휀스' 포함 155개 업체 V열(제외여부) '제외' 일괄 체크</span><input type="date" class="task-date-input" id="ph13-competitor-filter-date" value="2026-10-13"><input type="text" class="task-memo-input" id="ph13-competitor-filter-memo" value="V열 제외 155건 처리 완료"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph13-brand-logo" checked><span class="task-text"><strong>[완료 2026-10-13]</strong> 삼협철망 고유 브랜드 정체성 복원: 대시보드(헤더/인증모달) 및 팩스 보고서에 카탈로그 정품 원형 <code>SH</code> 모노그램 심볼(투명 배경) 적용 및 대흥 더미데이터 42건 제거(0건 초기화)</span><input type="date" class="task-date-input" id="ph13-brand-logo-date" value="2026-10-13"><input type="text" class="task-memo-input" id="ph13-brand-logo-memo" value="정품 SH 심볼 로고 일체화 완료"></li>
+    </ul>
+  </div>
+
+  
+  <!-- PHASE 14 (2026-10-25 추가) -->
+  <div class="card" style="border-left: 4px solid #0284c7;">
+    <h2 style="color:#0369a1;">1️⃣4️⃣ PHASE 14 — 고품격 A4 PDF 브로슈어 전면 개편 & 웹 카탈로그 사진 비율(4:3/16:10) 일체화 (2026-10-25 완료)</h2>
+    <div class="info-box" style="background:#f0f9ff; border-left-color:#0284c7; color:#075985;">
+      💡 구글 스티치(Google Stitch) A4 디자인 시스템 이식, 삼협철망 정품 로고 및 실사 사진 100% 매핑, 영문 불필요 줄바꿈 제거, 웹 카탈로그 기준의 사진 종횡비(4:3 및 16:10 황금비) 전면 적용 완료.
+    </div>
+    <ul class="plain">
+      <li class="task-item completed"><input type="checkbox" id="ph14-stitch-import" checked><span class="task-text"><strong>[완료 2026-10-25]</strong> 구글 스티치 디자인 이식 & A4 7개 페이지 규격화 (<code>catalog/brochure.html</code>, Tailwind CSS CDN + Pretendard 폰트 시스템, <code>.a4-page</code> 정밀 분할)</span><input type="date" class="task-date-input" id="ph14-stitch-import-date" value="2026-10-25"><input type="text" class="task-memo-input" id="ph14-stitch-import-memo" value="구글 스티치 7p A4 레이아웃 적용"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph14-logo-assets" checked><span class="task-text"><strong>[완료 2026-10-25]</strong> 공식 로고 및 고화질 실사 이미지 100% 매핑: 스티치 임시 'SH' 박스를 정품 로고(<code>images/logo_samhyup.png</code>)로 교체 및 외부 구글 URL 39개를 검증된 로컬 실사 자산으로 전수 교체 완료</span><input type="date" class="task-date-input" id="ph14-logo-assets-date" value="2026-10-25"><input type="text" class="task-memo-input" id="ph14-logo-assets-memo" value="정품 로고 및 실사 39종 매핑"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph14-photo-aspect" checked><span class="task-text"><strong>[완료 2026-10-25]</strong> 웹 카탈로그(<code>catalog/index.html</code>) 기준 사진 종횡비(4:3 및 16:10) 일체화: 납작했던 사진 컨테이너(h-28, h-36)를 h-36, h-40, h-48로 확대하여 상하단 잘림 현상 해소 및 원근감 복원</span><input type="date" class="task-date-input" id="ph14-photo-aspect-date" value="2026-10-25"><input type="text" class="task-memo-input" id="ph14-photo-aspect-memo" value="황금비 4:3 / 16:10 복원 완료"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph14-factual-integrity" checked><span class="task-text"><strong>[완료 2026-10-25]</strong> 공식 팩트 검증 및 타이틀 정돈: 허위 재고 문구 제거, 6대 제품 우선순위 엄수, 영문 서브타이틀 줄바꿈 제거로 국문 1열 헤드라인 가독성 극대화</span><input type="date" class="task-date-input" id="ph14-factual-integrity-date" value="2026-10-25"><input type="text" class="task-memo-input" id="ph14-factual-integrity-memo" value="팩트 무결성 및 타이틀 가독성 개선"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph14-print-pdf" checked><span class="task-text"><strong>[완료 2026-10-25]</strong> A4 인쇄 및 원클릭 PDF 출력 최적화: 우측 하단 플로팅 액션 바 탑재(인쇄 시 자동 숨김 <code>.no-print</code>), <code>@media print</code> 시 100% A4 규격 출력 보장</span><input type="date" class="task-date-input" id="ph14-print-pdf-date" value="2026-10-25"><input type="text" class="task-memo-input" id="ph14-print-pdf-memo" value="A4 인쇄 & PDF 다운로드 연동"></li>
+    </ul>
+  </div>
+
+
+  <!-- PHASE 15 (2026-10-26 추가) -->
+  <div class="card" style="border-left: 4px solid #16a34a;">
+    <h2 style="color:#15803d;">1️⃣5️⃣ PHASE 15 — 제안서 이미지 액박 해소, v2 정기 리마인드 템플릿 제작 및 Apps Script 4계절 자동화 (2026-10-26 완료)</h2>
+    <div class="info-box" style="background:#f0fdf4; border-left-color:#16a34a; color:#14532d;">
+      💡 대흥정밀 고도화 성과 전수 이식 완료: 제안서 cid: 인라인 이미지 액박 Vercel 절대 경로 교체, v2 정기 리마인드 템플릿(용접철망/자재공급) 신규 제작, 4계절 안부 인사({계절인사}) 자동 치환 엔진 탑재, Apps Script 2회차 대상 원클릭 자동 체크 메뉴 완비.
+    </div>
+    <ul class="plain">
+      <li class="task-item completed"><input type="checkbox" id="ph15-cid-fix" checked><span class="task-text"><strong>[완료 2026-10-26]</strong> 제안서 템플릿(samhyup_proposal.html) 이미지 액박 100% 해소: <code>cid:logo</code>, <code>cid:assembled_mesh</code>, <code>cid:gabion</code>, <code>cid:mesh_pallet</code> 등 4대 핵심 이미지를 검증된 Vercel CDN 절대 URL로 전수 교체</span><input type="date" class="task-date-input" id="ph15-cid-fix-date" value="2026-10-26"><input type="text" class="task-memo-input" id="ph15-cid-fix-memo" value="Vercel CDN 절대 URL 교체로 액박 완전 해소"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph15-proposal-v2" checked><span class="task-text"><strong>[완료 2026-10-26]</strong> v2 정기 리마인드 전용 제안서 구축: <code>samhyup_proposal_v2.html</code> 및 미리보기 파일(<code>samhyup_proposal_v2_preview.html</code>) 신규 제작 완료 (공장직송 최저단가, 시험성적서 신속 발급, 긴급 직송 납기 지원 3대 혜택 강조)</span><input type="date" class="task-date-input" id="ph15-proposal-v2-date" value="2026-10-26"><input type="text" class="task-memo-input" id="ph15-proposal-v2-memo" value="v2 정기 리마인드 템플릿 및 미리보기 완비"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph15-seasonal-greeting" checked><span class="task-text"><strong>[완료 2026-10-26]</strong> 365일 실시간 계절 안부 인사 자동 치환 엔진: 템플릿 내 <code>{계절인사}</code> 동적 변수 반영 및 Apps Script에서 발송 월(1~12월) 기준 4계절 맞춤 비즈니스 안부 자동 생성</span><input type="date" class="task-date-input" id="ph15-seasonal-greeting-date" value="2026-10-26"><input type="text" class="task-memo-input" id="ph15-seasonal-greeting-memo" value="4계절 맞춤 안부 인사 실시간 치환"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph15-auto-split-gas" checked><span class="task-text"><strong>[완료 2026-10-26]</strong> Google Apps Script 엔진 전면 개편: 신규(v1)/기존(v2) 제안서 자동 분기 발송, 발송 완료 시 M열 '1회차 완료'/'2회차 완료' 상태 자동 추적 분리</span><input type="date" class="task-date-input" id="ph15-auto-split-gas-date" value="2026-10-26"><input type="text" class="task-memo-input" id="ph15-auto-split-gas-memo" value="v1/v2 자동 분기 및 M열 회차 관리"></li>
+      <li class="task-item completed"><input type="checkbox" id="ph15-round2-selector" checked><span class="task-text"><strong>[완료 2026-10-26]</strong> 원클릭 2회차 대상 자동 선택 메뉴 신설: 상단 메뉴 [☑️ 2회차 리마인드 대상 자동 체크] 탑재로 이전 발송 후 14일 이상 경과 업체만 1초 만에 자동 선택</span><input type="date" class="task-date-input" id="ph15-round2-selector-date" value="2026-10-26"><input type="text" class="task-memo-input" id="ph15-round2-selector-memo" value="2회차 대상 원클릭 선택 메뉴 탑재"></li>
+    </ul>
+  </div>
+
+    <!-- PHASE 12 -->
+  <div class="card">
+    <h2>1️⃣2️⃣ PHASE 12 — 잔여 과제 및 향후 고도화 추진 계획</h2>
+    <div class="info-box">
+      💡 대시보드 실시간 Live 통합 테스트 완료 및 차주별 팩스 2차~9차 정기 발송 집행 및 리드 모니터링입니다.
+    </div>
+    <ul class="plain">
+      <li class="task-item"><input type="checkbox" id="ph12-batch-exec"><span class="task-text">주차별 샌드랩스 팩스 접수 전용
+          파일(`samhyup_sendlabs_fax_batch[1~9]`) 정기 발송 및 <code>fax_log</code> 기록</span><input type="date"
+          class="task-date-input" id="ph12-batch-exec-date"><input type="text" class="task-memo-input"
+          id="ph12-batch-exec-memo"></li>
+      <li class="task-item"><input type="checkbox" id="ph12-live-gas"><span class="task-text">실제 GAS 아웃바운드 및 대시보드 실시간
+          라이브 통합 테스트 수행</span><input type="date" class="task-date-input" id="ph12-live-gas-date"><input type="text"
+          class="task-memo-input" id="ph12-live-gas-memo"></li>
+    </ul>
+  </div>
+
+  <script>
+    const prefix = 'samhyup_plan_2026_';
+    const defaults = {
+      'ph21-sidebar-dashboard': { checked: true, date: '2026-11-23', memo: '130px 사이드바 & 4-Grid KPI 완료' },
+      'ph21-auth-modal-clean': { checked: true, date: '2026-11-23', memo: '화이트 클린 모달 & 8px 백드롭 블러 완료' },
+      'ph21-reports-1020px': { checked: true, date: '2026-11-23', memo: '1020px Pretendard & Base64 로고 리뉴얼' },
+      'ph21-github-deploy': { checked: true, date: '2026-11-23', memo: 'ghkim365/samhyup GitHub 배포 완료' },
+      'ph21-fail-safe-backup': { checked: true, date: '2026-11-23', memo: 'COM 백업 및 안전 타임스탬프 보관 완료' },
+      'ph15-cid-fix': { checked: true, date: '2026-10-26', memo: 'Vercel CDN 절대 URL 교체로 액박 완전 해소' },
+      'ph15-proposal-v2': { checked: true, date: '2026-10-26', memo: 'v2 정기 리마인드 템플릿 및 미리보기 완비' },
+      'ph15-seasonal-greeting': { checked: true, date: '2026-10-26', memo: '4계절 맞춤 안부 인사 실시간 치환' },
+      'ph15-auto-split-gas': { checked: true, date: '2026-10-26', memo: 'v1/v2 자동 분기 및 M열 회차 관리' },
+      'ph15-round2-selector': { checked: true, date: '2026-10-26', memo: '2회차 대상 원클릭 선택 메뉴 탑재' },
+
+      'ph14-stitch-import': { checked: true, date: '2026-10-25', memo: '구글 스티치 7p A4 레이아웃 적용' },
+      'ph14-logo-assets': { checked: true, date: '2026-10-25', memo: '정품 로고 및 실사 39종 매핑' },
+      'ph14-photo-aspect': { checked: true, date: '2026-10-25', memo: '황금비 4:3 / 16:10 복원 완료' },
+      'ph14-factual-integrity': { checked: true, date: '2026-10-25', memo: '팩트 무결성 및 타이틀 가독성 개선' },
+      'ph14-print-pdf': { checked: true, date: '2026-10-25', memo: 'A4 인쇄 & PDF 다운로드 연동' },
+      'ph13-fax-view': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 연동 완료' },
+      'ph13-fax-report': { checked: true, date: '2026-10-13', memo: 'fax/fax_report.html 구축 완료' },
+      'ph13-gas-handler': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 배포 완료' },
+      'ph13-competitor-filter': { checked: true, date: '2026-10-13', memo: 'V열 제외 155건 처리 완료' },
+      'ph13-brand-logo': { checked: true, date: '2026-10-13', memo: '카탈로그 정품 SH 심볼 일체화 완료' },
+      'ph1-hero': { checked: true, date: '2026-08-29', memo: '삼협철망 헤드라인 구성 완료' },
+      'ph1-catalog': { checked: true, date: '2026-08-29', memo: '제품 카탈로그 그리드 배치 완료' },
+      'ph1-specs': { checked: true, date: '2026-08-29', memo: '망눈/선경 규격표 완비' },
+      'ph1-quoteform': { checked: true, date: '2026-08-29', memo: 'Formspree 연동 완료' },
+      'ph1-call-link': { checked: true, date: '2026-08-29', memo: '전화 바로연결 세팅' },
+      'ph1-seo': { checked: true, date: '2026-08-29', memo: '네이버/구글 서치콘솔 수집 완료' },
+      'ph2-gas-setup': { checked: true, date: '2026-08-30', memo: 'google_apps_script_outbound.js 구축' },
+      'ph2-maillog': { checked: true, date: '2026-08-30', memo: 'mail_log 시트 생성 및 기록 연동' },
+      'ph2-templates': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal.html 템플릿 제안서 완료' },
+      'ph2-preview': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal_preview.html 제공' },
+      'ph3-account-split': { checked: true, date: '2026-09-01', memo: 'Gmail 발송 / Naver 수신 세팅' },
+      'ph3-bounce-sync': { checked: true, date: '2026-09-02', memo: 'syncMailLogToCompany() 반송 반영 완료' },
+      'ph4-crawl-clean': { checked: true, date: '2026-09-04', memo: '전국 철망 수요처 타깃 DB 정제 완료' },
+      'ph4-address-enrich': { checked: true, date: '2026-09-04', memo: '주소 보강 스크립트 실행 완료' },
+      'ph4-target-ppt': { checked: true, date: '2026-09-04', memo: '수요처 발굴 보고서 PDF/PPTX 작성' },
+      'ph5-utm-setup': { checked: true, date: '2026-09-04', memo: 'UTM 파라미터 세팅 완료' },
+      'ph6-dashboard-ui': { checked: true, date: '2026-09-04', memo: '검색/필터/페이징 dashboard.html 탑재' },
+      'ph6-report-tabs': { checked: true, date: '2026-09-04', memo: 'mail_report.html 탭분리 및 차트 시각화' },
+      'ph6-tainted-cors': { checked: true, date: '2026-09-04', memo: 'Tainted Canvas CORS 로고 해결' },
+      'ph7-vercel': { checked: true, date: '2026-08-30', memo: 'vercel.json 연속 배포 완료' },
+      'ph7-pwa': { checked: true, date: '2026-08-30', memo: 'manifest.json & sw.js 등록 완료' },
+      'ph8-wbs-docs': { checked: true, date: '2026-09-04', memo: 'WBS 계획서 최신화 완료' },
+      'ph8-tech-guide': { checked: true, date: '2026-09-14', memo: 'B2B 리드 기술 가이드 작성' },
+      'ph8-docx-report': { checked: true, date: '2026-10-04', memo: 'samhyup_fax_work_report_20261004.docx 작성' },
+      'ph9-fax-service': { checked: true, date: '2026-09-28', memo: '샌드랩스 건당 25 Cash 분석 완료' },
+      'ph9-gsheet-faxlog': { checked: true, date: '2026-09-28', memo: 'fax_log 시트 생성 완료' },
+      'ph9-company-channel': { checked: true, date: '2026-09-28', memo: 'company U열 영업채널 드롭다운 세팅' },
+      'ph9-mail-sync': { checked: true, date: '2026-09-28', memo: '메일 성공 업체 U열 메일 반영' },
+      'ph9-fax-crawl': { checked: true, date: '2026-09-28', memo: '100% 검증 팩스번호 T열 완비' },
+      'ph10-mail-schedule': { checked: true, date: '2026-10-01', memo: '월 2회 (1일/15일) 정기발송 개편' },
+      'ph10-fax-pivot': { checked: true, date: '2026-10-01', memo: '메일 반송 N열 실패 -> U열 팩스 피벗' },
+      'ph10-blog-macro': { checked: true, date: '2026-10-01', memo: '네이버 블로그 매크로 위험 방침 수립' },
+      'ph10-blog-target': { checked: false, date: '', memo: '수작업 맞춤 블로그 포스팅 진행 예정' },
+      'ph11-staggered-strategy': { checked: true, date: '2026-10-02', memo: '주 1회 월요일 14개사 분산 발송 확정' },
+      'ph11-a4-fit': { checked: true, date: '2026-09-30', memo: 'fax_proposal_a4.html A4 1페이지 최적화' },
+      'ph11-rounds-setup': { checked: true, date: '2026-10-03', memo: '9개 회차(팩스1일~9일) 추출 스크립트 완비' },
+      'ph11-batch1-launch': { checked: false, date: '', memo: '10월 6일 1차 (팩스1일) 14개사 개시 예정' },
+      'ph12-batch-exec': { checked: false, date: '', memo: '팩스 2~9차 주차별 정기 발송 예정' },
+      'ph12-live-gas': { checked: false, date: '', memo: '대시보드 실시간 라이브 연동 테스트 예정' }
+    };
+
+    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+    checkboxes.forEach(cb => {
+      const def = defaults[cb.id] || {};
+      const dateInput = document.getElementById(cb.id + '-date');
+      const memoInput = document.getElementById(cb.id + '-memo');
+
+      const savedCheck = localStorage.getItem(prefix + cb.id);
+      const savedDate = localStorage.getItem(prefix + cb.id + '_date');
+      const savedMemo = localStorage.getItem(prefix + cb.id + '_memo');
+
+      const isChecked = def.checked ? true : (savedCheck !== null ? savedCheck === 'true' : false);
+      const dateVal = def.date ? def.date : (savedDate !== null ? savedDate : '');
+      const memoVal = def.memo ? def.memo : (savedMemo !== null ? savedMemo : '');
+
+      cb.checked = isChecked;
+      if (isChecked) cb.closest('.task-item').classList.add('completed');
+      if (dateInput && dateVal) dateInput.value = dateVal;
+      if (memoInput && memoVal) memoInput.value = memoVal;
+
+      cb.addEventListener('change', () => {
+        localStorage.setItem(prefix + cb.id, cb.checked);
+        cb.closest('.task-item').classList.toggle('completed', cb.checked);
+      });
+    });
+  </script>
+
+  </div>
+
+
+    <!-- ================================================================= -->
+    <!-- [탭 2] Cloudflare & Vercel 등록·배포 완벽 매뉴얼 및 인프라 전환 일지 -->
+    <!-- ================================================================= -->
+    <div
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TAB 2: Cloudflare Pages 배포 매뉴얼 & 인프라 전환 일지 -->
+  <!-- ============================================================== -->
+  <div id="tab-deploy" class="plan-tab-pane">
+<div class="card">
+        <h2>🌐 Cloudflare Pages & Vercel 등록·배포 완벽 매뉴얼 & 인프라 전환 일지</h2>
+
+        <!-- 인프라 전환 핵심 요약 배너 -->
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-left: 5px solid #2563EB; border-radius: 8px; padding: 18px 22px; margin-bottom: 25px;">
+          <h4 style="color: #1D4ED8; margin: 0 0 8px 0; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+            <span>💡</span> 인프라 전환 핵심 요약 (2026-11-19)
+          </h4>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #1E3A8A;">
+            기존 <strong>Vercel</strong>의 무료 플랜(Hobby)은 월간 대역폭(100GB) 제한 및 상업용 B2B 서비스 운영에 따른 제재/과금 위험이 상존했습니다.<br>
+            이에 따라 <strong>대역폭과 요청 수가 완전 무제한 무료</strong>이며, 국내 통신 3사(서울 PoP) 직결로 초고속 로딩을 제공하는 <strong>Cloudflare Pages</strong>로 인프라를 성공적으로 전환하였습니다.<br>
+            또한 배포 용량 최적화를 위해 <strong>archive/ 폴더와 임시 스크립트 등을 100% 분리·제외</strong>하고, 대시보드와 카탈로그 파일명을 <strong>명시적 명명 체계(index_dashboard / index_catalog)</strong>로 전면 개편하여 혼선을 원천 차단했습니다.
+          </p>
+        </div>
+
+        <!-- 1. 최신 배포 사이트 접속 정보 -->
+        <h3>1. 최신 배포 사이트 접속 정보</h3>
+        <table class="wbs-table" style="margin-bottom: 28px;">
+          <thead>
+            <tr>
+              <th style="width: 22%;">플랫폼 / 시스템</th>
+              <th style="width: 45%;">공식 접속 주소 (URL)</th>
+              <th style="width: 33%;">역할 및 특징</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #F0FDF4;">
+              <td><strong>Cloudflare Pages<br><span style="font-size: 11px; color: #16A34A; font-weight: normal;">(신규 공식 메인)</span></strong></td>
+              <td>
+                <a href="https://samhyup.pages.dev" target="_blank" style="color: #2563EB; font-weight: bold; text-decoration: underline;">https://samhyup.pages.dev</a><br>
+                <div style="margin-top: 6px; font-size: 12px; color: #4B5563;">
+                  ↳ <strong>메인 접속:</strong> <a href="https://samhyup.pages.dev/index_dashboard.html" target="_blank" style="color: #059669;">index_dashboard.html (대시보드 직행)</a><br>
+                  ↳ <strong>고객 카탈로그:</strong> <a href="https://samhyup.pages.dev/catalog/index_catalog.html" target="_blank" style="color: #2563EB;">/catalog/index_catalog.html (메일 연동용)</a><br>
+                  ↳ <strong>기업 브로슈어:</strong> <a href="https://samhyup.pages.dev/catalog/index_brochure.html" target="_blank" style="color: #D97706;">/catalog/index_brochure.html</a>
+                </div>
+              </td>
+              <td>
+                <span style="display: inline-block; background: #DCFCE7; color: #15803D; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 4px; margin-bottom: 4px;">무제한 무료 / 초고속 서울 CDN</span><br>
+                대역폭·요청 수 무제한, 2026-11-19 공식 오픈
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Vercel<br><span style="font-size: 11px; color: #6B7280; font-weight: normal;">(기존 운영 레거시)</span></strong></td>
+              <td>
+                <a href="https://samhyup.vercel.app" target="_blank" style="color: #6B7280; text-decoration: underline;">https://samhyup.vercel.app</a>
+              </td>
+              <td>
+                <span style="display: inline-block; background: #FEF3C7; color: #B45309; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 4px; margin-bottom: 4px;">추후 Pause 예정</span><br>
+                기존 링크 접속자 배려를 위해 당분간 듀얼 유지 후 전환
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Local Server<br><span style="font-size: 11px; color: #6B7280; font-weight: normal;">(사내 로컬 작업)</span></strong></td>
+              <td>
+                <code style="background: #F1F5F9; padding: 3px 6px; border-radius: 4px;">builder-samhyup-sales/index_dashboard.html</code>
+              </td>
+              <td>로컬 오프라인 모니터링 및 실시간 시뮬레이션</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 2. Vercel vs Cloudflare Pages 비교 -->
+        <h3>2. Vercel vs Cloudflare Pages 인프라 비교</h3>
+        <table class="wbs-table" style="margin-bottom: 28px;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">비교 항목</th>
+              <th style="width: 37%;">Vercel (기존)</th>
+              <th style="width: 38%;">Cloudflare Pages (신규 권장)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>월간 대역폭 (Bandwidth)</strong></td>
+              <td>100 GB 한도 (초과 시 차단 또는 Pro 과금)</td>
+              <td><strong style="color: #059669;">완전 무제한 (무료 플랜 영구 무료)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>월간 요청 수 (Requests)</strong></td>
+              <td>한도 초과 시 속도 제한</td>
+              <td><strong style="color: #059669;">완전 무제한</strong></td>
+            </tr>
+            <tr>
+              <td><strong>B2B 상업적 이용</strong></td>
+              <td>Hobby 무료 플랜 시 상업용 정책 제재 위험</td>
+              <td><strong>무료 티어에서도 상업 사이트 정적 호스팅 정식 허용</strong></td>
+            </tr>
+            <tr>
+              <td><strong>국내 접속 속도</strong></td>
+              <td>해외/리전 캐시 경유 가능</td>
+              <td><strong>서울 엣지 데이터센터(SKT, KT, LGU+) 직결 초고속 캐싱</strong></td>
+            </tr>
+            <tr>
+              <td><strong>아키텍처 적합도</strong></td>
+              <td>Next.js/Serverless 특화</td>
+              <td><strong>삼협철망 정적 웹앱(PWA) + GAS API에 100% 최적</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 3. [중요] Cloudflare 배포 시 고생하지 않는 핵심 교훈 -->
+        <h3>3. ⚠️ Cloudflare 배포 시 절대 헤매지 않는 핵심 교훈 (Fail-Safe Guide)</h3>
+        <div style="background: #FEF2F2; border: 1px solid #FECACA; border-left: 5px solid #EF4444; border-radius: 8px; padding: 18px 20px; margin-bottom: 20px;">
+          <h4 style="color: #B91C1C; margin: 0 0 8px 0; font-size: 14px;">🚨 [주의 1] Cloudflare 새 UI에서 "Workers"로 빠지는 함정 주의!</h4>
+          <p style="margin: 0; font-size: 13px; color: #7F1D1D; line-height: 1.6;">
+            Cloudflare 대시보드가 최근 <em>Workers & Pages</em>로 메뉴를 통합하면서, <code>Create an app</code>에서 GitHub을 선택하면 정적 사이트(Pages)가 아닌 <strong>서버리스 코드 실행용인 'Worker' 프로젝트(<code>npx wrangler deploy</code>)로 생성</strong>되어 버립니다.<br>
+            이 상태에서는 정적 HTML 사이트 배포 시 <code>wrangler.toml</code> 누락 또는 인증 토큰 오류(<code>[ERROR] Code: 10000</code>)가 계속 발생합니다.<br>
+            👉 <strong>해결책:</strong> 복잡한 Git CI 빌드 대신, <strong>Pages 프로젝트의 Direct Upload(폴더 드래그 앤 드롭) 방식</strong>을 사용하면 단 5초 만에 오류 없이 100% 배포가 완료됩니다!
+          </p>
+        </div>
+
+        <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-left: 5px solid #F59E0B; border-radius: 8px; padding: 18px 20px; margin-bottom: 25px;">
+          <h4 style="color: #B45309; margin: 0 0 8px 0; font-size: 14px;">💡 [주의 2] 여러 폴더의 index.html 난립에 따른 혼선 원천 차단!</h4>
+          <p style="margin: 0; font-size: 13px; color: #92400E; line-height: 1.6;">
+            루트에도 index.html, catalog에도 index.html 등 동일한 파일명이 중복되면 라우팅과 링크 관리에서 심각한 혼선이 발생합니다.<br>
+            👉 <strong>해결책 (2026-11-19 확정 표준 체계):</strong><br>
+            • <strong>루트 대문(index.html):</strong> 메인 접속 시 <code>index_dashboard.html</code>로 자동 이동하는 리다이렉터 전용 파일로만 사용.<br>
+            • <strong>영업 대시보드(index_dashboard.html):</strong> 관리자 전용 모니터링 화면으로 명확히 명명.<br>
+            • <strong>고객 카탈로그(catalog/index_catalog.html):</strong> 고객에게 메일/견적서 발송 시 연동되는 카탈로그 전용 파일로 명확히 명명.<br>
+            • <strong>대시보드 하단 바로가기:</strong> <code>index_dashboard.html</code> 하단에 카탈로그 및 브로슈어로 1클릭 이동/링크 복사 네비게이션을 상시 배치.
+          </p>
+        </div>
+
+        <!-- 4. 초간단 1클릭 배포 표준 절차 -->
+        <h3>4. 초간단 표준 배포 절차 (Direct Upload 매뉴얼)</h3>
+        <ol style="font-size: 14px; line-height: 1.8; color: #334155; padding-left: 20px; margin-bottom: 25px;">
+          <li>
+            <strong>배포 패키지 확인:</strong><br>
+            로컬 프로젝트 내 <code>builder-samhyup-sales/dist_deploy</code> 폴더를 배포 원본으로 사용합니다.<br>
+            <span style="font-size: 12px; color: #059669;">(archive/, workflow/, 임시 PDF 등 불필요 파일이 100% 제외된 61.3MB 초경량 정예 패키지)</span>
+          </li>
+          <li>
+            <strong>Cloudflare 대시보드 접속:</strong><br>
+            Cloudflare 콘솔(<a href="https://dash.cloudflare.com" target="_blank" style="color: #2563EB;">dash.cloudflare.com</a>) 로그인 → <strong>Workers & Pages</strong> 이동.
+          </li>
+          <li>
+            <strong>samhyup Pages 프로젝트 진입:</strong><br>
+            파란색 번개 아이콘의 <strong>samhyup (samhyup.pages.dev)</strong> 프로젝트를 클릭합니다.
+          </li>
+          <li>
+            <strong>폴더 드래그 앤 드롭:</strong><br>
+            <strong>[Create deployment]</strong> 클릭 후, 탐색기에서 <code>dist_deploy</code> 폴더를 마우스로 브라우저 상자에 끌어다 놓습니다.
+          </li>
+          <li>
+            <strong>[Deploy site] 클릭:</strong><br>
+            약 5~10초 후 배포가 완료되며, <a href="https://samhyup.pages.dev" target="_blank" style="color: #2563EB; font-weight: bold;">https://samhyup.pages.dev</a> 접속 시 즉시 대시보드가 열리고 정상 작동합니다!
+          </li>
+        </ol>
+
+        <!-- 5. 2026-11-19 작업 이력 상세 일지 -->
+        <h3>5. 2026-11-19 작업 이력 상세 일지 (WBS 실적)</h3>
+        <table class="wbs-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">작업 항목</th>
+              <th style="width: 55%;">상세 작업 내용 및 해결 조치</th>
+              <th style="width: 15%;">결과 / 산출물</th>
+              <th style="width: 15%;">상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A4 카탈로그 인쇄 잘림 해결</strong></td>
+              <td>Chrome Headless 인쇄 시 Tailwind CSS 모바일 축소(단일 컬럼) 현상 규명 → .a4-page 전용 데스크톱 그리드 강제 적용으로 7페이지 전체 하단 잘림 완벽 해결</td>
+              <td>삼협철망_카탈로그_최종완성본.pdf</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>이미지 비율 및 박스 정렬 복원</strong></td>
+              <td>비정상적으로 납작해진 갤러리 이미지 비율을 자연스러운 1:1 / 4:3 비율(h-28)로 복원. 7페이지 핵심 가치 3개 박스를 단일 행 3컬럼 균등 높이(align-items: stretch)로 정렬</td>
+              <td>index.html 소스 반영</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>카탈로그 폴더명 간소화</strong></td>
+              <td>기존의 긴 경로(<code>catalog
+enewal_brochure\</code>)를 직관적인 <code>catalogrochure\</code>로 안전하게 변경 완료</td>
+              <td>catalog/brochure/</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>프로젝트 대규모 다이어트</strong></td>
+              <td>
+                • catalog 루트 내 중복 사진(19.3MB) 및 임시 ZIP(30MB), 테스트 스크립트 36개 archive로 분리<br>
+                • sales vs catalog 이미지 전수 해시(MD5) 대조로 중복 10개 파일 확인 및 용량 최적화
+              </td>
+              <td>catalog: 80MB → 30.6MB<br>dist_deploy: 61.3MB</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>파일명 체계 개편 & 네비게이션 구축</strong></td>
+              <td>
+                • <code>dashboard.html</code> → <code>index_dashboard.html</code><br>
+                • <code>catalog/index.html</code> → <code>catalog/index_catalog.html</code><br>
+                • 루트 <code>index.html</code> 접속 시 <code>index_dashboard.html</code>로 직행 리다이렉트<br>
+                • <code>index_dashboard.html</code> 하단에 카탈로그/브로슈어 1클릭 새창열기 및 링크 복사 바 탑재
+              </td>
+              <td>index_dashboard.html<br>index_catalog.html<br>index.html</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cloudflare 배포 패키지 구축</strong></td>
+              <td>archive/ 폴더 100% 완전 제외, _redirects 탑재, dist_deploy 폴더를 통한 초간단 Direct Upload 체계 완성</td>
+              <td>dist_deploy/ 폴더<br>samhyup.pages.dev</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 6. 2026-11-20 작업 이력: Cloudflare 배포 완료 및 UI·파일구조 최종 확정 -->
+        <h3>6. 2026-11-20 작업 이력: Cloudflare 배포 완료 및 UI·파일구조 최종 확정 (WBS 마감)</h3>
+        <table class="wbs-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">작업 항목</th>
+              <th style="width: 52%;">상세 작업 내용 및 조치 결과</th>
+              <th style="width: 18%;">결과 / 산출물</th>
+              <th style="width: 12%;">상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>루트 중복 파일 제거 & 경로 단일화</strong></td>
+              <td>루트에 생성되었던 <code>index_catalog.html</code> 영구 삭제. 카탈로그 정식 경로는 오직 <code>catalog/index_catalog.html</code> 하나로 단일화 확정하여 혼선 원천 차단.</td>
+              <td>루트 index_catalog.html 영구 제거</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>브로슈어 명명 체계 통일</strong></td>
+              <td><code>catalog/brochure.html</code>을 정식 표준명인 <code>catalog/index_brochure.html</code>로 변경 완료. 대시보드 및 모든 하위 링크/클립보드 복사 로직 일괄 갱신.</td>
+              <td>catalog/index_brochure.html</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>대시보드 상단 버튼 UI/UX 개선</strong></td>
+              <td>
+                • 카탈로그 버튼: '카탈로그 보기 ↗' → '카탈로그' 텍스트 간소화 및 저채도 슬레이트 네이비(#475569) 적용으로 시각적 피로도 완화<br>
+                • 브로슈어 버튼: 흰색 배경에 글자 안 보이던 문제 해결 → 화이트(#FFFFFF) 배경 + 짙은 네이비(#1C2B4A) 텍스트 + 테두리(#CBD5E1) 적용으로 선명한 고대비 확보
+              </td>
+              <td>index_dashboard.html 상단 퀵 버튼</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>에러 리포트 플로팅 버튼 배경색 변경</strong></td>
+              <td>기존 붉은색 그라데이션에서 짙은 네이비(#1C2B4A) 배경으로 변경. 노란색 숫자 '7' 뱃지(#EAB308)의 가독성과 시인성을 극대화하여 모니터링 품질 향상.</td>
+              <td>#errReportBtn 스타일 개선</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cloudflare Pages 실시간 배포 성공</strong></td>
+              <td><code>dist_deploy</code> 폴더(270개 파일, 61.3MB, archive 100% 완전 제외)를 Cloudflare Pages 프로덕션에 정상 배포 완료. 전 세계 글로벌 CDN 200 OK 실시간 서비스 개시.</td>
+              <td>https://samhyup.pages.dev</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+            <tr>
+              <td><strong>COM 백업 및 구글문서 영구 보존</strong></td>
+              <td>
+                • COM 백업: <code>H:\Antigravity\backup_com\builder-samhyup-sales_latest</code> 최신 상태 100% 미러링 완료<br>
+                • 구글 문서(1G1sPMzq...): <code>■ 작업 시점: builder-samhyup-sales_202611</code> 헤딩 아래 배포 및 마감 내역 기록 완료<br>
+                • 표준 Word 보고서(.docx): 맑은 고딕, 본문 10pt 서식 준수 파일 자동 생성 보관
+              </td>
+              <td>H: 드라이브 COM 백업<br>Google Docs / 표준 .docx</td>
+              <td><span class="status-done" style="background:#DCFCE7; color:#15803D; padding:2px 8px; border-radius:4px; font-weight:bold;">완료</span></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- TAB 3: B2B 이메일 발송 자동화 및 템플릿·도메인 관리 -->
+  <!-- ============================================================== -->
+  <div id="tab-mail" class="plan-tab-pane">
+    <div class="card">
+      <h3 class="card-title">✉️ 1. 삼협철망 B2B 정기 이메일 발송 체계</h3>
+      <p style="font-size:14px; margin-bottom:12px;">
+        삼협철망은 전국 1,000여 개 철물/건재/토목/펜스/제조 실수요처를 대상으로
+        Gmail API 및 Google Apps Script 기반의 1:1 맞춤형 B2B 제안서(용접철망, 개비온, 메쉬파레트)를 정기 발송합니다.
+      </p>
+      <div class="tip-box green">
+        • <strong>발신 계정</strong>: <code>samhyup.sales@gmail.com</code> (Gmail API 연동)<br>
+        • <strong>수신/상담 계정</strong>: <code>shwire365@naver.com</code> (고객 친화 네이버 메일 이원화)<br>
+        • <strong>발송 템플릿</strong>: <code>catalog/templates/samhyup_proposal_v2.html</code> (모바일 최적화 반응형 HTML)<br>
+        • <strong>고객 회신 및 DB</strong>: 구글 스프레드시트 <code>mail_log</code> 및 <code>schedule</code> 자동 실시간 동기화
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🌐 2. 이메일 템플릿 Cloudflare 도메인 133개소 전수 전환 현황</h3>
+      <p style="font-size:14px; margin-bottom:12px;">
+        Cloudflare Pages 이전 완료에 따라, 메일 본문에 포함된 CI 로고, 제품 실사 갤러리(39종), 견적 계산기 및 카탈로그 링크를
+        신규 공식 도메인(<code>https://samhyup.pages.dev</code>)으로 100% 갱신 완료하였습니다.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>대상 파일</th>
+            <th>치환 건수</th>
+            <th>주요 변경 항목</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>catalog/templates/samhyup_proposal.html</code></td>
+            <td><strong>29개소</strong></td>
+            <td>CI 로고, 용접철망/메쉬파레트/개비온 갤러리 이미지 27장, 카탈로그 바로가기 링크</td>
+          </tr>
+          <tr>
+            <td><code>catalog/templates/samhyup_proposal_v2.html</code></td>
+            <td><strong>29개소</strong></td>
+            <td>v2 정기 리마인드 템플릿 내 갤러리 및 모바일 맞춤 견적 링크 최신화</td>
+          </tr>
+          <tr>
+            <td><code>dist_deploy/catalog/templates/</code> (배포본 2종)</td>
+            <td><strong>58개소</strong></td>
+            <td>Cloudflare 실시간 배포 패키지 내 템플릿 동기화 적용</td>
+          </tr>
+          <tr>
+            <td><code>google_apps_script_outbound.js</code> (루트 &amp; catalog)</td>
+            <td><strong>6개소</strong></td>
+            <td>Apps Script 내 BASE_URL 및 이메일 발송 본문 생성 파라미터 전환</td>
+          </tr>
+          <tr>
+            <td><code>catalog/templates/samhyup_proposal_preview.html</code> 등</td>
+            <td><strong>11개소</strong></td>
+            <td>블로그 미리보기, 제안서 뷰어, 구글애즈 세팅 가이드 등 도메인 갱신</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box">
+        💡 <strong>이미지 액박 원천 차단 구조</strong>: <code>_redirects</code> 설정에 <code>/gallery/* -> /catalog/gallery/:splat 200</code> 및 <code>/images/* -> /catalog/images/:splat 200</code> 리라이트가 탑재되어, 이메일 수신자가 메일을 열 때 언제 어디서나 100% 즉시 이미지가 로드됩니다.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🍂 3. 4계절 맞춤 안부 인사 및 v1/v2 자동 분기 시스템</h3>
+      <p style="font-size:14px; margin-bottom:12px;">
+        Apps Script 엔진에서 발송 월에 따라 봄, 여름, 가을, 겨울 안부 인사가 메일 첫머리에 자동 삽입되며,
+        1차 미수신 업체에는 v1(신규 소개), 2차 리마인드 업체에는 v2(실속 혜택 강조) 제안서가 자동 분기 발송됩니다.
+      </p>
+      <pre><code>// 4계절 자동 인사 로직 예시
+var month = new Date().getMonth() + 1;
+var seasonalGreeting = (month >= 3 && month <= 5) ? "따뜻한 봄기운과 함께 귀사의 번영을 기원합니다." :
+                       (month >= 6 && month <= 8) ? "무더운 여름철, 현장의 안전과 건강을 기원합니다." :
+                       (month >= 9 && month <= 11) ? "풍요로운 결실의 계절 가을, 귀사의 무궁한 발전을 기원합니다." :
+                       "추운 겨울철, 현장 작업의 안전과 귀사의 건승을 기원합니다.";</code></pre>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- TAB 4: B2B 팩스 대량 발송 운영 체계 & 센드랩스 연동 -->
+  <!-- ============================================================== -->
+  <div id="tab-fax" class="plan-tab-pane">
+    <div class="card">
+      <h3 class="card-title">📠 1. 센드랩스(SendLabs) 9개 회차 분산 발송 체계</h3>
+      <p style="font-size:14px; margin-bottom:12px;">
+        인터넷 접근이 어렵거나 현장 공장 사무실이 중심인 건설/토목/철물 제조기업을 위해,
+        <strong>센드랩스 대량 팩스 엔진</strong>을 통해 9개 회차(팩스1일~팩스9일)로 분산하여 B2B 규격 제안서를 발송합니다.
+      </p>
+      <div class="tip-box green">
+        • <strong>발송 플랫폼</strong>: 센드랩스 (https://www.sendlabs.co.kr)<br>
+        • <strong>발송 형태</strong>: A4 1장 흑백 가독성 최적화 단축 견적 제안서 (팩스 번호 및 QR코드 탑재)<br>
+        • <strong>회차별 관리</strong>: 팩스1일 ~ 팩스9일 순차적 분산 전송으로 통신사 스팸 차단 방지<br>
+        • <strong>동종 업체 제외</strong>: 와이어메쉬/철망 동종 제조사는 필터링하여 불필요한 마찰 원천 방지
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📄 2. 팩스 전용 제안서 산출물 및 인쇄 가이드</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>문서명</th>
+            <th>규격 / 형식</th>
+            <th>용도 및 특징</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>sales/삼협철망(주) B2B 대량 팩스 시안 A4 완벽 인쇄</code></td>
+            <td>A4 단면 / 고해상도 PDF</td>
+            <td>센드랩스 업로드 전용 1장 제안서 (공장도가격, 즉시출고 규격표 탑재)</td>
+          </tr>
+          <tr>
+            <td><code>catalog/renewal_brochure/</code> 브로슈어 인쇄본</td>
+            <td>A4 7페이지 카탈로그 PDF</td>
+            <td>견적 요청 고객사 대상 정밀 스펙북 발송용 (Chrome Headless 인쇄 통과)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- TAB 5: B2B 정기 발송 표준운영절차 (SOP) -->
+  <!-- ============================================================== -->
+  <div id="tab-sop" class="plan-tab-pane">
+    <div class="card">
+      <h3 class="card-title">📖 삼협철망 B2B 정기 발송 표준운영절차 (Standard Operating Procedure)</h3>
+      <p style="font-size:14px; margin-bottom:14px;">
+        본 절차서는 에이전트와 운영자가 매주 정기 발송(이메일 &amp; 팩스)을 오차 없이 집행하기 위한 표준 업무 지침입니다.
+      </p>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th width="15%">구분</th>
+            <th width="35%">이메일 발송 루틴 (화/목 집행)</th>
+            <th width="50%">팩스 발송 루틴 (수/금 집행)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 타겟 선별<br>(D-1 준비)</strong></td>
+            <td>
+              • 스프레드시트 <code>targets</code> 탭에서 미발송 유효 이메일 고객사 선별<br>
+              • 반송 플래그(DNS/550/SPF) 제외 및 동종사 필터링 확인<br>
+              • 주간 발송 리스트 시트 분리 생성
+            </td>
+            <td>
+              • 팩스번호 유효 고객사 선별 (하이픈 정규화 완료 건)<br>
+              • 직전 메일 반송사 중 팩스 보유 업체 우선 배정<br>
+              • 센드랩스 전용 엑셀 업로드 파일 생성
+            </td>
+          </tr>
+          <tr>
+            <td><strong>2. 사전 점검<br>(인프라 검증)</strong></td>
+            <td>
+              • Cloudflare Pages(<code>samhyup.pages.dev</code>) 라이브 200 OK 상태 점검<br>
+              • 제안서 내 이미지 CDN(<code>/gallery/*</code>, <code>/images/*</code>) 서빙 확인<br>
+              • Gmail API 일일 쿼터 확인
+            </td>
+            <td>
+              • 센드랩스 잔여 캐시/포인트 확인<br>
+              • 팩스용 A4 단축 제안서 PDF 무결성 점검<br>
+              • 팩스 번호 형식(02-, 031- 등) 유효성 검증
+            </td>
+          </tr>
+          <tr>
+            <td><strong>3. 발송 집행<br>(자동화 실행)</strong></td>
+            <td>
+              • Apps Script <code>sendOutboundBatch()</code> 실행<br>
+              • 1건당 1.5~2초 딜레이로 스팸 필터 회피<br>
+              • 발송 완료 즉시 <code>mail_log</code>에 타임스탬프 기록
+            </td>
+            <td>
+              • 센드랩스 로그인 후 A4 제안서 PDF 및 대상자 엑셀 업로드<br>
+              • 테스트 팩스 1건 송신 후 수신 품질(해상도) 확인<br>
+              • 최종 본 발송 전송 승인
+            </td>
+          </tr>
+          <tr>
+            <td><strong>4. 사후 분석<br>(모니터링)</strong></td>
+            <td>
+              • 대시보드(<code>index_dashboard.html</code>)에서 CVR 및 유입 세션 점검<br>
+              • 반송된 메일은 <code>mail_report.html</code> 에러 리포트에 즉시 등재<br>
+              • 견적 요청 회신 건은 네이버 메일에서 즉시 응대
+            </td>
+            <td>
+              • 발송 2시간 후 센드랩스 전송 결과표(성공/통화중/결번) 다운로드<br>
+              • 결번 번호는 DB에서 영구 제외 처리<br>
+              • 성공 업체는 팩스 이력 시트에 완료 체크
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div><!-- /.container -->
+
+<script>
+  function switchPlanTab(tabId) {
+    // 1. Reset all buttons
+    var buttons = document.querySelectorAll('.plan-tab-btn');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove('active');
+    }
+
+    // 2. Hide all panes
+    var panes = document.querySelectorAll('.plan-tab-pane');
+    for (var j = 0; j < panes.length; j++) {
+      panes[j].classList.remove('active');
+    }
+
+    // 3. Activate target button & pane
+    if (event && event.currentTarget) {
+      event.currentTarget.classList.add('active');
+    } else {
+      var targetBtn = Array.from(buttons).find(b => b.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+
+    var target = document.getElementById(tabId);
+    if (target) {
+      target.classList.add('active');
+    }
+  }
+
+  // Auto-init checklist states from memory
+  const prefix = 'samhyup_plan_2026_';
+  const defaults = {
+      'ph21-sidebar-dashboard': { checked: true, date: '2026-11-23', memo: '130px 사이드바 & 4-Grid KPI 완료' },
+      'ph21-auth-modal-clean': { checked: true, date: '2026-11-23', memo: '화이트 클린 모달 & 8px 백드롭 블러 완료' },
+      'ph21-reports-1020px': { checked: true, date: '2026-11-23', memo: '1020px Pretendard & Base64 로고 리뉴얼' },
+      'ph21-github-deploy': { checked: true, date: '2026-11-23', memo: 'ghkim365/samhyup GitHub 배포 완료' },
+      'ph21-fail-safe-backup': { checked: true, date: '2026-11-23', memo: 'COM 백업 및 안전 타임스탬프 보관 완료' },
+
+      'ph20-email-cf-domain': { checked: true, date: '2026-11-20', memo: '이메일 템플릿/스크립트 133개소 Cloudflare 도메인 전환 완료' },
+      'ph20-err-btn-ui': { checked: true, date: '2026-11-20', memo: '대흥정밀 스타일 필 버튼 & 정밀 SVG 메일 아이콘 및 앰버골드 뱃지 탑재' },
+      'ph20-plan-ui-redesign': { checked: true, date: '2026-11-20', memo: '대흥정밀 5-Tab 마스터 플랜 모던 UI/UX 전면 개편 적용' },
+      'ph19-cf-production-live': { checked: true, date: '2026-11-20', memo: 'samhyup.pages.dev 270개 파일 정상 배포 및 CDN 실시간 오픈' },
+      'ph19-dashboard-ui-polish': { checked: true, date: '2026-11-20', memo: '카탈로그 저채도, 브로슈어 고대비, 에러 리포트 톤다운 완료' },
+      'ph19-clean-duplicate': { checked: true, date: '2026-11-20', memo: '루트 중복 index_catalog 삭제 및 catalog/ 파일명 단일화' },
+      'ph18-cf-migration': { checked: true, date: '2026-11-19', memo: 'Vercel에서 Cloudflare Pages로 인프라 이전 기획 및 패키징' },
+      'ph18-dist-deploy-build': { checked: true, date: '2026-11-19', memo: '61.3MB dist_deploy 경량화 빌드 및 archive 완전 분리' },
+'ph15-cid-fix': { checked: true, date: '2026-10-26', memo: 'Vercel CDN 절대 URL 교체로 액박 완전 해소' },
+      'ph15-proposal-v2': { checked: true, date: '2026-10-26', memo: 'v2 정기 리마인드 템플릿 및 미리보기 완비' },
+      'ph15-seasonal-greeting': { checked: true, date: '2026-10-26', memo: '4계절 맞춤 안부 인사 실시간 치환' },
+      'ph15-auto-split-gas': { checked: true, date: '2026-10-26', memo: 'v1/v2 자동 분기 및 M열 회차 관리' },
+      'ph15-round2-selector': { checked: true, date: '2026-10-26', memo: '2회차 대상 원클릭 선택 메뉴 탑재' },
+
+      'ph14-stitch-import': { checked: true, date: '2026-10-25', memo: '구글 스티치 7p A4 레이아웃 적용' },
+      'ph14-logo-assets': { checked: true, date: '2026-10-25', memo: '정품 로고 및 실사 39종 매핑' },
+      'ph14-photo-aspect': { checked: true, date: '2026-10-25', memo: '황금비 4:3 / 16:10 복원 완료' },
+      'ph14-factual-integrity': { checked: true, date: '2026-10-25', memo: '팩트 무결성 및 타이틀 가독성 개선' },
+      'ph14-print-pdf': { checked: true, date: '2026-10-25', memo: 'A4 인쇄 & PDF 다운로드 연동' },
+      'ph13-fax-view': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 연동 완료' },
+      'ph13-fax-report': { checked: true, date: '2026-10-13', memo: 'fax/fax_report.html 구축 완료' },
+      'ph13-gas-handler': { checked: true, date: '2026-10-13', memo: 'GAS site=fax 배포 완료' },
+      'ph13-competitor-filter': { checked: true, date: '2026-10-13', memo: 'V열 제외 155건 처리 완료' },
+      'ph13-brand-logo': { checked: true, date: '2026-10-13', memo: '카탈로그 정품 SH 심볼 일체화 완료' },
+      'ph1-hero': { checked: true, date: '2026-08-29', memo: '삼협철망 헤드라인 구성 완료' },
+      'ph1-catalog': { checked: true, date: '2026-08-29', memo: '제품 카탈로그 그리드 배치 완료' },
+      'ph1-specs': { checked: true, date: '2026-08-29', memo: '망눈/선경 규격표 완비' },
+      'ph1-quoteform': { checked: true, date: '2026-08-29', memo: 'Formspree 연동 완료' },
+      'ph1-call-link': { checked: true, date: '2026-08-29', memo: '전화 바로연결 세팅' },
+      'ph1-seo': { checked: true, date: '2026-08-29', memo: '네이버/구글 서치콘솔 수집 완료' },
+      'ph2-gas-setup': { checked: true, date: '2026-08-30', memo: 'google_apps_script_outbound.js 구축' },
+      'ph2-maillog': { checked: true, date: '2026-08-30', memo: 'mail_log 시트 생성 및 기록 연동' },
+      'ph2-templates': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal.html 템플릿 제안서 완료' },
+      'ph2-preview': { checked: true, date: '2026-08-30', memo: 'samhyup_proposal_preview.html 제공' },
+      'ph3-account-split': { checked: true, date: '2026-09-01', memo: 'Gmail 발송 / Naver 수신 세팅' },
+      'ph3-bounce-sync': { checked: true, date: '2026-09-02', memo: 'syncMailLogToCompany() 반송 반영 완료' },
+      'ph4-crawl-clean': { checked: true, date: '2026-09-04', memo: '전국 철망 수요처 타깃 DB 정제 완료' },
+      'ph4-address-enrich': { checked: true, date: '2026-09-04', memo: '주소 보강 스크립트 실행 완료' },
+      'ph4-target-ppt': { checked: true, date: '2026-09-04', memo: '수요처 발굴 보고서 PDF/PPTX 작성' },
+      'ph5-utm-setup': { checked: true, date: '2026-09-04', memo: 'UTM 파라미터 세팅 완료' },
+      'ph6-dashboard-ui': { checked: true, date: '2026-09-04', memo: '검색/필터/페이징 dashboard.html 탑재' },
+      'ph6-report-tabs': { checked: true, date: '2026-09-04', memo: 'mail_report.html 탭분리 및 차트 시각화' },
+      'ph6-tainted-cors': { checked: true, date: '2026-09-04', memo: 'Tainted Canvas CORS 로고 해결' },
+      'ph7-vercel': { checked: true, date: '2026-08-30', memo: 'vercel.json 연속 배포 완료' },
+      'ph7-pwa': { checked: true, date: '2026-08-30', memo: 'manifest.json & sw.js 등록 완료' },
+      'ph8-wbs-docs': { checked: true, date: '2026-09-04', memo: 'WBS 계획서 최신화 완료' },
+      'ph8-tech-guide': { checked: true, date: '2026-09-14', memo: 'B2B 리드 기술 가이드 작성' },
+      'ph8-docx-report': { checked: true, date: '2026-10-04', memo: 'samhyup_fax_work_report_20261004.docx 작성' },
+      'ph9-fax-service': { checked: true, date: '2026-09-28', memo: '샌드랩스 건당 25 Cash 분석 완료' },
+      'ph9-gsheet-faxlog': { checked: true, date: '2026-09-28', memo: 'fax_log 시트 생성 완료' },
+      'ph9-company-channel': { checked: true, date: '2026-09-28', memo: 'company U열 영업채널 드롭다운 세팅' },
+      'ph9-mail-sync': { checked: true, date: '2026-09-28', memo: '메일 성공 업체 U열 메일 반영' },
+      'ph9-fax-crawl': { checked: true, date: '2026-09-28', memo: '100% 검증 팩스번호 T열 완비' },
+      'ph10-mail-schedule': { checked: true, date: '2026-10-01', memo: '월 2회 (1일/15일) 정기발송 개편' },
+      'ph10-fax-pivot': { checked: true, date: '2026-10-01', memo: '메일 반송 N열 실패 -> U열 팩스 피벗' },
+      'ph10-blog-macro': { checked: true, date: '2026-10-01', memo: '네이버 블로그 매크로 위험 방침 수립' },
+      'ph10-blog-target': { checked: false, date: '', memo: '수작업 맞춤 블로그 포스팅 진행 예정' },
+      'ph11-staggered-strategy': { checked: true, date: '2026-10-02', memo: '주 1회 월요일 14개사 분산 발송 확정' },
+      'ph11-a4-fit': { checked: true, date: '2026-09-30', memo: 'fax_proposal_a4.html A4 1페이지 최적화' },
+      'ph11-rounds-setup': { checked: true, date: '2026-10-03', memo: '9개 회차(팩스1일~9일) 추출 스크립트 완비' },
+      'ph11-batch1-launch': { checked: false, date: '', memo: '10월 6일 1차 (팩스1일) 14개사 개시 예정' },
+      'ph12-batch-exec': { checked: false, date: '', memo: '팩스 2~9차 주차별 정기 발송 예정' },
+      'ph12-live-gas': { checked: false, date: '', memo: '대시보드 실시간 라이브 연동 테스트 예정' }
+  };
+
+  const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    const def = defaults[cb.id] || {};
+    const dateInput = document.getElementById(cb.id + '-date');
+    const memoInput = document.getElementById(cb.id + '-memo');
+
+    const savedCheck = localStorage.getItem(prefix + cb.id);
+    const savedDate = localStorage.getItem(prefix + cb.id + '_date');
+    const savedMemo = localStorage.getItem(prefix + cb.id + '_memo');
+
+    const isChecked = def.checked ? true : (savedCheck !== null ? savedCheck === 'true' : false);
+    const dateVal = def.date ? def.date : (savedDate !== null ? savedDate : '');
+    const memoVal = def.memo ? def.memo : (savedMemo !== null ? savedMemo : '');
+
+    cb.checked = isChecked;
+    if (isChecked) cb.closest('.task-item').classList.add('completed');
+    if (dateInput && dateVal) dateInput.value = dateVal;
+    if (memoInput && memoVal) memoInput.value = memoVal;
+
+    cb.addEventListener('change', () => {
+      localStorage.setItem(prefix + cb.id, cb.checked);
+      cb.closest('.task-item').classList.toggle('completed', cb.checked);
+    });
+  });
+</script>
+
+</body>
+</html>

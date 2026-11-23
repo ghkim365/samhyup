@@ -1,0 +1,4 @@
+# Cloudflare Pages Redirects / Rewrites
+/    /index_dashboard.html    200
+/gallery/*    /catalog/gallery/:splat    200
+/images/*     /catalog/images/:splat     200

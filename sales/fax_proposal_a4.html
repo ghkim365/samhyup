@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼협철망(주) B2B 대량 팩스 전용 A4 제안서</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 6mm 9mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+      color: #000000;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      line-height: 1.3;
+      font-size: 12px;
+      word-break: keep-all;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 755px;
+      margin: 0 auto;
+      border: 3px solid #000000;
+      padding: 9px 12px;
+      background: #ffffff;
+      word-break: keep-all;
+    }
+
+    /* 상단 헤더 영역 */
+    .header {
+      border-bottom: 2.5px double #000000;
+      padding-bottom: 5px;
+      margin-bottom: 7px;
+      text-align: center;
+    }
+
+    .header-text {
+      width: 100%;
+      text-align: center;
+    }
+
+    .header .sub-header {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin-bottom: 2px;
+    }
+
+    .title-with-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 900;
+      margin: 2px 0 4px 0;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    .header-inline-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .header .badge {
+      background-color: #000000;
+      color: #ffffff;
+      display: inline-block;
+      padding: 3px 14px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    /* 팩스 메인 헤드라인 바 */
+    .hero-banner {
+      border: 2px solid #000000;
+      padding: 6px 10px;
+      margin-bottom: 7px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+      background-color: #f2f2f2;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 900;
+      background: #000000;
+      color: #ffffff;
+      padding: 3px 8px;
+      margin: 7px 0 6px 0;
+      display: inline-block;
+    }
+
+    /* 삼협철망 주력 4대 제품 정밀 갤러리 (4열 1행 균형 배치) */
+    .product-gallery-4 {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      margin-bottom: 7px;
+      border: 2px solid #000000;
+      background-color: #ffffff;
+    }
+
+    .gallery-row-4 {
+      display: table-row;
+    }
+
+    .gallery-item-4 {
+      display: table-cell;
+      width: 25%;
+      padding: 5px 5px;
+      text-align: center;
+      border-right: 1px solid #000000;
+      vertical-align: top;
+      background-color: #ffffff;
+    }
+
+    .gallery-item-4:last-child {
+      border-right: none;
+    }
+
+    .gallery-img-box-4 {
+      border: 1px solid #000000;
+      background: #ffffff;
+      padding: 2px;
+      margin-bottom: 3px;
+      height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-img-box-4 img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .gallery-title-4 {
+      font-size: 11.5px;
+      font-weight: 900;
+      margin-bottom: 1px;
+      color: #000000;
+      letter-spacing: -0.3px;
+    }
+
+    .gallery-desc-4 {
+      font-size: 10px;
+      color: #222222;
+      line-height: 1.18;
+      letter-spacing: -0.4px;
+    }
+
+    /* 공장 직영 첨단 설비 & 신뢰 보증 와이드 배너 (기계 높이를 175px로 웅장하게 확대) */
+    .factory-trust-section {
+      border: 2px solid #000000;
+      background: #ffffff;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      padding: 7px 11px;
+      gap: 16px;
+    }
+
+    .trust-badge-col {
+      width: 260px;
+      flex-shrink: 0;
+      text-align: center;
+      border-right: 1.5px solid #000000;
+      padding-right: 14px;
+    }
+
+    .trust-img-box {
+      width: 100%;
+      height: 175px;
+      border: 1.5px solid #000000;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .trust-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .trust-caption {
+      font-size: 9.5px;
+      font-weight: 900;
+      color: #000000;
+      margin-top: 3px;
+    }
+
+    .trust-content-col {
+      flex: 1;
+      line-height: 1.55;
+    }
+
+    .trust-main-title {
+      font-size: 14.5px;
+      font-weight: 900;
+      color: #000000;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+      border-bottom: 1.5px solid #000000;
+      padding-bottom: 4px;
+    }
+
+    .trust-main-title span {
+      background: #000000;
+      color: #ffffff;
+      font-size: 11px;
+      padding: 1.5px 6px;
+      margin-left: 6px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .trust-spec-grid {
+      display: table;
+      width: 100%;
+      font-size: 11.5px;
+      padding-top: 4px;
+    }
+
+    .trust-spec-row {
+      display: table-row;
+    }
+
+    .trust-spec-lbl {
+      display: table-cell;
+      font-weight: 900;
+      width: 82px;
+      color: #000000;
+      padding: 3px 0;
+      white-space: nowrap;
+    }
+
+    .trust-spec-val {
+      display: table-cell;
+      color: #111111;
+      font-weight: 700;
+      padding: 3px 0;
+    }
+
+    /* 테이블 스타일 */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 7px;
+      border: 2px solid #000000;
+      word-break: keep-all;
+    }
+
+    .spec-table th {
+      background-color: #e6e6e6;
+      border: 1px solid #000000;
+      padding: 6px 7px;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+      width: 25%;
+      word-break: keep-all;
+    }
+
+    .spec-table td {
+      border: 1px solid #000000;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      vertical-align: middle;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+
+    .spec-table td strong {
+      font-size: 12px;
+      color: #000000;
+    }
+
+    /* 3대 핵심 경쟁력 박스 */
+    .benefit-box {
+      border: 2px solid #000000;
+      padding: 7px 11px;
+      margin-bottom: 7px;
+      background-color: #ffffff;
+      word-break: keep-all;
+    }
+
+    .benefit-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .benefit-list li {
+      font-size: 11.5px;
+      font-weight: 800;
+      margin-bottom: 3px;
+      line-height: 1.3;
+      display: flex;
+      align-items: flex-start;
+      word-break: keep-all;
+    }
+
+    .benefit-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .benefit-list .num {
+      background: #000000;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 1px 5px;
+      margin-right: 7px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* 하단 문의처 콜투액션 (CTA) 박스 */
+    .contact-card {
+      border: 2.5px solid #000000;
+      padding: 7px 11px;
+      background-color: #f9f9f9;
+    }
+
+    .contact-card .cta-headline {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+      border-bottom: 1.5px solid #000000;
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+      letter-spacing: -0.5px;
+    }
+
+    .contact-flex {
+      display: table;
+      width: 100%;
+    }
+
+    .contact-col {
+      display: table-cell;
+      width: 39%;
+      vertical-align: top;
+      font-size: 11.5px;
+      line-height: 1.38;
+    }
+
+    .contact-col.left {
+      width: 44%;
+      padding-right: 7px;
+      border-right: 1px solid #000000;
+      letter-spacing: -0.4px;
+    }
+
+    .contact-col.right {
+      padding-left: 9px;
+      border-right: 1px solid #000000;
+    }
+
+    .contact-qr {
+      display: table-cell;
+      width: 80px;
+      vertical-align: middle;
+      text-align: center;
+      padding-left: 8px;
+    }
+
+    .contact-qr img {
+      width: 58px;
+      height: 58px;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .contact-qr .qr-label {
+      font-size: 8.5px;
+      color: #333;
+      line-height: 1.2;
+      font-weight: bold;
+    }
+
+    .big-number {
+      font-size: 13px;
+      font-weight: 900;
+      display: block;
+      margin-top: 1px;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+
+    /* 푸터 공지 */
+    .footer-note {
+      text-align: center;
+      font-size: 9.5px;
+      color: #444444;
+      margin-top: 4px;
+      border-top: 1px solid #cccccc;
+      padding-top: 2px;
+    }
+
+    /* 이미지 확대 팝업 모달 스타일 (인쇄 시 숨김) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #ffffff;
+      border: 3px solid #000000;
+      border-radius: 8px;
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #000000;
+      cursor: pointer;
+      line-height: 1;
+      border: none;
+      background: none;
+    }
+
+    .modal-close-btn:hover {
+      color: #ff0000;
+    }
+
+    .modal-img-container {
+      width: 100%;
+      max-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      padding: 10px;
+    }
+
+    .modal-img-container img {
+      max-width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 4px;
+      color: #000000;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: #333333;
+      font-weight: bold;
+    }
+
+    @media print {
+      body {
+        background: none;
+      }
+
+      .page-container {
+        border-width: 3px;
+        max-width: 100%;
+      }
+
+      .modal-overlay {
+        display: none !important;
+      }
+
+      .cad-img-box-6 {
+        cursor: default;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-container">
+    <!-- 헤더 영역 -->
+    <div class="header">
+      <div class="header-text">
+        <div class="sub-header">[ 공장 직판 합리적 단가 용접철망 &amp; 메쉬휀스 전문 ]</div>
+        <h1 class="title-with-logo">
+          <img src="../catalog/images/logo_samhyup.png" alt="삼협철망(주) 로고" class="header-inline-logo"
+            onerror="this.style.display='none'">
+          <span>삼 협 철 망 (주) (SAMHYUP MESH)</span>
+        </h1>
+        <div class="badge">용접철망 · 인테리어용접 · 동물보호휀스 · 개비온철망 · 정밀 용접가공 설비보유</div>
+      </div>
+    </div>
+
+    <!-- 메인 비전 및 타겟 바너 -->
+    <div class="hero-banner">
+      📢 공장 직영 대량 생산 &amp; 맞춤 가공 | 자재비 최소 10% 절감! / 12Point 등 첨단 자동화 설비 완비 / 전국 배송
+    </div>
+
+    <!-- 삼협철망 주력 4대 제품 정밀 갤러리 (4열 1행) -->
+    <div class="section-title">■ 삼협철망 주요 주력 제품 정밀 입체 구조 (클릭 시 확대보기)</div>
+    <div class="product-gallery-4">
+      <div class="gallery-row-4">
+        <!-- 1: 용접철망 -->
+        <div class="gallery-item-4">
+          <div class="gallery-img-box-4"
+            onclick="openImageModal('./render_imgs/clean_white_bg_wiremesh.png', '① 용접철망 / 와이어메쉬', '건설 기초용 정밀 격자 &amp; 스폿 용접')">
+            <img src="./render_imgs/clean_white_bg_wiremesh.png" alt="용접철망 입체 구조">
+          </div>
+          <div class="gallery-title-4">① 용접철망 / 와이어메쉬</div>
+          <div class="gallery-desc-4">건설 기초 정밀 격자·스폿용접</div>
+        </div>
+
+        <!-- 2: 인테리어용접 -->
+        <div class="gallery-item-4">
+          <div class="gallery-img-box-4"
+            onclick="openImageModal('./render_imgs/clean_white_bg_interior.png', '② 인테리어용접 메쉬', '미려한 디자인 격자 &amp; 고급 분체도장')">
+            <img src="./render_imgs/clean_white_bg_interior.png" alt="인테리어용접 입체 구조">
+          </div>
+          <div class="gallery-title-4">② 인테리어용접 메쉬</div>
+          <div class="gallery-desc-4">디자인 격자 &amp; 고급 분체도장</div>
+        </div>
+
+        <!-- 3: 동물보호 휀스 -->
+        <div class="gallery-item-4">
+          <div class="gallery-img-box-4"
+            onclick="openImageModal('./render_imgs/render_pet-fence_fax.png', '③ 동물보호 휀스', '촘촘한 야생동물 차단 휀스')">
+            <img src="./render_imgs/render_pet-fence_fax.png" alt="동물보호 휀스 입체 구조">
+          </div>
+          <div class="gallery-title-4">③ 동물보호 휀스</div>
+          <div class="gallery-desc-4">촘촘한 야생동물 차단 안전망</div>
+        </div>
+
+        <!-- 4: 개비온 철망 -->
+        <div class="gallery-item-4">
+          <div class="gallery-img-box-4"
+            onclick="openImageModal('./render_imgs/render_gabion-wiremesh_fax.png', '④ 개비온 철망', '격자 용접형 석축 옹벽 구조')">
+            <img src="./render_imgs/render_gabion-wiremesh_fax.png" alt="개비온 철망 입체 구조">
+          </div>
+          <div class="gallery-title-4">④ 개비온 철망</div>
+          <div class="gallery-desc-4">격자 용접형 석축 옹벽망태</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공장 직영 첨단 설비 & 신뢰 보증 와이드 배너 (기계 이미지 대폭 확대) -->
+    <div class="factory-trust-section">
+      <div class="trust-badge-col">
+        <div class="trust-img-box"
+          onclick="openImageModal('./render_imgs/welding-machine-7-point.jpg', '삼협철망 공장 직영 자동 용접 설비', '대형 12Point·7Point·5Point 스폿용접기, 고속 자동직선기, 전자동 용접라인 완비')">
+          <img src="./render_imgs/welding-machine-7-point.jpg" alt="공장 자동 용접 설비">
+        </div>
+        <div class="trust-caption">정밀 자동 스폿 용접 설비</div>
+      </div>
+      <div class="trust-content-col">
+        <div class="trust-main-title">
+          공장 직영 자동화 생산 라인 완비 <span>신뢰 보증 직판</span>
+        </div>
+        <div class="trust-spec-grid">
+          <div class="trust-spec-row">
+            <div class="trust-spec-lbl">■ 보유 장비 :</div>
+            <div class="trust-spec-val"><strong>대형 12Point · 7Point · 5Point</strong> 정밀 스폿용접기, 고속 자동직선기, 자동용접기</div>
+          </div>
+          <div class="trust-spec-row">
+            <div class="trust-spec-lbl">■ 단가 경쟁력 :</div>
+            <div class="trust-spec-val">공장 직접 생산으로 유통 마진 없는 합리적 공장도 단가 공급 (자재비 절감)</div>
+          </div>
+          <div class="trust-spec-row">
+            <div class="trust-spec-lbl">■ 주문 제작 :</div>
+            <div class="trust-spec-val">고객 도면 및 요청 규격 맞춤 정밀 가공 · 대량 발주 납기 준수 전국 현장 배송</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. 주요 생산 및 가공 품목 상세 -->
+    <div class="section-title">■ 주요 생산 품목 사양 및 규격</div>
+    <table class="spec-table">
+      <tr>
+        <th>용접철망 / 와이어메쉬</th>
+        <td>
+          <strong>건설 기초용 · 도로 포장용 · 산업용 고품질 용접철망 &amp; 와이어메쉬</strong><br>
+          선경 2.0Ø ~ 8.0Ø / 망목 20x20mm ~ 75x75mm 이상 (흑선, 아연도금선, SUS 스테인리스)
+        </td>
+      </tr>
+      <tr>
+        <th>인테리어용접 / 일체형메쉬</th>
+        <td>
+          <strong>교차부 플랫 융착 용접 일체형메쉬 &amp; 천정/벽면 인테리어 디자인 메쉬</strong><br>
+          이음매 단차 없는 미려한 도장, 부식 방지 아연/분체도장 (상업시설 천정, 파티션, 맞춤 제작)
+        </td>
+      </tr>
+      <tr>
+        <th>동물보호휀스 / 개비온철망</th>
+        <td>
+          <strong>격자 용접형 개비온 철망태 &amp; 촘촘한 야생동물 차단 안전 휀스</strong><br>
+          친환경 석축 보호 옹벽, 조경 벽체, 고속도로·농가 로드킬 방지 보호망 및 현장 규격 맞춤 제작
+        </td>
+      </tr>
+    </table>
+
+    <!-- 3. 삼협철망(주) 3대 핵심 경쟁력 -->
+    <div class="section-title">■ 삼협철망(주) 3대 핵심 경쟁력</div>
+    <div class="benefit-box">
+      <ul class="benefit-list">
+        <li>
+          <span class="num">01</span>
+          <div><strong>제조사 직판 압도적 단가 경쟁력:</strong> 공장 직영 자동화 생산 라인으로 중간 유통 마진 없는 자재비 최소 10% 절감 공급</div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div><strong>정밀 자동화 품질 &amp; 엄격한 납기 준수:</strong> 균일한 용접 품질과 높은 인장강도로 소량 주문 제작부터 대량 현장 납품 대응</div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div><strong>24시간 내 빠른 무료 견적:</strong> 팩스/이메일로 도면 또는 규격·수량 접수 시 즉시 단가 견적서 제출</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. 하단 문의처 및 팩스 접수처 -->
+    <div class="contact-card">
+      <div class="cta-headline">도면/규격·수량(FAX / Email)을 보내주시면 최저 단가 견적서를 발송해 드립니다.</div>
+      <div class="contact-flex">
+        <div class="contact-col left">
+          <strong>[ 회사 및 접수 정보 ]</strong><br>
+          • <strong>상호명:</strong> 삼협철망(주) (SAMHYUP MESH)<br>
+          • <strong>주소:</strong> 인천광역시 서구 사월로37번길 25(왕길동)<br>
+          • <strong>이메일:</strong> samhyupm@naver.com<br>
+          • <strong>홈페이지:</strong> http://www.samhyup.com/
+        </div>
+        <div class="contact-col right">
+          • 견적/가공 문의 (직통):
+          <span class="big-number">TEL : 032-563-4558 / 010-7708-0852</span>
+          • 팩스 도면 접수:
+          <span class="big-number">FAX : 032-563-4234</span>
+        </div>
+        <div class="contact-qr">
+          <img src="./samhyup_homepage_qr.png" alt="홈페이지 QR">
+          <div class="qr-label">홈페이지<br>바로가기</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note" style="text-align:center;">
+      수신을 원치 않으시면 언제든지 연락 주시면 즉시 삭제 처리해 드립니다.
+    </div>
+  </div>
+
+  <!-- 이미지 확대 팝업 모달 -->
+  <div id="imageModal" class="modal-overlay" onclick="closeImageModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeImageModal(event)">&times;</button>
+      <div class="modal-img-container">
+        <img id="modalImg" src="" alt="확대 이미지">
+      </div>
+      <div id="modalTitle" class="modal-title"></div>
+      <div id="modalDesc" class="modal-desc"></div>
+    </div>
+  </div>
+
+  <script>
+    function openImageModal(imgSrc, title, desc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+
+      modalImg.src = imgSrc;
+      modalTitle.innerHTML = title;
+      modalDesc.innerHTML = desc;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal(event) {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeImageModal();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>삼협철망(주) 공식 제품 카탈로그 &amp; 견적서 (A4 인쇄용)</title>
+  <!-- Tailwind CSS CDN with forms and container-queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Custom Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0A2540',
+              deep: '#0F172A',
+              blue: '#0284C7',
+              accent: '#2563EB',
+              slate: '#334155',
+              light: '#F8FAFC',
+              border: '#CBD5E1'
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Noto Sans KR', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Typography & Global Sheet Styles -->
+  <style data-purpose="typography">
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background-color: #E2E8F0;
+    }
+  </style>
+  <!-- Print and Layout Custom Sizing -->
+  <style data-purpose="a4-layout">
+    /* A4 simulation for web view and exact print fidelity */
+    .a4-page {
+      width: 100%;
+      max-width: 890px;
+      min-height: 1260px;
+      margin: 0 auto 32px auto;
+      background: #FFFFFF;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      box-sizing: border-box;
+    }
+
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        padding: 0;
+      }
+
+      .a4-page {
+        margin: 0;
+        box-shadow: none;
+        max-width: 100%;
+        min-height: 100vh;
+        page-break-after: always;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 text-sm antialiased py-6 px-2 sm:px-4">
+  <!-- BEGIN: Floating Action Bar for Print & Quick Contact -->
+  <aside class="no-print fixed bottom-6 right-6 z-50 flex flex-col gap-2" data-purpose="quick-actions">
+    <button
+      class="flex items-center gap-2 bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-full shadow-xl transition-all border border-slate-600 text-xs"
+      onclick="window.print()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path
+          d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+          stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+      </svg>
+      <span>PDF 저장 / A4 인쇄</span>
+    </button>
+    <a class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-full shadow-xl transition-all text-xs"
+      href="tel:032-563-4558">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+          stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+      </svg>
+      <span>공장 견적 문의: 032-563-4558</span>
+    </a>
+  </aside>
+  <!-- END: Floating Action Bar -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 1: 표지 및 회사 개요 & 메인 인프라 -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage1 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-1" id="page-1">
+    <!-- Top Header -->
+    <header class="border-b-2 border-brand-navy pb-5">
+      <div class="flex flex-wrap justify-between items-start gap-4">
+        <!-- Logo Area -->
+        <div class="flex items-center gap-3" data-purpose="company-logo">
+          <img alt="삼협철망(주)" class="h-10 w-auto object-contain" src="images/logo_samhyup.png" />
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-2xl font-black text-brand-navy tracking-tight">삼협철망(주)</h1>
+              <span class="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-bold">공장직판 최저가</span>
+            </div>
+            <p class="text-[11px] font-semibold text-slate-500 tracking-wider">SAMHYUP WIRE MESH CO., LTD.</p>
+          </div>
+        </div>
+        <!-- Right Tag -->
+        <div class="text-right">
+          <span
+            class="inline-block px-3 py-1 bg-slate-900 text-blue-300 text-xs font-semibold rounded-md shadow-sm border border-slate-700">
+            삼협철망 종합 제품 카탈로그 &amp; 견적 제안서
+          </span>
+          <p class="text-[10px] text-slate-500 mt-1">인천 서구 직영 대용량 생산설비 완비 · 중간 마진 없는 공장직판</p>
+        </div>
+      </div>
+      <!-- Main Catchphrase Title -->
+      <div class="mt-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
+        <h2 class="text-2xl sm:text-3xl font-black text-brand-navy tracking-tight leading-tight">
+          고강도 용접철망 · 메쉬휀스<br />
+          <span class="text-blue-600">토목 · 건축 · 조경 자재 전문</span>
+        </h2>
+        <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+          삼협철망(주)은 공장 직영 <strong>12Point·7Point·5Point 정밀 자동 스폿 용접기</strong> 및 <strong>자동 직선기 설비 라인</strong>을 통해 오차 없는
+          균일한 격자 강도와 탁월한 인장력을 갖춘 용접철망(와이어메쉬), 인테리어용접, 동물보호망, 개비온철망을 전국 건설·토목 현장에 최적의 공장도 가격으로 직송 납품합니다.
+        </p>
+      </div>
+    </header>
+    <!-- Main Factory & Core Products Showcase Visuals -->
+    <section class="my-6" data-purpose="factory-showcase">
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+          <span class="w-1.5 h-4 bg-blue-600 rounded-sm inline-block"></span>
+          인천 왕길동 직영 공장 대형 자동화 용접 생산설비 라인
+        </h3>
+        <span class="text-[11px] text-slate-400">Strict Quality Control &amp; Direct Supply</span>
+      </div>
+      <!-- Hero Factory Image Section -->
+      <div class="rounded-lg overflow-hidden border border-slate-200 bg-slate-100 mb-4 shadow-sm">
+        <div class="relative h-64 bg-slate-800 flex items-center justify-center overflow-hidden">
+          <img alt="인천 왕길동 직영 공장 정밀 자동화 용접 생산설비" class="w-full h-full object-cover opacity-90" src="images/banner.png">
+          <div
+            class="absolute bottom-2 left-3 bg-brand-navy/85 backdrop-blur-sm text-white text-[11px] px-3 py-1 rounded border border-slate-600">
+            인천 왕길동 직영 공장 정밀 자동화 용접 생산설비
+          </div>
+          </img>
+        </div>
+      </div>
+      <!-- 3 Visual Thumbnails Representing Core Sectors -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm flex flex-col">
+          <div class="h-40 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="고강도 용접철망 (와이어메쉬)" class="w-full h-full object-cover" src="gallery/assembled_mesh_02.jpg" />
+          </div>
+          <div class="p-2 text-center bg-slate-50 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-800">① 고강도 용접철망 (와이어메쉬)</p>
+            <p class="text-[10px] text-slate-500">기초 슬라브 · 콘크리트 균열방지</p>
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm flex flex-col">
+          <div class="h-40 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="인테리어용접 &amp; 일체형메쉬" class="w-full h-full object-cover" src="gallery/interior_welding_01.jpg" />
+          </div>
+          <div class="p-2 text-center bg-slate-50 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-800">② 인테리어용접 &amp; 일체형메쉬</p>
+            <p class="text-[10px] text-slate-500">단차 없는 플랫 용접 · 고급 분체도장</p>
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm flex flex-col">
+          <div class="h-40 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="동물보호망 (유해동물 차단)" class="w-full h-full object-cover" src="gallery/protection_fence_01.jpg" />
+          </div>
+          <div class="p-2 text-center bg-slate-50 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-800">③ 동물보호망 (유해동물 차단)</p>
+            <p class="text-[10px] text-slate-500">고속도로 로드킬 차단 · 농가 방호망</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page 1 Bottom Direct Order Box -->
+    <footer class="mt-auto">
+      <div
+        class="bg-gradient-to-r from-brand-navy via-slate-900 to-brand-navy text-white rounded-lg p-5 shadow-md border border-slate-700"
+        data-purpose="factory-contact-banner">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+          <div>
+            <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-500 text-white mb-2">삼협철망(주)
+              공장직판 사업부</span>
+            <p class="text-sm font-semibold text-slate-100">전국 현장 맞춤 도면 주문제작 · 직영 공장 최저 단가 공급</p>
+            <p class="text-xs text-slate-300 mt-1">도면 및 규격 접수 즉시 공장도 최저 견적서 산출 지원</p>
+          </div>
+          <div class="bg-black/30 rounded p-3 text-xs space-y-1.5 border border-slate-700/60 font-mono">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400 font-sans">견적직통:</span>
+              <span class="text-yellow-300 font-bold text-sm">032-563-4558 / 010-7708-0852</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400 font-sans">팩스접수:</span>
+              <span class="text-slate-200">032-563-4234</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400 font-sans">이메일:</span>
+              <span class="text-slate-200 underline font-sans">samhyupm@naver.com</span>
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-700">
+              <span class="text-slate-400 font-sans">공장위치:</span>
+              <span class="text-slate-300 text-[11px] font-sans">인천광역시 서구 사월로37번길 25 (왕길동) · www.samhyup.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Number Indicator -->
+      <div class="flex justify-between items-center text-[11px] text-slate-400 mt-3 pt-2 border-t border-slate-200">
+        <span>삼협철망(주) | 종합 제품 카탈로그</span>
+        <span class="font-bold text-slate-600">- 1 -</span>
+      </div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage1 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 2: 고강도 용접철망 (와이어메쉬) -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage2 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-2" id="page-2">
+    <!-- Top Header & Navigation Breadcrumb -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          공장 바닥 · 도로 · 건축 기초 보강
+        </span>
+      </div>
+    </header>
+    <!-- Product Title & Feature Overview -->
+    <section class="mt-4" data-purpose="product-header">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            고강도 용접철망 (와이어메쉬)
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            HIGH-STRENGTH WELDED WIRE MESH FOR CONCRETE SLAB REINFORCEMENT
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            정밀 자동 전기저항 용접 · 균일한 인장강도 · 공장 바닥·도로 포장 콘크리트 타설 균열 원천 방지
+          </p>
+        </div>
+      </div>
+      <!-- Brief Description and Feature List -->
+      <div
+        class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <div class="md:col-span-2 space-y-2">
+          <p class="text-xs text-slate-700 leading-relaxed">
+            삼협철망(주)의 용접철망은 직영 공장의 정밀 자동화 용접 라인을 통해 가로선과 세로선을 직교 용접하여 생산합니다. 보통철선(흑선), 아연도금선, 스테인리스 강선(SUS) 등 다양한 강종을
+            취급하며 원하시는 선경과 규격으로 맞춤 주문 생산(분체도장 포함)이 가능합니다.
+          </p>
+          <ul class="text-xs space-y-1 text-slate-700 font-medium">
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>흑선 강종:</strong> 3Ø, 4Ø, 5Ø, 6Ø, 8Ø
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>아연도금선:</strong> 3Ø, 4Ø, 5Ø
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>스테인리스 (SUS):</strong> 2Ø, 3Ø, 4Ø, 5Ø, 6Ø, 8Ø
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>제작 가능 치수:</strong> 폭 최대 2,400mm × 길이 최대 6,000mm까지 주문제작 가능 (그 외 선경 및 규격 별도 문의)
+            </li>
+          </ul>
+        </div>
+        <div
+          class="h-48 rounded-lg overflow-hidden border border-slate-300 bg-white shadow-sm flex items-center justify-center">
+          <img alt="와이어메쉬 적재 및 규격 샘플" class="w-full h-full object-cover" src="gallery/assembled_mesh_02.jpg" />
+        </div>
+      </div>
+    </section>
+    <!-- Official Specification Table -->
+    <section class="mt-5" data-purpose="specification-table">
+      <div class="flex justify-between items-center mb-1.5">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          용접철망 제품 규격표 (삼협철망 공식 사양)
+        </h3>
+        <span class="text-[10px] text-slate-500 font-medium">※ 최대 2,400 × 6,000mm까지 맞춤 주문제작 가능</span>
+      </div>
+      <div class="overflow-hidden border border-slate-300 rounded-lg shadow-sm">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-brand-navy text-white text-[11px] uppercase tracking-wider">
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold">선경 (Wire Diameter)</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold">망목 (Mesh Size)</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold">제작 사이즈</th>
+              <th class="py-2.5 px-3 text-center font-bold">취급 소재 (강종)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">3Ø</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">20 × 20 mm ~ 부터 가능</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">주문제작 가능</td>
+              <td class="py-2 px-3 text-center">흑선 / 아연도금선 / SUS</td>
+            </tr>
+            <tr class="bg-slate-50 hover:bg-slate-100">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">4Ø</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">25 × 25 mm ~ 부터 가능</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">주문제작 가능</td>
+              <td class="py-2 px-3 text-center">흑선 / 아연도금선 / SUS</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">5Ø</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">35 × 35 mm ~ 부터 가능</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">주문제작 가능</td>
+              <td class="py-2 px-3 text-center">흑선 / 아연도금선 / SUS</td>
+            </tr>
+            <tr class="bg-slate-50 hover:bg-slate-100">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">6Ø</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">50 × 50 mm ~ 부터 가능</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">주문제작 가능</td>
+              <td class="py-2 px-3 text-center">흑선 / SUS (아연도금 협의)</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">8Ø</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">75 × 75 mm ~ 부터 가능</td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">주문제작 가능</td>
+              <td class="py-2 px-3 text-center">흑선 / SUS (아연도금 협의)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Product Site & Factory Photo Gallery -->
+    <section class="mt-5" data-purpose="production-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          실제 생산 및 현장 출고 갤러리
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="정밀 플랫 용접 완제품" class="w-full h-full object-cover" src="gallery/assembled_mesh_04.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            정밀 플랫 용접 완제품
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="주문 사양별 맞춤 가공 완제품" class="w-full h-full object-cover" src="gallery/assembled_mesh_03.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            주문 사양별 맞춤 가공 완제품
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="밴딩 결속 및 전국 화물 직송" class="w-full h-full object-cover" src="gallery/assembled_mesh_12.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            밴딩 결속 및 전국 화물 직송
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="도면 치수 정밀 검수 완료" class="w-full h-full object-cover" src="gallery/assembled_mesh_11.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            도면 치수 정밀 검수 완료
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer -->
+    <footer class="mt-auto pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-slate-500">
+      <div>
+        <strong>삼협철망(주)</strong> 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234
+      </div>
+      <div class="font-bold text-slate-700 text-xs">- 2 -</div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage2 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 3: 인테리어용접 · 일체형메쉬 -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage3 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-3" id="page-3">
+    <!-- Top Header -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          디자인 · 천정/벽면 · 플랫 가공
+        </span>
+      </div>
+    </header>
+    <!-- Product Title & Feature Overview -->
+    <section class="mt-4" data-purpose="interior-mesh-intro">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            인테리어용접 · 일체형메쉬 (Interior &amp; Flat Mesh)
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            ARCHITECTURAL INTERIOR WIRE MESH · FLAT WELDED SCREEN
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            단차 없는 플랫 융착 용접 · 감각적인 상업 공간 연출 · 정밀 분체도장 및 SUS 가공
+          </p>
+        </div>
+      </div>
+      <div
+        class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <div class="md:col-span-2 space-y-2 text-xs text-slate-700 leading-relaxed">
+          <p>
+            철선 교차부를 정밀 가압 성형 용접하여 두께 단차를 완전히 해소한 고품격 일체형 메쉬입니다. 이음매가 없어 매끄러우며 도장 밀착성이 뛰어나 카페, 백화점, 상업시설 천장 메쉬 인테리어 및
+            감각적인 벽면 파티션으로 널리 납품됩니다.
+          </p>
+          <ul class="space-y-1 font-medium">
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>소재 강종:</strong> 아연도금선(GI), 스테인리스 강선(SUS304), 보통철선(흑선)
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>표면 처리:</strong> 블랙/화이트/커스텀 컬러 고급 분체전도장 및 고내식 도금
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>제품 강점:</strong> 교차부 단차가 없는 일체형 플랫 용접으로 시공성 및 핸들링 우수
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>주요 용도:</strong> 호텔·빌딩 천장재, 전시 매대, 파티션, 공구 보관함, 디자인 벽체
+            </li>
+          </ul>
+        </div>
+        <div
+          class="h-48 rounded-lg overflow-hidden border border-slate-300 bg-white shadow-sm flex items-center justify-center">
+          <img alt="인테리어 플랫 메쉬 샘플" class="w-full h-full object-cover" src="images/interior_welding.jpg" />
+        </div>
+      </div>
+    </section>
+    <!-- Detailed Specification Table -->
+    <section class="mt-5" data-purpose="interior-table">
+      <div class="flex justify-between items-center mb-1.5">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          인테리어용접 · 일체형메쉬 제작 사양 (공식 기준)
+        </h3>
+        <span class="text-[10px] text-slate-500 font-medium">※ 원하시는 선경 · 망목 · 사이즈 100% 맞춤 제작 (분체도장 포함)</span>
+      </div>
+      <div class="overflow-hidden border border-slate-300 rounded-lg shadow-sm">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-brand-navy text-white text-[11px] uppercase tracking-wider">
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/4">구분</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/3">가공 특징 및 장점</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold">취급 소재 및 마감</th>
+              <th class="py-2.5 px-3 text-center font-bold">적용 범위 (주요 용도)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                천정 및 벽면 인테리어망
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                철선 선택폭이 넓어 경량화 가능 • Mesh size의 다양함으로 감각적인 연출
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                흑선, 아연도금선, SUS<br />(고급 분체도장 처리)
+              </td>
+              <td class="py-2 px-3 text-center">
+                천정 및 벽면 인테리어, 각종 소품 제작
+              </td>
+            </tr>
+            <tr class="bg-slate-50 hover:bg-slate-100">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                일체형 플랫 메쉬 (Flat)
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                교차부를 납작하게 융착하여 두께 단차 해소, 이음매 없는 평면 및 뛰어난 시공성
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                가압 성형 정밀 스폿 용접<br />(완전한 도장 밀착)
+              </td>
+              <td class="py-2 px-3 text-center">
+                노출 천장메쉬, 백화점/매장 디스플레이 매대
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                특수 박스/파티션 가공망
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                원하는 치수 도면 100% 반영 주문생산 • 반영구적 내구성
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                도면 맞춤 선경 • 규격<br />(부식 방지 아연/SUS)
+              </td>
+              <td class="py-2 px-3 text-center">
+                공구 및 부품 Box 제작, 공간 분리 파티션
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Interior Installation Gallery -->
+    <section class="mt-5" data-purpose="interior-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          인테리어용접 가공 및 시공 실적 갤러리
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="상업공간 천정 메쉬 인테리어" class="w-full h-full object-cover" src="gallery/interior_welding_01.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            상업공간 천정 메쉬 인테리어
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="정밀 블랙 분체도장 마감" class="w-full h-full object-cover" src="gallery/interior_welding_02.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            정밀 블랙 분체도장 마감
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="단차 없는 일체형 플랫 메쉬" class="w-full h-full object-cover" src="gallery/interior_welding_04.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            단차 없는 일체형 플랫 메쉬
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="공간 분리 디자인 파티션" class="w-full h-full object-cover" src="gallery/interior_welding_03.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            공간 분리 디자인 파티션
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer -->
+    <footer class="mt-auto pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-slate-500">
+      <div>
+        <strong>삼협철망(주)</strong> 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234
+      </div>
+      <div class="font-bold text-slate-700 text-xs">- 3 -</div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage3 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 4: 동물보호망 (야생동물 유도방호 휀스) -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage4 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-4" id="page-4">
+    <!-- Top Header -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          도로 · 농가 · 야생동물 차단
+        </span>
+      </div>
+    </header>
+    <!-- Product Title & Feature Overview -->
+    <section class="mt-4" data-purpose="animal-barrier-intro">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            동물보호망 (야생동물 유도방호 휀스)
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            WILDLIFE PROTECTION &amp; AGRICULTURAL BARRIER FENCE
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            고속도로 로드킬 완전 차단 • 농가 멧돼지/고라니 침입 방지 • 촘촘한 고강도 안전 울타리
+          </p>
+        </div>
+      </div>
+      <div
+        class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <div class="md:col-span-2 space-y-2 text-xs text-slate-700 leading-relaxed">
+          <p>
+            야생동물의 출몰 지역에 설치해 야생동물 침입을 방지하고 동물의 차량 충돌로부터 운전자와 동물의 생명을 보호합니다. 촘촘하고 견고하게 제작하여 작은 뱀 한 마리도 빠져나가지 못하도록 소형 유해동물
+            침입까지 완벽 차단합니다.
+          </p>
+          <ul class="space-y-1 font-medium">
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>제작 방식:</strong> 원하시는 선경, 망목, 사이즈 100% 맞춤 제작 (분체도장 포함)
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>강선 소재:</strong> 고내식 아연도금 강선 및 폴리에스테르 분체전도장
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>주요 특징:</strong> 촘촘하고 견고한 격자 용접으로 소형 유해동물 완벽 차단
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>적용 현장:</strong> 고속도로, 국도변 유도 방호 울타리, 농가 과수원, 태양광 발전소
+            </li>
+          </ul>
+        </div>
+        <div
+          class="h-48 rounded-lg overflow-hidden border border-slate-300 bg-white shadow-sm flex items-center justify-center">
+          <img alt="동물보호망 시공 샘플" class="w-full h-full object-cover" src="images/protection_fence.jpg" />
+        </div>
+      </div>
+    </section>
+    <!-- Animal Barrier Table -->
+    <section class="mt-5" data-purpose="animal-barrier-table">
+      <div class="flex justify-between items-center mb-1.5">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          동물보호망 제작 사양 및 적용 구분
+        </h3>
+        <span class="text-[10px] text-slate-500 font-medium">※ 현장 발주 도면 맞춤 제작</span>
+      </div>
+      <div class="overflow-hidden border border-slate-300 rounded-lg shadow-sm">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-brand-navy text-white text-[11px] uppercase tracking-wider">
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/4">구분</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/3">가공 형태 및 특징</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold">도장 및 마감 사양</th>
+              <th class="py-2.5 px-3 text-center font-bold">주요 설치 구간</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                도로 방호 울타리망
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                차량 충돌 방지 및 대형 야생동물 진입 차단
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                고내식 아연도금 / 다크그린 분체도장
+              </td>
+              <td class="py-2 px-3 text-center">
+                고속도로, 국도변 로드킬 방지 구간
+              </td>
+            </tr>
+            <tr class="bg-slate-50 hover:bg-slate-100">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                농가 유해조수 차단망
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                작은 동물 침입을 막는 하단 촘촘한 맞춤 격자망
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                아연도금선 맞춤 가공
+              </td>
+              <td class="py-2 px-3 text-center">
+                과수원, 농경지, 인삼밭 경계
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                태양광 및 산업시설형
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                외부 침입 방지 및 시설물 보호 안전망
+              </td>
+              <td class="py-2 px-3 text-center border-r border-slate-200">
+                분체도장 및 현장 맞춤 규격
+              </td>
+              <td class="py-2 px-3 text-center">
+                태양광 발전단지 경계, 산업 시설 울타리
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Field Installation Gallery -->
+    <section class="mt-5" data-purpose="animal-barrier-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          현장 시공 및 납품 사진 갤러리
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="안전 방호 울타리 전경" class="w-full h-full object-cover" src="gallery/protection_fence_05.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            안전 방호 울타리 전경
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="하단 촘촘한 유해동물 차단망" class="w-full h-full object-cover" src="gallery/protection_fence_02.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            하단 촘촘한 유해동물 차단망
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="친환경 다크그린 고내후성 도장" class="w-full h-full object-cover" src="gallery/protection_fence_03.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            친환경 다크그린 고내후성 도장
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="산간 경사지 완벽 밀착 시공" class="w-full h-full object-cover" src="gallery/protection_fence_04.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            산간 경사지 완벽 밀착 시공
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer -->
+    <footer class="mt-auto pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-slate-500">
+      <div>
+        <strong>삼협철망(주)</strong> 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234
+      </div>
+      <div class="font-bold text-slate-700 text-xs">- 4 -</div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage4 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 5: 개비온철망 (용접형 개비온 패널) -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage5 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-5" id="page-5">
+    <!-- Top Header -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          토목 · 사면보호 · 친환경 조경 옹벽
+        </span>
+      </div>
+    </header>
+    <!-- Product Title & Feature Overview -->
+    <section class="mt-4" data-purpose="gabion-intro">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            개비온철망 (용접형 개비온 패널)
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            WELDED WIRE GABION BASKETS &amp; RETAINING WALL STRUCTURES
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            전기저항 용접식 고강도 격자 구조체 • 석축 옹벽 배부름 방지 • 친환경 조경 옹벽
+          </p>
+        </div>
+      </div>
+      <div
+        class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <div class="md:col-span-2 space-y-2 text-xs text-slate-700 leading-relaxed">
+          <p>
+            내식성이 뛰어난 아연도금 강선을 전기저항 용접하여 정밀 격자로 제작한 박스형 철망 구조체입니다. 전통적인 꼬임형과 달리 형상 유지력이 월등하여 돌 채움 시 볼록 튀어나오는 배부름 현상이 없으며,
+            배수성이 우수한 친환경 석축 옹벽 및 조경 벽체로 시공됩니다. (※ 돌 채움 시공이 아닌 정밀 철망 패널 제조 납품)
+          </p>
+          <ul class="space-y-1 font-medium">
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>구조 강성:</strong> 전기저항 용접식 정밀 격자망으로 돌 채움 시 배부름 없는 형상 유지력
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>철선 규격:</strong> 고내식 아연도금 강선 및 고급 분체도장 (주문 규격별 맞춤 가공)
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>주문제작:</strong> 원하시는 선경, 망목, 치수로 100% 주문 제작 공급
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+              <strong>주요 용도:</strong> 자연석차벽 조경 벽체, 도로 사면 보호 옹벽, 하천 제방 수해 방지망
+            </li>
+          </ul>
+        </div>
+        <div
+          class="h-48 rounded-lg overflow-hidden border border-slate-300 bg-white shadow-sm flex items-center justify-center">
+          <img alt="용접형 개비온 패널 시공 샘플" class="w-full h-full object-cover" src="images/gabion.png" />
+        </div>
+      </div>
+    </section>
+    <!-- Gabion Specification Table -->
+    <section class="mt-5" data-purpose="gabion-table">
+      <div class="flex justify-between items-center mb-1.5">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          용접 개비온 패널 제작 사양 (삼협철망 공식 기준)
+        </h3>
+        <span class="text-[10px] text-slate-500 font-medium">※ 현장 도면 규격 100% 맞춤 제작 (분체도장 포함)</span>
+      </div>
+      <div class="overflow-hidden border border-slate-300 rounded-lg shadow-sm">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-brand-navy text-white text-[11px] uppercase tracking-wider">
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/4">구분</th>
+              <th class="py-2.5 px-3 border-r border-slate-700 text-center font-bold w-1/3">제작 특징 및 구조 강점</th>
+              <th class="py-2.5 px-3 text-center font-bold">적용 분야 (주요 용도)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                조경용 개비온 패널
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                정밀 전기저항 용접식 격자 구조 • 자연석 채움 시 배부름 없는 평면 유지
+              </td>
+              <td class="py-2 px-3 text-center">
+                공원 화단, 빌딩 외벽 인테리어, 정원 디자인 담장
+              </td>
+            </tr>
+            <tr class="bg-slate-50 hover:bg-slate-100">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                석축 및 옹벽용 구조재
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                고내식 아연도금 강선 적용으로 장기 내구성 확보 • 탁월한 배수성
+              </td>
+              <td class="py-2 px-3 text-center">
+                도로 사면 보호 옹벽, 토목 법면 보강, 낙석 방지 옹벽
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 text-center font-bold text-slate-900 border-r border-slate-200">
+                하천 호안용 침답태
+              </td>
+              <td class="py-2 px-3 border-r border-slate-200">
+                수해 방지 친환경 다공성 구조 • 현장 발주 규격 도면 맞춤 일괄 제작
+              </td>
+              <td class="py-2 px-3 text-center">
+                하천 제방 호안 블록, 친환경 수변 생태 복원 구간
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Gabion Gallery -->
+    <section class="mt-5" data-purpose="gabion-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          개비온 토목 및 조경 옹벽 시공 실적
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="자연석 조경 옹벽 시공" class="w-full h-full object-cover" src="gallery/gabion_01.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            자연석 조경 옹벽 시공
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="단단한 형상 유지 용접 철망 구조체" class="w-full h-full object-cover" src="gallery/gabion_02.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            단단한 형상 유지 용접 철망 구조체
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="하천 제방 친환경 수해 방지 공사" class="w-full h-full object-cover" src="gallery/gabion_06.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            하천 제방 친환경 수해 방지 공사
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-36 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="현대 건축 디자인 외벽 개비온" class="w-full h-full object-cover" src="gallery/gabion_10.jpg" />
+          </div>
+          <div class="p-1.5 text-center bg-slate-900 text-white text-[11px] font-medium">
+            현대 건축 디자인 외벽 개비온
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer -->
+    <footer class="mt-auto pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-slate-500">
+      <div>
+        <strong>삼협철망(주)</strong> 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234
+      </div>
+      <div class="font-bold text-slate-700 text-xs">- 5 -</div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage5 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 6: 메쉬파레트 · 조립식 견사망 -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage6 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-6" id="page-6">
+    <!-- Top Header -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          물류보관 · 조립식 특수망
+        </span>
+      </div>
+    </header>
+    <!-- Dual Section Intro Title -->
+    <section class="mt-4" data-purpose="pallet-and-kennel-intro">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            메쉬파레트 · 조립식 견사망
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            STORAGE MESH PALLETS • MODULAR BOLT-ASSEMBLY KENNEL FENCE
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            접이식 다단 적재 메쉬파레트 • 무용접 볼트 조립식 견사망 (규격 맞춤 주문 제작)
+          </p>
+        </div>
+      </div>
+      <!-- Split Layout for Pallet and Kennel -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- 1. Mesh Pallet -->
+        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+              <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                <span class="px-1.5 py-0.5 bg-blue-600 text-white text-[10px] rounded">물류·보관</span>
+                접이식 메쉬파레트
+              </h3>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              6.0Ø 강선 구조로 견고하며 다단 적재(3~4단) 및 지게차 4방향 이동이 가능합니다. 미사용 시 접어서 보관할 수 있어 공간을 효율적으로 절감합니다.
+            </p>
+            <ul class="text-xs space-y-1 text-slate-700 font-medium bg-white p-2.5 rounded border border-slate-200">
+              <li><strong>규격:</strong> 800×600, 1000×800, 1200×1000mm 등</li>
+              <li><strong>선경/망목:</strong> 6.0Ø • 50×50mm (아연도금 및 분체도장)</li>
+              <li><strong>옵션:</strong> 우레탄 바퀴 장착, 내부 칸막이 주문 제작</li>
+            </ul>
+          </div>
+          <div class="mt-3 h-36 rounded overflow-hidden border border-slate-200 bg-white">
+            <img alt="접이식 메쉬파레트" class="w-full h-full object-cover" src="images/mesh_pallet.jpg" />
+          </div>
+        </div>
+        <!-- 2. Assembly Kennel -->
+        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+              <h3 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                <span class="px-1.5 py-0.5 bg-emerald-600 text-white text-[10px] rounded">조립식 주문제작</span>
+                조립식 견사망
+              </h3>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              포인트 정밀 스폿 용접으로 체결 강도가 탁월하며, 현장에서 별도 용접기 없이 볼트와 전용 클립만으로 간편 조립 가능한 대형 안전 견사망입니다.
+            </p>
+            <ul class="text-xs space-y-1 text-slate-700 font-medium bg-white p-2.5 rounded border border-slate-200">
+              <li><strong>체결방식:</strong> 무용접 볼트/클립 체결식 간편 조립</li>
+              <li><strong>도금사양:</strong> 고내식 아연도금 및 분체도장 코팅</li>
+              <li><strong>규격:</strong> 원하는 가로/세로 규격 100% 맞춤 주문 제작</li>
+            </ul>
+          </div>
+          <div class="mt-3 h-36 rounded overflow-hidden border border-slate-200 bg-white">
+            <img alt="조립식 견사망" class="w-full h-full object-cover" src="images/pet_fence.jpg" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Pallet & Kennel Real Gallery (6 Tiles) -->
+    <section class="mt-5" data-purpose="pallet-kennel-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          메쉬파레트 및 견사망 현장 사진 갤러리
+        </h3>
+      </div>
+      <div class="grid grid-cols-3 gap-2.5">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="정밀 6Ø 스폿 용접" class="w-full h-full object-cover" src="gallery/mesh_pallet_01.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            정밀 6Ø 스폿 용접
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="창고 다단 적재 운영" class="w-full h-full object-cover" src="gallery/mesh_pallet_02.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            창고 다단 적재 운영
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="접이식 부피 절감 보관" class="w-full h-full object-cover" src="gallery/mesh_pallet_03.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            접이식 부피 절감 보관
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="개폐 도어 일체형 패널" class="w-full h-full object-cover" src="gallery/pet_fence_01.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            개폐 도어 일체형 패널
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="고강도 아연선 패널" class="w-full h-full object-cover" src="gallery/pet_fence_04.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            고강도 아연선 패널
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="조립식 현장 완공 실황" class="w-full h-full object-cover" src="gallery/pet_fence_11.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            조립식 현장 완공 실황
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Page Footer -->
+    <footer class="mt-auto pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-slate-500">
+      <div>
+        <strong>삼협철망(주)</strong> 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234
+      </div>
+      <div class="font-bold text-slate-700 text-xs">- 6 -</div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage6 -->
+  <!-- ========================================================================== -->
+  <!-- PAGE 7: 완제품 출하 품질 · 전국 현장 납품 실적 & 견적 안내 -->
+  <!-- ========================================================================== -->
+  <!-- BEGIN: CatalogPage7 -->
+  <main class="a4-page p-8 sm:p-10 border border-slate-200" data-purpose="catalog-page-7" id="page-7">
+    <!-- Top Header -->
+    <header class="border-b-2 border-slate-200 pb-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-brand-navy tracking-tight text-lg">삼협철망(주)</span>
+          <span class="text-slate-400">|</span>
+          <span class="text-xs font-semibold text-slate-600">SAMHYUP MESH</span>
+        </div>
+        <span class="text-xs bg-slate-900 text-white font-medium px-2.5 py-1 rounded">
+          완제품 품질 검수 · 전국 현장 직송
+        </span>
+      </div>
+    </header>
+    <!-- Main Title -->
+    <section class="mt-4" data-purpose="quality-control-intro">
+      <div class="flex items-start gap-2">
+        <div class="w-2 h-6 bg-brand-navy mt-0.5"></div>
+        <div>
+          <h2 class="text-xl font-black text-brand-navy tracking-tight">
+            완제품 출하 품질 · 전국 현장 납품 실적
+          </h2>
+          <p class="text-[11px] font-semibold text-blue-700 tracking-wider">
+            FINISHED PRODUCTS QUALITY INSPECTION, NATIONWIDE SUPPLY RECORDS &amp; QUICK QUOTE
+          </p>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            30년 전통 직영 공장 직판 • 철저한 출하 전 치수 검수 • 대기업 및 전국 관공서 공사 납품
+          </p>
+        </div>
+      </div>
+      <!-- Factory Logistics Banner Visual -->
+      <div class="mt-3 rounded-lg overflow-hidden border border-slate-300 bg-slate-900 shadow-sm relative">
+        <div class="h-44 bg-slate-800 flex items-center justify-center">
+          <img alt="전국 대량 직송 납품 물류 현황" class="w-full h-full object-cover opacity-80" src="images/banner.png" />
+        </div>
+        <div
+          class="absolute bottom-2 left-3 bg-brand-navy/90 text-white text-[11px] px-3 py-1 rounded border border-slate-600">
+          전국 산업단지, 도로변 동물보호 유도방호망, 대형 물류센터, 조경 및 토목 현장 납품
+        </div>
+      </div>
+    </section>
+    <!-- Core 3 Strengths Box -->
+    <section class="mt-4" data-purpose="three-core-strengths">
+      <div class="bg-blue-50/70 border border-blue-200 rounded-lg p-3.5">
+        <h3 class="text-xs font-bold text-brand-navy mb-2 flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewbox="0 0 20 20">
+            <path clip-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              fill-rule="evenodd"></path>
+          </svg>
+          삼협철망(주) 직영 생산 · 전국 현장 직판 시스템 핵심 가치
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="bg-white p-2.5 rounded border border-slate-200 shadow-2xs">
+            <p class="text-xs font-bold text-blue-900 mb-1">① 공장도 직판 최저 단가</p>
+            <p class="text-[11px] text-slate-600 leading-normal">
+              유통 벤더사를 거치지 않아 시중 대리점 대비 <strong>최소 10% 이상 자재 원가</strong>를 절감합니다.
+            </p>
+          </div>
+          <div class="bg-white p-2.5 rounded border border-slate-200 shadow-2xs">
+            <p class="text-xs font-bold text-blue-900 mb-1">② 직영 공장 신속 제작·직송</p>
+            <p class="text-[11px] text-slate-600 leading-normal">
+              인천 직영 공장에서 주문 즉시 제작에 착수하여 전국 건설 현장 납기를 철저히 준수합니다.
+            </p>
+          </div>
+          <div class="bg-white p-2.5 rounded border border-slate-200 shadow-2xs">
+            <p class="text-xs font-bold text-blue-900 mb-1">③ 특수 도면 100% 맞춤 제작</p>
+            <p class="text-[11px] text-slate-600 leading-normal">
+              비규격 선경, 변형 망목, 일체형 프레임 결합 등 현장 발주 사양에 맞춰 일괄 제작합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Nationwide Supply Gallery (6 Tiles) -->
+    <section class="mt-4" data-purpose="supply-records-gallery">
+      <div class="mb-2">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-3.5 bg-blue-600 inline-block rounded-xs"></span>
+          전국 현장 시공 실적 및 출하 갤러리
+        </h3>
+      </div>
+      <div class="grid grid-cols-3 gap-2.5">
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="용접철망 밴딩 검속 및 화물 적송" class="w-full h-full object-cover" src="gallery/assembled_mesh_03.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            용접철망 밴딩 검속 및 화물 적송
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="출하 대기 규격 파렛 및 안전 상차" class="w-full h-full object-cover" src="gallery/assembled_mesh_12.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            출하 대기 규격 파렛 및 안전 상차
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="자연석 채움 개비온 옹벽 시공" class="w-full h-full object-cover" src="gallery/gabion_04.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            자연석 채움 개비온 옹벽 시공
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="도로변 동물보호 유도방호 휀스 시공" class="w-full h-full object-cover" src="gallery/protection_fence_04.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            도로변 동물보호 유도방호 휀스 시공
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="외벽 조경 및 석축 옹벽 시공 실적" class="w-full h-full object-cover" src="gallery/gabion_09.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            외벽 조경 및 석축 옹벽 시공 실적
+          </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div class="h-28 bg-slate-100 flex items-center justify-center overflow-hidden">
+            <img alt="상업시설 천정 메쉬 인테리어 가공" class="w-full h-full object-cover" src="gallery/interior_welding_01.jpg" />
+          </div>
+          <div class="p-1 text-center bg-slate-900 text-white text-[10px] font-medium">
+            상업시설 천정 메쉬 인테리어 가공
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Comprehensive Quote & Contact Footer Block -->
+    <footer class="mt-auto">
+      <div class="bg-brand-navy rounded-lg p-4 text-white shadow-lg border border-slate-700"
+        data-purpose="rfq-contact-box">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div class="text-center sm:text-left">
+            <h4
+              class="text-sm sm:text-base font-extrabold text-white flex items-center justify-center sm:justify-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+              신속 공장 직판 비교 견적 상담
+            </h4>
+            <p class="text-xs text-slate-300 mt-1">
+              필요하신 품목, 규격, 수량을 남겨주시면 최적의 공장도 단가와 납품 일정을 신속하게 산출해 드립니다.
+            </p>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 이메일: samhyupm@naver.com ｜ 팩스: 032-563-4234 ｜ 웹사이트: www.samhyup.com
+            </p>
+          </div>
+          <div class="text-center sm:text-right shrink-0">
+            <div class="text-yellow-300 font-black text-xl sm:text-2xl tracking-tight">
+              032-563-4558
+            </div>
+            <div class="text-xs text-blue-200 font-medium">
+              직통: 010-7708-0852
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Number Indicator -->
+      <div class="flex justify-between items-center text-[10px] text-slate-400 mt-3 pt-2 border-t border-slate-200">
+        <span>삼협철망(주) 본사/직영공장: 인천광역시 서구 사월로37번길 25 (왕길동) ｜ 대표전화: 032-563-4558 ｜ 팩스: 032-563-4234</span>
+        <span class="font-bold text-slate-700 text-xs">- 7 -</span>
+      </div>
+    </footer>
+  </main>
+  <!-- END: CatalogPage7 -->
+</body>
+
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>삼협철망(주) B2B 대량 팩스 전용 A4 제안서</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 6mm 10mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+      color: #000000;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      line-height: 1.3;
+      font-size: 12.5px;
+      word-break: keep-all;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      border: 3px solid #000000;
+      padding: 10px 14px;
+      background: #ffffff;
+      word-break: keep-all;
+    }
+
+    /* 상단 헤더 영역 */
+    .header {
+      border-bottom: 3px double #000000;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .header-text {
+      width: 100%;
+      text-align: center;
+    }
+
+    .header .sub-header {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    .title-with-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 900;
+      margin: 2px 0 6px 0;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    .header-inline-logo {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .header .badge {
+      background-color: #000000;
+      color: #ffffff;
+      display: inline-block;
+      padding: 4px 16px;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    /* QR 코드 영역 */
+    .contact-qr {
+      display: table-cell;
+      width: 90px;
+      vertical-align: middle;
+      text-align: center;
+      padding-left: 10px;
+      border-left: 1px solid #000000;
+    }
+
+    .contact-qr img {
+      width: 74px;
+      height: 74px;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .contact-qr .qr-label {
+      font-size: 9px;
+      color: #333;
+      line-height: 1.3;
+      font-weight: bold;
+    }
+
+    /* 팩스 메인 헤드라인 바 */
+    .hero-banner {
+      border: 2px solid #000000;
+      padding: 6px 10px;
+      margin-bottom: 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 900;
+      background-color: #f2f2f2;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 900;
+      background: #000000;
+      color: #ffffff;
+      padding: 3px 8px;
+      margin: 8px 0 5px 0;
+      display: inline-block;
+    }
+
+    /* 테이블 스타일 (팩스 출력 시 명확한 굵은 선) */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      border: 2px solid #000000;
+      word-break: keep-all;
+    }
+
+    .spec-table th {
+      background-color: #e6e6e6;
+      border: 1px solid #000000;
+      padding: 6px 4px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      width: 25%;
+      word-break: keep-all;
+    }
+
+    .spec-table td {
+      border: 1px solid #000000;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: middle;
+      word-break: keep-all;
+    }
+
+    .spec-table td strong {
+      font-size: 13px;
+      color: #000000;
+    }
+
+    /* 3대 핵심 경쟁력 박스 */
+    .benefit-box {
+      border: 2px solid #000000;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background-color: #ffffff;
+      word-break: keep-all;
+    }
+
+    .benefit-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .benefit-list li {
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      line-height: 1.35;
+      display: flex;
+      align-items: flex-start;
+      word-break: keep-all;
+    }
+
+    .benefit-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .benefit-list .num {
+      background: #000000;
+      color: #ffffff;
+      font-size: 11px;
+      padding: 1px 6px;
+      margin-right: 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* 도면 및 시가공 접수 가이드 */
+    .process-grid {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      margin-bottom: 8px;
+      border: 2px dashed #000000;
+    }
+
+    .process-step {
+      display: table-cell;
+      width: 33.33%;
+      padding: 8px;
+      text-align: center;
+      border-right: 1px dashed #000000;
+      vertical-align: top;
+    }
+
+    .process-step:last-child {
+      border-right: none;
+    }
+
+    .process-step .step-num {
+      font-size: 11px;
+      font-weight: 900;
+      text-decoration: underline;
+    }
+
+    .process-step .step-title {
+      font-size: 13px;
+      font-weight: 900;
+      margin: 2px 0;
+    }
+
+    .process-step .step-desc {
+      font-size: 11.5px;
+      color: #222222;
+    }
+
+    /* 하단 문의처 콜투액션 (CTA) 박스 */
+    .contact-card {
+      border: 3px solid #000000;
+      padding: 8px 12px;
+      background-color: #f9f9f9;
+    }
+
+    .contact-card .cta-headline {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .contact-flex {
+      display: table;
+      width: 100%;
+    }
+
+    .contact-col {
+      display: table-cell;
+      width: 39%;
+      vertical-align: top;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .contact-col.left {
+      width: 44%;
+      padding-right: 6px;
+      border-right: 1px solid #000000;
+      letter-spacing: -0.4px;
+    }
+
+    .contact-col.right {
+      padding-left: 10px;
+      border-right: 1px solid #000000;
+    }
+
+    .big-number {
+      font-size: 14.5px;
+      font-weight: 900;
+      display: block;
+      margin-top: 1px;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
+    }
+
+    /* 푸터 공지 */
+    .footer-note {
+      text-align: center;
+      font-size: 10px;
+      color: #444444;
+      margin-top: 6px;
+      border-top: 1px solid #cccccc;
+      padding-top: 4px;
+    }
+
+    @media print {
+      body {
+        background: none;
+      }
+      .page-container {
+        border-width: 4px;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-container">
+    <!-- 헤더 영역 -->
+    <div class="header">
+      <div class="header-text">
+        <div class="sub-header">[ 공장 직판 합리적 단가 용접철망 &amp; 메쉬휀스 전문 ]</div>
+        <h1 class="title-with-logo">
+          <img src="../catalog/images/logo_samhyup.png" alt="삼협철망(주) 로고" class="header-inline-logo" onerror="this.style.display='none'">
+          <span>삼 협 철 망 (주) (SAMHYUP MESH)</span>
+        </h1>
+        <div class="badge">용접철망 · 와이어메쉬 · 인테리어메쉬 · 메쉬파레트 · 메쉬휀스 · 개비온</div>
+      </div>
+    </div>
+
+    <!-- 메인 비전 및 타겟 바너 -->
+    <div class="hero-banner">
+      📢 제조사 직판 자재비 최소 10% 절감! / 정밀 자동화 설비 / 전국 신속 배송
+    </div>
+
+    <!-- 1. 주요 생산 및 가공 품목 -->
+    <div class="section-title">■ 주요 생산 및 전문 가공 분야</div>
+    <table class="spec-table">
+      <tr>
+        <th>용접철망 / 와이어메쉬</th>
+        <td>
+          <strong>건설 기초용 · 산업용 고품질 용접철망 &amp; 와이어메쉬</strong><br>
+          선경 2Ø ~ 8Ø / 망목 20x20mm ~ 75x75mm 이상 (흑선, 아연선, SUS 스테인리스)
+        </td>
+      </tr>
+      <tr>
+        <th>인테리어용접 / 일체형메쉬</th>
+        <td>
+          <strong>교차부 플랫 용접 일체형메쉬 &amp; 인테리어 디자인 메쉬</strong><br>
+          단차 없는 이음매 및 미려한 컬러 분체도장/아연도금 (천정·벽면 인테리어, 부품Box)
+        </td>
+      </tr>
+      <tr>
+        <th>메쉬파레트 / 견사망</th>
+        <td>
+          <strong>접이식 메쉬파레트 &amp; 포인트 스폿 조립식 대형 견사망</strong><br>
+          6Ø 선경 / 50x50mm 망목 (3~4단 다단 적재 보관, 부식 방지 분체도장 코팅)
+        </td>
+      </tr>
+      <tr>
+        <th>개비온철망 / 동물보호휀스</th>
+        <td>
+          <strong>격자 용접형 개비온 철망태 &amp; 고강도 야생동물 차단 휀스</strong><br>
+          친환경 법면 보호 옹벽, 조경 벽체, 고속도로·농가 로드킬 방지 보호망
+        </td>
+      </tr>
+    </table>
+
+    <!-- 2. 가공가능규격 -->
+    <div class="section-title">■ 생산 및 가공 규격 (용접철망/메쉬 기준)</div>
+    <table class="spec-table" style="margin-bottom:12px;">
+      <tr>
+        <th style="width:24%;">구분</th>
+        <th style="width:23%;">망목 / 선경</th>
+        <th style="width:27%;">가공 범위</th>
+        <th style="width:26%;">비고</th>
+      </tr>
+      <tr>
+        <td style="text-align:center;font-weight:900;word-break:keep-all;">용접철망 / 와이어메쉬</td>
+        <td style="text-align:center;font-size:12.5px;font-weight:900;word-break:keep-all;">20mm ~ 75mm 이상<br>(선경 2Ø ~ 8Ø)</td>
+        <td style="font-size:12px;white-space:nowrap;">흑선 / 아연선 / SUS 선택<br><span style="font-size:11.5px;color:#444;">최대 2,400mm x 6,000mm 제작</span></td>
+        <td style="font-size:11.5px;word-break:keep-all;">건축 기초용, 미장용, 산업용<br>정밀 격자 구조 &amp; 높은 인장강도</td>
+      </tr>
+      <tr>
+        <td style="text-align:center;font-weight:900;word-break:keep-all;">메쉬파레트 / 휀스</td>
+        <td style="text-align:center;font-size:12.5px;font-weight:900;white-space:nowrap;">50mm x 50mm<br>(선경 6Ø)</td>
+        <td colspan="2" style="white-space:nowrap;">800x600x650 / 1000x800x850 / 1200x1000x950 접이식 <strong>전국 신속 현장 배송</strong></td>
+      </tr>
+    </table>
+
+    <!-- 3. 삼협철망(주) 3대 핵심 경쟁력 -->
+    <div class="section-title">■ 삼협철망(주) 3대 핵심 경쟁력</div>
+    <div class="benefit-box">
+      <ul class="benefit-list">
+        <li>
+          <span class="num">01</span>
+          <div><strong>제조사 직판 압도적 단가 경쟁력:</strong> 공장 직영 자체 자동화 생산 라인으로 중간 유통 마진 없는 자재비 최소 10% 절감 공급</div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div><strong>정밀 자동화 품질 &amp; 엄격한 납기 준수:</strong> 균일한 용접 품질과 높은 인장강도로 소량 주문 제작부터 대량 현장 납품까지 신속 대응</div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div><strong>24시간 내 빠른 무료 견적:</strong> 팩스/이메일로 도면 또는 규격·수량 접수 시 즉시 단가 견적서 제출</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. 도면 및 견적 접수 절차 안내 -->
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="step-num">STEP 1</div>
+        <div class="step-title">도면/수량 접수</div>
+        <div class="step-desc">FAX 또는 이메일로<br>도면 및 수량 전송</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">STEP 2</div>
+        <div class="step-title">단가 검토 &amp; 견적</div>
+        <div class="step-desc">기술 검토 후 24시간 내<br>최저 단가 견적 제출</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">STEP 3</div>
+        <div class="step-title">시가공 &amp; 현장배송</div>
+        <div class="step-desc">생산 검수 완료 후<br>전국 현장 신속 출고</div>
+      </div>
+    </div>
+
+    <!-- 5. 하단 문의처 및 팩스 접수처 -->
+    <div class="contact-card">
+      <div class="cta-headline">도면/수량(FAX / Email)을 보내주시면 최저 단가 견적서를 발송해 드립니다.</div>
+      <div class="contact-flex">
+        <div class="contact-col left">
+          <strong>[ 회사 및 접수 정보 ]</strong><br>
+          • <strong>상호명:</strong> 삼협철망(주) (SAMHYUP MESH)<br>
+          • <strong>주소:</strong> 인천광역시 서구 사월로37번길 25(왕길동)<br>
+          • <strong>이메일:</strong> samhyupm@naver.com<br>
+          • <strong>홈페이지:</strong> http://www.samhyup.com/
+        </div>
+        <div class="contact-col right">
+          • 견적/가공 문의 (직통):
+          <span class="big-number">TEL : 032-563-4558 / 010-7708-0852</span>
+          • 팩스 도면 접수:
+          <span class="big-number">FAX : 032-563-4234</span>
+        </div>
+        <div class="contact-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://www.samhyup.com/" alt="홈페이지 QR">
+          <div class="qr-label">홈페이지<br>바로가기</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note" style="text-align:center;">
+      수신을 원치 않으시면 언제든지 연락 주시면 즉시 삭제 처리해 드립니다.
+    </div>
+  </div>
+
+</body>
+
+</html>

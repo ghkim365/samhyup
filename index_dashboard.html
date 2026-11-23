@@ -1,0 +1,4389 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼협철망 B2B 비즈니스 &amp; 마케팅 대시보드</title>
+    <!-- Google Fonts & Pretendard -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --navy: #15284d;
+            --navy-deep: #111B31;
+            --blue: #2d67c8;
+            --blue-light: #e8f0fe;
+            --bg: #F1F4FA;
+            --card: #FFFFFF;
+            --text: #172B52;
+            --muted: #71809B;
+            --line: #E6EBF4;
+            --border-color: #DDE1E7;
+            --border-light: #EAEDF1;
+            --gold: #D2A23C;
+            --gold-light: #F5EDD3;
+            --green: #20B783;
+            --green-light: #DCF7EB;
+            --orange: #F6A33B;
+            --red: #EF4444;
+            --red-light: #FFE5E6;
+            --shadow: 0 4px 14px rgba(20, 43, 83, 0.06);
+            --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+            --font-main: "Pretendard", "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --panel-bg: #FFFFFF;
+            --primary: var(--navy);
+            --accent: #2563EB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font-main);
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.55;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================== */
+        /* AUTH OVERLAY MODAL                                             */
+        /* ============================================================== */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 1px solid #CBD5E1;
+        }
+
+        .auth-card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .auth-card p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+
+        .auth-input-group {
+            margin-bottom: 16px;
+        }
+
+        .auth-input-group input {
+            width: 100%;
+            padding: 13px;
+            font-size: 18px;
+            letter-spacing: 6px;
+            text-align: center;
+            border: 2px solid #CBD5E1;
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .auth-input-group input:focus {
+            border-color: var(--blue);
+        }
+
+        .auth-error {
+            color: var(--red);
+            font-size: 12px;
+            font-weight: 600;
+            min-height: 18px;
+            margin-bottom: 12px;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 13px;
+            font-size: 14.5px;
+            font-weight: 600;
+            background: var(--navy);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-auth:hover {
+            background: #1e3a6a;
+        }
+
+        /* ============================================================== */
+        /* SIDEBAR (Renewal 130px Layout)                                */
+        /* ============================================================== */
+        .sidebar {
+            width: 175px;
+            position: fixed;
+            inset: 0 auto 0 0;
+            background: linear-gradient(180deg, #122442 0%, #1b2f50 100%);
+            color: #FFFFFF;
+            padding: 24px 12px 18px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .logo-mark {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: #E9F2FF;
+            line-height: 1;
+        }
+
+        .logo-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 5px;
+            color: #FFFFFF;
+        }
+
+        .logo-sub {
+            font-size: 7.5px;
+            color: #A8B9D4;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+        }
+
+        .nav {
+            display: grid;
+            gap: 6px;
+        }
+
+        .nav a {
+            color: #DCE6F6;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+        }
+
+        .nav a.active {
+            background: linear-gradient(90deg, #C99A39 0%, #E0B84F 100%);
+            color: #152A4B;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(201, 154, 57, 0.3);
+        }
+
+        .nav .ico {
+            width: 18px;
+            text-align: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .side-bottom {
+            margin-top: auto;
+            border: 1px solid #3B5273;
+            border-radius: 9px;
+            padding: 12px 10px;
+            font-size: 10.5px;
+            color: #C9D7EB;
+            text-align: center;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #25C58B;
+            margin-right: 4px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.15);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .side-bottom button {
+            width: 100%;
+            background: transparent;
+            color: #DBE6F4;
+            border: 1px solid #536781;
+            border-radius: 6px;
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .side-bottom button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+        }
+
+        /* ============================================================== */
+        /* MAIN LAYOUT (Margin 130px)                                     */
+        /* ============================================================== */
+        .main {
+            margin-left: 175px;
+            padding: 22px 24px 40px;
+            max-width: calc(100% - 175px);
+        }
+
+        /* Topbar */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .heading h1 {
+            font-size: 21.5px;
+            margin: 0 0 4px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+        }
+
+        .heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pillselect {
+            border: 1px solid #D1D9E6;
+            background: #FFFFFF;
+            color: #344D76;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 12.5px;
+            outline: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pillbtn {
+            border: 1px solid #D1D9E6;
+            background: #FFFFFF;
+            color: #344D76;
+            border-radius: 20px;
+            padding: 8px 13px;
+            font-weight: 600;
+            font-size: 12.5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .pillbtn:hover {
+            background: #F8FAFC;
+            color: var(--blue);
+            transform: translateY(-1px);
+        }
+
+        .pillbtn.primary {
+            background: var(--navy);
+            color: #FFFFFF;
+            border-color: var(--navy);
+        }
+
+        .pillbtn.primary:hover {
+            background: #1e3a6a;
+            color: #FFFFFF;
+        }
+
+        .pillbtn.active {
+            background: #DCFCE7;
+            color: #166534;
+            border-color: #86EFAC;
+        }
+
+        /* Mode Selector */
+        .mode-group {
+            display: flex;
+            background: #E2E8F0;
+            border-radius: 20px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .mode-btn {
+            border: none;
+            background: transparent;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 11px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: #FFFFFF;
+            color: var(--navy);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Cards General */
+        .card {
+            background: var(--card);
+            border: 1px solid #E8EDF5;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        /* 4 KPI Cards Grid */
+        .grid4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .kpi {
+            padding: 16px 18px 14px;
+            min-height: 124px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .kpi .label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #64748B;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .kpi .value {
+            font-size: 33px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--navy);
+            margin: 4px 0 2px;
+            line-height: 1.1;
+        }
+
+        .delta {
+            font-size: 12.5px;
+            color: #1CB67D;
+            font-weight: 600;
+        }
+
+        .kpi.warn {
+            background: #FFFDF8;
+            border-color: #FDE68A;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .kpi.warn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.15);
+        }
+
+        .kpi.warn .value {
+            color: #B45309;
+        }
+
+        /* Content Grid (Charts) */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .chart-card {
+            padding: 18px 20px;
+            min-height: 330px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cardtitle {
+            font-size: 16.5px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subtitle {
+            font-size: 12.5px;
+            color: #8794AA;
+            margin-bottom: 12px;
+        }
+
+        .chart-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 250px;
+        }
+
+        /* Leads Table Card */
+        .table-card {
+            padding: 18px 20px 14px;
+            margin-bottom: 18px;
+        }
+
+        .tablehead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            padding: 6px 10px;
+            min-width: 240px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            font-size: 12px;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        thead {
+            background: #F1F4FA;
+            color: #6A7B98;
+            font-size: 12.5px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 11px 13px;
+            border-bottom: 1px solid #E8EDF5;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        td {
+            color: #263B5E;
+        }
+
+        tbody tr:hover {
+            background: #F8FAFF;
+        }
+
+        .badge {
+            border-radius: 12px;
+            padding: 4px 8px;
+            font-weight: 600;
+            font-size: 11.5px;
+            display: inline-block;
+        }
+
+        .badge.red {
+            background: #FFE5E6;
+            color: #C33D50;
+        }
+
+        .badge.orange {
+            background: #FFF0D9;
+            color: #B7791B;
+        }
+
+        .badge.blue {
+            background: #E2EFFF;
+            color: #2E6AC5;
+        }
+
+        .badge.green {
+            background: #DCF7EB;
+            color: #178B62;
+        }
+
+        .badge-product {
+            background: #EDE9FE;
+            color: #6D28D9;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .detail {
+            border: 1px solid #CCD7E9;
+            background: #FFFFFF;
+            border-radius: 6px;
+            color: #345174;
+            padding: 5px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .detail:hover {
+            background: var(--blue);
+            color: #FFFFFF;
+            border-color: var(--blue);
+        }
+
+        /* Bottom Grid (Simulator & Quick Cards) */
+        .bottomgrid {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .simcard {
+            padding: 18px 20px;
+        }
+
+        .sim-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .control label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 12.5px;
+            margin-bottom: 8px;
+        }
+
+        .control input[type="range"] {
+            width: 100%;
+            accent-color: #2868C9;
+        }
+
+        .amount {
+            border: 1px solid #DCE5F3;
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-weight: 600;
+            color: var(--blue);
+            background: #F8FAFC;
+            font-size: 12.5px;
+        }
+
+        .simtable {
+            border: 1px solid #E3E9F2;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 11.5px;
+        }
+
+        .simtable div {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            padding: 9px 12px;
+            border-bottom: 1px solid #EDF1F7;
+        }
+
+        .simtable div:first-child {
+            background: #F1F4FA;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .simtable div:last-child {
+            border-bottom: none;
+        }
+
+        .quick-card {
+            padding: 18px 20px;
+        }
+
+        .quickgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .quick {
+            border: 1px solid #E6EBF4;
+            border-radius: 10px;
+            background: #FFFFFF;
+            box-shadow: 0 3px 8px rgba(25, 48, 88, 0.04);
+            padding: 14px 6px;
+            text-align: center;
+            color: #334D75;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .quick:hover {
+            transform: translateY(-2px);
+            border-color: #CBD5E1;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+            color: var(--blue);
+        }
+
+        .quick .qico {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .notice {
+            padding: 16px 20px;
+            margin-top: 14px;
+        }
+
+        .notice ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+        }
+
+        .notice li {
+            padding: 8px 0;
+            border-bottom: 1px solid #EDF1F6;
+            font-size: 12.5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .notice li:last-child {
+            border-bottom: none;
+        }
+
+        .notice-date {
+            color: #8896AD;
+            font-size: 10.5px;
+        }
+
+        /* ============================================================== */
+        /* MODALS (Quote Detail & Error Report)                           */
+        /* ============================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #FFFFFF;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid #CBD5E1;
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16.5px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #64748B;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 11px;
+            color: #64748B;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-item p {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .info-item-full {
+            grid-column: span 2;
+        }
+
+        .specs-display-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12.5px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        /* Responsive Breakpoints */
+        @media(max-width: 1024px) {
+            .grid4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid,
+            .bottomgrid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .sidebar {
+                width: 65px;
+                padding: 16px 4px;
+            }
+
+            .logo-name,
+            .logo-sub {
+                display: none;
+            }
+
+            .nav a {
+                justify-content: center;
+                padding: 12px 0;
+            }
+
+            .nav a .navtext {
+                display: none;
+            }
+
+            .side-bottom {
+                display: none;
+            }
+
+            .main {
+                margin-left: 65px;
+                max-width: calc(100% - 65px);
+                padding: 14px 10px;
+            }
+
+            .heading h1 {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================== -->
+    <!-- PASSWORD AUTH OVERLAY GATE                                     -->
+    <!-- ============================================================== -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-card">
+            <div
+                style="width: 58px; height: 58px; margin: 0 auto 16px; border-radius: 14px; overflow: hidden; background: #FFFFFF; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; border: 1px solid #E2E8F0;">
+                <img src="catalog/images/logo_samhyup.png" alt="삼협철망" style="width:100%; height:100%; object-fit:contain;">
+            </div>
+            <h2>삼협철망 관리자 인증</h2>
+            <p>보안 데이터 및 실시간 모니터링을 위해 비밀번호를 입력해주세요.</p>
+            <div class="auth-input-group">
+                <input type="password" id="authPassword" placeholder="••••" maxlength="8" autocomplete="off"
+                    onkeydown="if(event.key === 'Enter') verifyPassword()">
+            </div>
+            <div id="authError" class="auth-error"></div>
+            <button class="btn-auth" onclick="verifyPassword()">인증하기</button>
+
+            <!-- 방문자 링크 안내 -->
+            <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #E2E8F0; text-align: center;">
+                <p style="font-size: 12px; color: #64748B; margin-bottom: 12px; font-weight: 500;">
+                    💡 제품 카탈로그 또는 기업 소개를 찾으시나요?
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <a href="catalog/index_catalog.html" target="_blank" class="pillbtn primary"
+                        style="justify-content:center; padding:9px 12px; font-size:12px;">📱 모바일 카탈로그</a>
+                    <a href="https://samhyup.pages.dev/" target="_blank" class="pillbtn"
+                        style="justify-content:center; padding:9px 12px; font-size:12px;">🌐 협력 제안서</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SIDEBAR NAVIGATION (130px)                                     -->
+    <!-- ============================================================== -->
+    <aside class="sidebar">
+        <div class="logo" style="padding-bottom:12px; margin-bottom:14px;">
+            <div
+                style="width:56px; height:56px; margin:0 auto; border-radius:12px; overflow:hidden; background:#FFFFFF; padding:4px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.22);">
+                <img src="catalog/images/logo_samhyup.png" alt="삼협철망" style="width:100%; height:100%; object-fit:contain;">
+            </div>
+        </div>
+        <nav class="nav">
+            <a class="active" href="#"><span class="ico">⌂</span><span class="navtext">대시보드</span></a>
+            <a href="#quotes"><span class="ico">✉</span><span class="navtext">견적 관리</span></a>
+            <a href="#analytics"><span class="ico">📊</span><span class="navtext">마케팅 분석</span></a>
+            <a href="javascript:void(0)" onclick="switchSite('mailling')"><span class="ico">📬</span><span
+                    class="navtext">메일 발송</span></a>
+            <a href="javascript:void(0)" onclick="switchSite('fax')"><span class="ico">📠</span><span class="navtext">팩스
+                    현황</span></a>
+            <a href="#sim"><span class="ico">▦</span><span class="navtext">시뮬레이터</span></a>
+            <a href="plan/samhyup_plan_2026.html" target="_blank"><span class="ico">📋</span><span
+                    class="navtext">운영계획서</span></a>
+            <a href="javascript:void(0)" onclick="changeAdminPassword()"><span class="ico">🔑</span><span
+                    class="navtext">비번 변경</span></a>
+        </nav>
+        <div class="side-bottom">
+            <div><span class="status-dot"></span>시스템 정상</div>
+            <div style="margin:6px 0 2px; color:#91A4BF; font-size:9.5px;">최근 동기화</div>
+            <strong style="color:#FFFFFF; font-size:10px;">2026.11.23 LIVE</strong>
+            <button onclick="sessionStorage.removeItem('samhyup_admin_auth'); location.reload();">로그아웃</button>
+        </div>
+    </aside>
+
+    <!-- ============================================================== -->
+    <!-- MAIN DASHBOARD CONTENT                                         -->
+    <!-- ============================================================== -->
+    <main class="main" id="dashboard-wrapper">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="heading">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                    <h1 id="brand-title" style="margin-bottom:0;">삼협철망</h1>
+                    <div id="badge-google-ads"
+                        style="display:inline-flex; align-items:center; gap:5px; font-size:11px; color:#166534; background:#DCF7EB; padding:3px 8px; border-radius:12px; font-weight:600;">
+                        <span class="status-dot"></span>Google Ads (samhyup 651-167-5293): Active
+                    </div>
+                </div>
+                <p id="brand-subtitle">용접철망·와이어메쉬·휀스 카탈로그 & B2B 마케팅 모니터링 관리자</p>
+            </div>
+            <div class="top-actions">
+                <!-- Target Site Selector -->
+                <select id="site-selector" class="pillselect" onchange="switchSite(this.value)">
+                    <option value="catalog">📱 모바일 카탈로그</option>
+                    <option value="main_site">🌐 공식 홈페이지 (www.samhyup.com)</option>
+                    <option value="mailling">✉️ B2B 이메일 발송 현황</option>
+                    <option value="fax">📠 B2B 팩스 발송 현황</option>
+                </select>
+
+                <!-- Report View Button (Dynamic) -->
+                <button id="btn-report-view" class="pillbtn primary" onclick="openMailReport()" style="display:none;">
+                    📊 발송 상세 리포트 ↗
+                </button>
+
+                <!-- Mode Selector -->
+                <div class="mode-group">
+                    <button id="mode-realtime" class="mode-btn active" onclick="switchMode('realtime')">🔴 실시간</button>
+                    <button id="mode-simulator" class="mode-btn" onclick="switchMode('simulator')">⚙️ 시뮬</button>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <a href="catalog/index_catalog.html" target="_blank" class="pillbtn">📱 카탈로그 ↗</a>
+                <a href="catalog/index_brochure.html" target="_blank" class="pillbtn">📄 브로슈어 ↗</a>
+                <a href="https://samhyup.pages.dev/" target="_blank" class="pillbtn">🌐 제안서 ↗</a>
+                <a href="https://docs.google.com/spreadsheets/d/161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04/edit?pli=1&gid=1031257647#gid=1031257647"
+                    target="_blank" id="btn-gsheet-link" class="pillbtn">📊 구글시트 ↗</a>
+            </div>
+        </header>
+
+        <!-- KPI 4 CARDS GRID -->
+        <section class="grid4">
+            <!-- KPI 1: 총 방문 세션 -->
+            <article class="card kpi">
+                <div class="label" id="kpi-title-1">
+                    <span>👤</span> 총 방문 세션
+                </div>
+                <div class="value" id="kpi-visits">-</div>
+                <div class="delta" id="kpi-visits-ratio">Google Ads 유입 0%</div>
+                <!-- Sparkline SVG -->
+                <svg style="position:absolute; bottom:0; right:0; width:110px; height:45px; opacity:0.35;"
+                    viewBox="0 0 120 48">
+                    <polyline points="0,45 20,40 35,38 48,30 60,33 77,21 92,20 108,7 120,4" fill="none" stroke="#2563EB"
+                        stroke-width="2.5" />
+                </svg>
+            </article>
+
+            <!-- KPI 2: 누적 견적 문의 -->
+            <article class="card kpi">
+                <div class="label" id="kpi-title-2">
+                    <span>✉️</span> 견적 문의 접수
+                </div>
+                <div class="value" id="kpi-quotes">-</div>
+                <div class="delta" id="kpi-subtitle-2">
+                    최근 24시간 <span id="kpi-quotes-today">0건</span> 추가 접수
+                </div>
+                <!-- Sparkline SVG -->
+                <svg style="position:absolute; bottom:0; right:0; width:110px; height:45px; opacity:0.35;"
+                    viewBox="0 0 120 48">
+                    <polyline points="0,45 20,42 35,35 48,34 60,25 77,22 92,15 108,12 120,5" fill="none"
+                        stroke="#8B5CF6" stroke-width="2.5" />
+                </svg>
+            </article>
+
+            <!-- KPI 3: 견적 전환율 -->
+            <article class="card kpi">
+                <div class="label" id="kpi-title-3">
+                    <span>🎯</span> 견적 전환율 (CVR)
+                </div>
+                <div class="value" id="kpi-cvr">-%</div>
+                <div class="delta" id="kpi-subtitle-3" style="color:#64748B;">
+                    방문 대비 견적 성공율
+                </div>
+                <!-- Sparkline SVG -->
+                <svg style="position:absolute; bottom:0; right:0; width:110px; height:45px; opacity:0.35;"
+                    viewBox="0 0 120 48">
+                    <polyline points="0,42 20,38 35,35 48,28 60,30 77,18 92,16 108,10 120,6" fill="none"
+                        stroke="#10B981" stroke-width="2.5" />
+                </svg>
+            </article>
+
+            <!-- KPI 4: 반송 에러 / 미처리 문의 알림 -->
+            <article class="card kpi warn" onclick="openErrModal()" title="클릭하여 반송 에러 리포트 열기">
+                <div class="label" style="color:#B45309;">
+                    <span>⚠️</span> 반송·에러 모니터링
+                </div>
+                <div class="value" id="errBadge">0건</div>
+                <div style="font-weight:600; font-size:11px; color:#D97706;">
+                    반송 내역 확인하기 ›
+                </div>
+                <!-- Sparkline SVG -->
+                <svg style="position:absolute; bottom:0; right:0; width:110px; height:45px; opacity:0.35;"
+                    viewBox="0 0 120 48">
+                    <polyline points="0,45 20,40 35,36 48,32 60,35 77,28 92,20 108,18 120,10" fill="none"
+                        stroke="#F59E0B" stroke-width="2.5" />
+                </svg>
+            </article>
+        </section>
+
+        <!-- CONTENT GRID (Charts) -->
+        <section class="content-grid" id="analytics">
+            <!-- Left: 유입 채널 비중 추이 차트 -->
+            <article class="card chart-card">
+                <div class="cardtitle" id="chart-visits-title">📊 마케팅 유입 채널 분석</div>
+                <div class="subtitle" id="chart-visits-desc">Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중 추이</div>
+                <div class="chart-container">
+                    <canvas id="sourceChart"></canvas>
+                </div>
+            </article>
+
+            <!-- Right: 요청 품목별 선호도 차트 -->
+            <article class="card chart-card">
+                <div class="cardtitle" id="chart-product-title">🎯 가공 요청 품목 선호도</div>
+                <div class="subtitle" id="chart-product-desc">견적 요청이 접수된 서비스별(확관, 축관, 밴딩 등) 분포 분석</div>
+                <div class="chart-container">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </article>
+        </section>
+
+        <!-- LEADS TABLE CARD -->
+        <section class="card table-card" id="quotes">
+            <div class="tablehead">
+                <div>
+                    <h3 class="cardtitle" id="table-mode-title" style="margin-bottom:2px;">✉️ 최근 견적 문의 접수 목록</h3>
+                    <p class="subtitle" id="table-mode-desc" style="margin-bottom:0;">구글 스프레드시트와 실시간 연동된 최신 견적 접수
+                        데이터입니다.</p>
+                </div>
+
+                <div class="table-controls">
+                    <!-- Search Input -->
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input type="text" id="table-search-input" placeholder="검색 (회사명, 이메일, 담당자...)"
+                            oninput="onSearchInputChanged()">
+                    </div>
+
+                    <!-- Status Filter -->
+                    <select id="status-filter-select" class="pillselect" onchange="onStatusFilterChanged()">
+                        <option value="all" selected>전체 상태</option>
+                        <option value="성공">✅ 성공만</option>
+                        <option value="실패">❌ 실패만</option>
+                    </select>
+
+                    <!-- Items per page -->
+                    <select id="items-per-page-select" class="pillselect" onchange="onPageSizeChanged()">
+                        <option value="10" selected>10개씩</option>
+                        <option value="25">25개씩</option>
+                        <option value="50">50개씩</option>
+                        <option value="all">전체</option>
+                    </select>
+
+                    <span id="table-count-info" style="font-size:12px; font-weight:600; color:var(--muted);">전체
+                        0건</span>
+                </div>
+            </div>
+
+            <!-- Table Body -->
+            <div class="table-scroll">
+                <table id="leads-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>접수 일시</th>
+                            <th>회사 / 현장명</th>
+                            <th>담당자</th>
+                            <th>연락처</th>
+                            <th>가공 서비스</th>
+                            <th>유입 경로</th>
+                            <th>상태</th>
+                            <th>액션</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-body">
+                        <!-- Real-time dynamic items rendered here -->
+                    </tbody>
+                </table>
+
+                <div id="table-empty" style="display:none; padding:40px; text-align:center; color:var(--muted);">
+                    <div style="font-size:32px; margin-bottom:10px;">📥</div>
+                    <p id="empty-state-text">접수된 견적 요청이 없습니다.</p>
+                </div>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="pagination-controls"
+                style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px solid #E8EDF5;">
+                <div id="pagination-summary" style="font-size:12px; color:var(--muted);">
+                    Showing 1 to 10 of 0 entries
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button id="btn-prev-page" class="detail" onclick="changePage(-1)">◀ 이전</button>
+                    <span id="page-num-display"
+                        style="font-size:12px; font-weight:600; color:var(--navy); min-width:50px; text-align:center;">1
+                        / 1</span>
+                    <button id="btn-next-page" class="detail" onclick="changePage(1)">다음 ▶</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM GRID (Simulator & Quick Actions) -->
+        <section class="bottomgrid" id="sim">
+            <!-- Google Ads Simulator -->
+            <article class="card simcard">
+                <div class="cardtitle">▦ Google Ads 효율 시뮬레이터</div>
+                <div class="subtitle">일일 광고비 설정에 따른 예상 클릭수와 문의 건수, 전환비용(CPA)을 예측합니다.</div>
+
+                <div class="sim-layout">
+                    <div>
+                        <div class="control">
+                            <label>
+                                <span>일일 설정 광고 예산</span>
+                                <span class="amount" id="label-budget">150,000 원</span>
+                            </label>
+                            <input type="range" id="input-budget" min="50000" max="1000000" step="50000" value="150000">
+                        </div>
+                        <div class="control" style="margin-top:18px;">
+                            <label>
+                                <span>평균 클릭 단가 (CPC)</span>
+                                <span class="amount" id="label-cpc">450 원</span>
+                            </label>
+                            <input type="range" id="input-cpc" min="200" max="1500" step="50" value="450">
+                        </div>
+                        <button class="pillbtn primary"
+                            style="width:100%; margin-top:16px; justify-content:center; padding:11px;"
+                            onclick="calculateSimulator()">
+                            시뮬레이션 재계산 ▶
+                        </button>
+                        <button id="btn-mock-generate" class="pillbtn"
+                            style="margin-top:8px; width:100%; justify-content:center;" onclick="generateMockQuote()">
+                            ⚡ 시뮬레이션: 가상 견적 접수 테스트
+                        </button>
+                    </div>
+
+                    <div>
+                        <div class="simtable">
+                            <div>
+                                <span>구분</span>
+                                <span>설정 지표</span>
+                                <span>예상 성과</span>
+                            </div>
+                            <div>
+                                <span>예상 클릭수</span>
+                                <span>클릭당 CPC</span>
+                                <strong id="result-clicks" style="color:var(--navy); font-size:13px;">- 회</strong>
+                            </div>
+                            <div>
+                                <span>예상 견적 문의</span>
+                                <span>전환율 기준</span>
+                                <strong id="result-leads" style="color:var(--blue); font-size:13px;">- 건</strong>
+                            </div>
+                            <div>
+                                <span>예상 전환비용(CPA)</span>
+                                <span>리드당 원가</span>
+                                <strong id="result-cpa" style="color:#10B981; font-size:13px;">- 원</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Quick Actions & Notices -->
+            <div>
+                <article class="card quick-card">
+                    <div class="cardtitle">⚡ 업무 도구 빠른 실행</div>
+                    <div class="quickgrid">
+                        <a href="catalog/index_catalog.html" target="_blank" class="quick">
+                            <div class="qico">📱</div>카탈로그 보기
+                        </a>
+                        <a href="catalog/index_brochure.html" target="_blank" class="quick">
+                            <div class="qico">📄</div>공식 브로슈어 (A4)
+                        </a>
+                        <a href="https://samhyup.pages.dev/" target="_blank" class="quick">
+                            <div class="qico">🌐</div>B2B 협력제안서
+                        </a>
+                        <a href="https://docs.google.com/spreadsheets/d/161bSIprv3S0P8-UyPHnC9fWk4q_KcuANSPL-aZEJo04/edit?pli=1&gid=1031257647#gid=1031257647"
+                            target="_blank" class="quick">
+                            <div class="qico" style="color:#10B981;">📊</div>Company 시트
+                        </a>
+                        <a href="plan/samhyup_plan_2026.html" target="_blank" class="quick">
+                            <div class="qico">📋</div>2026 마스터플랜
+                        </a>
+                        <a href="https://www.sendlabs.co.kr/main.do" target="_blank" class="quick">
+                            <div class="qico" style="color:#2563EB;">📠</div>SendLabs 팩스
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card notice">
+                    <div class="cardtitle">📣 공지사항 &amp; 시스템 알림</div>
+                    <ul>
+                        <li>
+                            <span>Cloudflare Pages 배포 인프라 통합 완료</span>
+                            <span class="notice-date">11.20</span>
+                        </li>
+                        <li>
+                            <span>3차 정기 B2B 이메일 발송 68건 성공</span>
+                            <span class="notice-date">11.23</span>
+                        </li>
+                        <li>
+                            <span>반송 메일 1시간 주기 자동 스캔 트리거 가동</span>
+                            <span class="notice-date">11.23</span>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- SENDLABS ACCOUNT SECTION -->
+        <section class="card" id="sales-tools-section" style="padding:20px; margin-bottom:20px;">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #E8EDF5; padding-bottom:10px;">
+                <h3 class="cardtitle" style="margin-bottom:0;">📠 대량 팩스 발송 계정 정보 (SendLabs)</h3>
+                <span class="badge" style="background:#DCF7EB; color:#166534;">● 정상 사용 중</span>
+            </div>
+            <div
+                style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; font-size:12px;">
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                    <div style="color:#64748B; font-size:10.5px;">서비스 ID</div>
+                    <strong style="color:#1E293B;">samhyup</strong>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                    <div style="color:#64748B; font-size:10.5px;">공통 발신번호</div>
+                    <strong style="color:#005F56;">02-2076-8203</strong>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                    <div style="color:#64748B; font-size:10.5px;">요금 방식</div>
+                    <strong style="color:#1E293B;">충전식 · 25 Cash/장</strong>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px;">
+                    <div style="color:#64748B; font-size:10.5px;">발송 규격</div>
+                    <strong style="color:#1E293B;">A4 1장 흑백 최적화</strong>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- MODAL: QUOTE DETAILS                                           -->
+    <!-- ============================================================== -->
+    <div class="modal-overlay" id="quoteModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">견적 요청 상세 정보</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>회사 / 현장명</label>
+                        <p id="modal-company">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>담당자명</label>
+                        <p id="modal-name">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>연락처</label>
+                        <p id="modal-phone">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>이메일 주소</label>
+                        <p id="modal-email">-</p>
+                    </div>
+                    <div class="info-item">
+                        <label>가공 서비스</label>
+                        <p><span class="badge-product" id="modal-product">-</span></p>
+                    </div>
+                    <div class="info-item">
+                        <label>유입 경로</label>
+                        <p id="modal-source">-</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>희망 규격 및 요청 수량</label>
+                        <div class="specs-display-box" id="modal-specs">-</div>
+                    </div>
+                    <div class="info-item info-item-full" id="modal-file-box" style="display:none;">
+                        <label>첨부 도면 / 파일</label>
+                        <div style="margin-top:4px;">
+                            <a id="modal-file-link" href="#" target="_blank" class="pillbtn primary"
+                                style="font-size:12px;">
+                                📎 첨부파일 다운로드 / 열람 ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL: ERROR REPORT (BOUNCE EMAILS)                            -->
+    <!-- ============================================================== -->
+    <div class="modal-overlay" id="errModal" onclick="closeErrModalOutside(event)">
+        <div class="modal-card" style="max-width:720px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" style="color:var(--navy);">📧 이메일 발송 반송/에러 상세 리포트</h3>
+                    <div style="font-size:11px; color:#64748B; margin-top:2px;" id="errModalMeta">데이터 로딩 중...</div>
+                </div>
+                <button class="modal-close" onclick="closeErrModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Summary stat badges -->
+                <div
+                    style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:14px; text-align:center;">
+                    <div style="background:#FEE2E2; border:1px solid #FCA5A5; border-radius:8px; padding:10px;">
+                        <div style="font-size:11px; color:#991B1B; font-weight:600;">전체 실패 건수</div>
+                        <strong style="font-size:18px; color:#DC2626;" id="sc-total">0건</strong>
+                    </div>
+                    <div style="background:#FEF3C7; border:1px solid #FCD34D; border-radius:8px; padding:10px;">
+                        <div style="font-size:11px; color:#92400E; font-weight:600;">수신자 없음 (550)</div>
+                        <strong style="font-size:18px; color:#D97706;" id="sc-550">0건</strong>
+                    </div>
+                    <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:10px;">
+                        <div style="font-size:11px; color:#475569; font-weight:600;">도메인 오류 (DNS)</div>
+                        <strong style="font-size:18px; color:#1E293B;" id="sc-dns">0건</strong>
+                    </div>
+                </div>
+
+                <!-- Tabs: 날짜별 / 히스토리 -->
+                <div
+                    style="display:flex; gap:8px; margin-bottom:12px; border-bottom:1px solid #E2E8F0; padding-bottom:8px;">
+                    <button class="pillbtn primary" id="btn-tab-errlist" onclick="switchErrTab('list')">📅 일자별 반송 목록
+                        (<span id="errListCnt">0</span>건)</button>
+                    <button class="pillbtn" id="btn-tab-errhistory" onclick="switchErrTab('history')">📜 누적 히스토리 (<span
+                            id="errHistoryCnt">0</span>건)</button>
+                </div>
+
+                <!-- Date selector pills -->
+                <div id="errDateSelector" style="margin-bottom:12px; display:flex; gap:6px; flex-wrap:wrap;">
+                    <div id="errDateSelectorList" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+                </div>
+
+                <!-- Table for Errors -->
+                <div class="table-scroll" style="max-height:300px; overflow-y:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>회사명</th>
+                                <th>이메일 주소</th>
+                                <th>실패 원인</th>
+                                <th>조치 상태</th>
+                            </tr>
+                        </thead>
+                        <tbody id="errTableBody">
+                            <!-- Dynamic error logs -->
+                        </tbody>
+                        <tbody id="errHistoryBody" style="display:none;">
+                            <!-- Dynamic history logs -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:1px solid #E2E8F0;">
+                    <button class="detail" onclick="copyErrList()">📋 실패 목록 복사</button>
+                    <button class="pillbtn primary" onclick="closeErrModal()">확인 및 닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PRESERVED SCRIPTS (UNTOUCHED LOGIC & APIS)                     -->
+    <!-- ============================================================== -->
+    <script>
+
+        // [중요] 구글 스프레드시트 연동용 앱스 스크립트 웹 앱 URL을 배포 후 아래 빈칸에 붙여넣으세요.
+        // 예: "https://script.google.com/macros/s/AKfycb.../exec"
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyRYc9FcS5hmG-EFrz3ra2ky6eVGSq_5dFnKQ0RPB9H80dO64cA2xOSUkA1j_hyIwFF-A/exec"; // v8 2026-09-16
+
+        let currentSite = 'catalog';   // 'catalog', 'main_site', or 'mailling'
+        let dashboardMode = 'realtime'; // 'realtime' or 'simulator'
+        let analyticsData = null;
+        let sourceChart = null;
+        let productChart = null;
+
+        // Table Search & Pagination states
+        let searchQuery = '';
+        let statusFilter = 'all'; // 'all', '성공', or '실패'
+        let currentPage = 1;
+        let pageSize = 10;
+
+        // 1. 모바일 카탈로그 시뮬레이터 기본 더미 데이터
+        const defaultSimData = {
+            visits: { google_ads: 287, search: 183, direct: 76 },
+            quotes: [
+                {
+                    id: 1,
+                    date: "2026-07-10T10:15:30Z",
+                    company: "(주)한국정밀기계",
+                    name: "김민우 과장",
+                    phone: "010-3344-5566",
+                    email: "mw.kim@kpm.co.kr",
+                    product: "용접철망",
+                    specs: "Ø50.8 T2.0 탄소강 90° 벤딩 200개 단가 문의",
+                    source: "google_ads"
+                },
+                {
+                    id: 2,
+                    date: "2026-07-10T14:22:10Z",
+                    company: "태영산업",
+                    name: "이재혁 대표",
+                    phone: "010-9988-7766",
+                    email: "taeyoung@naver.com",
+                    product: "와이어메쉬",
+                    specs: "Ø60.3 T3.0 테이퍼 축관 가공 100개 단가 요청",
+                    source: "search"
+                },
+                {
+                    id: 3,
+                    date: "2026-07-11T09:05:45Z",
+                    company: "(주)서원기계",
+                    name: "박준형 팀장",
+                    phone: "010-1122-3344",
+                    email: "jhpark@seowon.com",
+                    product: "메쉬파레트",
+                    specs: "Ø25.4 냉간 인발 정밀 성형 공차 ±0.05mm 300개 문의",
+                    source: "direct"
+                },
+                {
+                    id: 4,
+                    date: "2026-07-11T16:40:00Z",
+                    company: "중앙금속",
+                    name: "최성호 차장",
+                    phone: "010-5566-7788",
+                    email: "shchoi@jungangmetal.co.kr",
+                    product: "인테리어용접",
+                    specs: "Ø76.1 알루미늄 플레어형 확관 150개 납기 문의",
+                    source: "google_ads"
+                },
+                {
+                    id: 5,
+                    date: "2026-07-12T08:30:15Z",
+                    company: "영남제관(주)",
+                    name: "정수진 대리",
+                    phone: "010-4455-6677",
+                    email: "sjjeong@youngnampipe.co.kr",
+                    product: "견사망",
+                    specs: "도면 기준 Ø101.6 벤딩+축관 복합가공 30개 주문제작 문의",
+                    source: "search"
+                }
+            ]
+        };
+
+        // 2. 공식 홈페이지 (www.samhyup.com) 시뮬레이터 기본 더미 데이터
+        const defaultMainSimData = {
+            visits: { google_ads: 980, search: 720, direct: 310 },
+            quotes: [
+                {
+                    id: 101,
+                    date: "2026-07-09T09:12:00Z",
+                    company: "삼호개발(주)",
+                    name: "강성태 부장",
+                    phone: "010-3322-8877",
+                    email: "stkang@samho.co.kr",
+                    product: "개비온철망",
+                    specs: "도로사면 옹벽 보호용 아연도금 개비온 매트리스 300헤베 단가 요청",
+                    source: "google_ads"
+                },
+                {
+                    id: 102,
+                    date: "2026-07-10T11:45:00Z",
+                    company: "신세계건설 현장",
+                    name: "윤민호 공사과장",
+                    phone: "010-4455-1122",
+                    email: "mhyoon@shinsegae.co.kr",
+                    product: "용접철망",
+                    specs: "#6 (4.0mm) 150x150 규격 3,500장 대량 출고 단가 및 상차 조건 문의",
+                    source: "search"
+                },
+                {
+                    id: 103,
+                    date: "2026-07-10T15:30:00Z",
+                    company: "동아조경(주)",
+                    name: "정현우 대리",
+                    phone: "010-7766-5544",
+                    email: "donga@daum.net",
+                    product: "동물보호망",
+                    specs: "녹색 PVC 피복 철망 H1.8m 450미터 휀스용 단가 의뢰",
+                    source: "google_ads"
+                },
+                {
+                    id: 104,
+                    date: "2026-07-11T10:20:00Z",
+                    company: "유니온무역",
+                    name: "최성수 과장",
+                    phone: "010-8899-7788",
+                    email: "union@uniontrade.co.kr",
+                    product: "메쉬파레트",
+                    specs: "접이식 메쉬파레트 특대형 (1200x1000x890) 120개 수출 납기 및 가격",
+                    source: "direct"
+                },
+                {
+                    id: 105,
+                    date: "2026-07-12T07:15:00Z",
+                    company: "서해종합건설",
+                    name: "백승기 소장",
+                    phone: "010-5544-2233",
+                    email: "sgbaek@seohae.co.kr",
+                    product: "일체형메쉬",
+                    specs: "지하주차장 천장 마감 메쉬망 아연도금 500장 단가 및 트럭 화물료",
+                    source: "search"
+                }
+            ]
+        };
+
+        // 3. B2B 이메일 발송 현황 시뮬레이터 기본 더미 데이터
+        const defaultMailSimData = {
+            visits: { success: 42, fail: 3, pending: 12 },
+            quotes: [
+                {
+                    id: 201,
+                    date: "2026-08-26T09:15:00Z",
+                    company: "삼협철망 테스트",
+                    name: "test@samhyup.com",
+                    phone: "1일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "비고: 신규 주소 테스트 성공",
+                    source: "success"
+                },
+                {
+                    id: 202,
+                    date: "2026-08-26T10:30:00Z",
+                    company: "(주)삼오기계",
+                    name: "samoo@samoo.co.kr",
+                    phone: "1일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "",
+                    source: "success"
+                },
+                {
+                    id: 203,
+                    date: "2026-08-26T13:12:00Z",
+                    company: "우주테크",
+                    name: "wrong_email_address",
+                    phone: "1일차",
+                    email: "실패",
+                    product: "이메일 주소 형식 오류",
+                    specs: "비고: 주소 오기입 확인 요망",
+                    source: "fail"
+                },
+                {
+                    id: 204,
+                    date: "2026-08-26T14:45:00Z",
+                    company: "한성철강",
+                    name: "sales@hansung.com",
+                    phone: "9일차",
+                    email: "성공",
+                    product: "Gmail API 발송 완료",
+                    specs: "",
+                    source: "success"
+                },
+                {
+                    id: 205,
+                    date: "2026-08-26T16:20:00Z",
+                    company: "현대정밀",
+                    name: "hd@hd-precision.co.kr",
+                    phone: "9일차",
+                    email: "실패",
+                    product: "수신인 사서함 용량 초과",
+                    specs: "비고: 유선 연락 필요",
+                    source: "fail"
+                }
+            ]
+        };
+
+
+        // 4. B2B 팩스 발송 현황 (fax_log) 데이터
+        const defaultFaxData = {
+            "visits": {
+                "success": 68,
+                "fail": 73,
+                "pending": 0
+            },
+            "quotes": [
+                {
+                    "id": "141",
+                    "date": "2026-11-16 10:49",
+                    "company": "(주)아이디오",
+                    "name": "041-548-8238",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "140",
+                    "date": "2026-11-16 10:49",
+                    "company": "히트텍",
+                    "name": "041-584-8889",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "139",
+                    "date": "2026-11-16 10:48",
+                    "company": "온돌라이프",
+                    "name": "0505-240-7070",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "138",
+                    "date": "2026-11-16 10:48",
+                    "company": "다올이티에스",
+                    "name": "051-955-2045",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "137",
+                    "date": "2026-11-16 10:49",
+                    "company": "정우카프링",
+                    "name": "055-339-8666",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "136",
+                    "date": "2026-11-16 10:48",
+                    "company": "해림ENG",
+                    "name": "055-346-1514",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "135",
+                    "date": "2026-11-16 10:49",
+                    "company": "(주)JH금속",
+                    "name": "062-955-2167",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "134",
+                    "date": "2026-11-16 10:49",
+                    "company": "대명산업",
+                    "name": "063-460-7035",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "133",
+                    "date": "2026-11-16 10:49",
+                    "company": "금성철강",
+                    "name": "063-465-0943",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "132",
+                    "date": "2026-11-16 10:49",
+                    "company": "더원드레스룸",
+                    "name": "070-8833-0116",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "131",
+                    "date": "2026-11-16 10:48",
+                    "company": "주식회사 선천스틸",
+                    "name": "031-562-9135",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "130",
+                    "date": "2026-11-16 10:48",
+                    "company": "(주)천명",
+                    "name": "031-657-8891",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "129",
+                    "date": "2026-11-16 10:48",
+                    "company": "주식회사 엠에스테크",
+                    "name": "031-683-0267",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "128",
+                    "date": "2026-11-16 10:49",
+                    "company": "엠오디이엔",
+                    "name": "031-696-6155",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "127",
+                    "date": "2026-11-16 10:48",
+                    "company": "대성테크",
+                    "name": "031-989-3825",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "126",
+                    "date": "2026-11-16 10:49",
+                    "company": "이레텍",
+                    "name": "031-991-0080",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "125",
+                    "date": "2026-11-16 10:49",
+                    "company": "서일",
+                    "name": "032-446-5363",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "124",
+                    "date": "2026-11-16 10:49",
+                    "company": "GD산업",
+                    "name": "032-584-1574",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "123",
+                    "date": "2026-11-16 10:48",
+                    "company": "삼원금속",
+                    "name": "031-941-1769",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "실패",
+                    "product": "실패(번호오류) (10:48)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "122",
+                    "date": "2026-11-16 10:48",
+                    "company": "(주)유풍",
+                    "name": "032-578-4788",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "실패",
+                    "product": "실패(응답없음) (10:48)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "121",
+                    "date": "2026-11-16 10:48",
+                    "company": "(주)바디스톤",
+                    "name": "02-6919-2560",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "120",
+                    "date": "2026-11-16 10:49",
+                    "company": "아이엘티",
+                    "name": "031-311-0004",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "119",
+                    "date": "2026-11-16 10:48",
+                    "company": "프레임세상",
+                    "name": "031-338-6465",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "118",
+                    "date": "2026-11-16 10:48",
+                    "company": "큐브테크",
+                    "name": "031-366-2970",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "117",
+                    "date": "2026-11-16 10:49",
+                    "company": "태림철망가공",
+                    "name": "031-432-2800",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "116",
+                    "date": "2026-11-16 10:49",
+                    "company": "원심하이테크",
+                    "name": "031-497-1575",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "115",
+                    "date": "2026-11-16 10:48",
+                    "company": "스타인테리어",
+                    "name": "031-528-3166",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "114",
+                    "date": "2026-11-16 10:48",
+                    "company": "대흥탱크",
+                    "name": "031-536-9848",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:48)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "113",
+                    "date": "2026-11-16 10:49",
+                    "company": "삼일기업",
+                    "name": "031-544-3186",
+                    "phone": "팩스 6일차(정기)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (10:49)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "112",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "(주)아이디오",
+                    "name": "0415488238",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "111",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "히트텍",
+                    "name": "0415848889",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "110",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "온돌라이프",
+                    "name": "05052407070",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "109",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "다올이티에스",
+                    "name": "0519552045",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "108",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "정우카프링",
+                    "name": "0553398666",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "107",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "해림ENG",
+                    "name": "0553461514",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "106",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "(주)JH금속",
+                    "name": "0629552167",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "105",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "더원드레스룸",
+                    "name": "07088330116",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "104",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "주식회사 명진커넥터",
+                    "name": "0328124588",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "103",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "혜인일렉트릭㈜",
+                    "name": "0432136846",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "102",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "주식회사 엠에스테크",
+                    "name": "0316830267",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "101",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "엠오디이엔",
+                    "name": "0316966155",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "100",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "삼원금속",
+                    "name": "0319411769",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "99",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "대성테크",
+                    "name": "0319893825",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "98",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "GD산업",
+                    "name": "0325841574",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "97",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "주식회사 히트솔루션",
+                    "name": "0327154284",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "96",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "로존",
+                    "name": "0318587460",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "95",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "니엣칸테홈",
+                    "name": "0319143556",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "94",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "한일열교환기",
+                    "name": "0319998646",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "93",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "(주)코리프냉동공조",
+                    "name": "0325784788",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "92",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "(주)바디스톤",
+                    "name": "0269192560",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "91",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "아이엘티",
+                    "name": "0313110004",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "90",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "프레임세상",
+                    "name": "0313386465",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "89",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "원심하이테크",
+                    "name": "0314971575",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "88",
+                    "date": "2026-11-02 11:57:00",
+                    "company": "스타인테리어",
+                    "name": "0315283166",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:57)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "87",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "대흥탱크",
+                    "name": "0315369848",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "86",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "삼일기업",
+                    "name": "0315443186",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "85",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "주식회사 선천스틸",
+                    "name": "0315629135",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "84",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "(주)천명",
+                    "name": "0316578891",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:56)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "83",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "이수냉열테크",
+                    "name": "0315299199",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "82",
+                    "date": "2026-11-02 11:56:00",
+                    "company": "전오전기(주)",
+                    "name": "0222662310",
+                    "phone": "팩스 5일차(2차전환)",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "134",
+                    "date": "2026-10-19",
+                    "company": "삼광인더스",
+                    "name": "031-225-1693",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "126",
+                    "date": "2026-10-19",
+                    "company": "태평철강",
+                    "name": "02-2633-3114",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "136",
+                    "date": "2026-10-19",
+                    "company": "그루터기하우징",
+                    "name": "031-8077-9403",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "161",
+                    "date": "2026-10-19",
+                    "company": "대명산기",
+                    "name": "031-498-8019",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "41",
+                    "date": "2026-10-19",
+                    "company": "원일금속",
+                    "name": "063-856-8663",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "회선불량 (통신 회선 장애)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "40",
+                    "date": "2026-10-19",
+                    "company": "현대특수철강공업",
+                    "name": "063-835-2082",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "58",
+                    "date": "2026-10-19",
+                    "company": "대아실업",
+                    "name": "055-752-2938",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "125",
+                    "date": "2026-10-19",
+                    "company": "올니스",
+                    "name": "055-299-0723",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "96",
+                    "date": "2026-10-19",
+                    "company": "한국철강",
+                    "name": "052-288-8111",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "56",
+                    "date": "2026-10-19",
+                    "company": "진성금속레이져",
+                    "name": "031-768-8327",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "87",
+                    "date": "2026-10-19",
+                    "company": "진흥레이저",
+                    "name": "031-981-3768",
+                    "phone": "팩스 4-3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "19",
+                    "date": "2026-10-19",
+                    "company": "대명기업",
+                    "name": "063-460-7035",
+                    "phone": "팩스 4-3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (16:29)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "175",
+                    "date": "2026-10-19",
+                    "company": "에스티어",
+                    "name": "031-225-0025",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "회선불량 (통신 회선 장애)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "143",
+                    "date": "2026-10-19",
+                    "company": "성모산업",
+                    "name": "031-432-7341",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "105",
+                    "date": "2026-10-19",
+                    "company": "은성와이어메쉬",
+                    "name": "031-366-3780",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "118",
+                    "date": "2026-10-19",
+                    "company": "신라톱기계",
+                    "name": "054-751-6366",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "5",
+                    "date": "2026-10-19",
+                    "company": "RELA",
+                    "name": "054-289-7999",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "193",
+                    "date": "2026-10-19",
+                    "company": "아이엠씨테크",
+                    "name": "053-584-8447",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "4",
+                    "date": "2026-10-19",
+                    "company": "현성산업",
+                    "name": "053-358-7595",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "8",
+                    "date": "2026-10-19",
+                    "company": "남경테크",
+                    "name": "051-314-9705",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "137",
+                    "date": "2026-10-19",
+                    "company": "에스오토닉스",
+                    "name": "053-710-8565",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "10",
+                    "date": "2026-10-19",
+                    "company": "신성에스앤티",
+                    "name": "053-609-2222",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "7",
+                    "date": "2026-10-19",
+                    "company": "한일금속",
+                    "name": "032-589-4566",
+                    "phone": "팩스 4-2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "162",
+                    "date": "2026-10-19",
+                    "company": "서일",
+                    "name": "032-446-5363",
+                    "phone": "팩스 4-2회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (16:31)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "168",
+                    "date": "2026-10-19",
+                    "company": "이레텍",
+                    "name": "031-991-0080",
+                    "phone": "팩스 4-2회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (16:26)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "240",
+                    "date": "2026-10-19",
+                    "company": "동양메쉬가공",
+                    "name": "031-497-2277",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "231",
+                    "date": "2026-10-19",
+                    "company": "광성휀스",
+                    "name": "031-314-1133",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "237",
+                    "date": "2026-10-19",
+                    "company": "유진축관기술",
+                    "name": "053-584-6688",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "243",
+                    "date": "2026-10-19",
+                    "company": "태양스웨이징",
+                    "name": "051-316-1188",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "239",
+                    "date": "2026-10-19",
+                    "company": "창성특수포밍",
+                    "name": "055-261-4433",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "회선불량 (통신 회선 장애)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "241",
+                    "date": "2026-10-19",
+                    "company": "경북용접철망",
+                    "name": "054-973-8899",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "232",
+                    "date": "2026-10-19",
+                    "company": "대덕스웨이징",
+                    "name": "042-931-7788",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "236",
+                    "date": "2026-10-19",
+                    "company": "세종정밀스웨이징",
+                    "name": "044-862-5566",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "연결오류 (통신 연결 실패)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "238",
+                    "date": "2026-10-19",
+                    "company": "한빛철망",
+                    "name": "032-567-1155",
+                    "phone": "팩스 4회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "235",
+                    "date": "2026-10-19",
+                    "company": "신한휀스산업",
+                    "name": "061-772-2053",
+                    "phone": "팩스 4회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (신성특수벤딩과 동일번호)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "234",
+                    "date": "2026-10-19",
+                    "company": "동방메쉬파레트",
+                    "name": "031-353-5105",
+                    "phone": "팩스 4회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (14:23)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "230",
+                    "date": "2026-10-19",
+                    "company": "신성특수벤딩",
+                    "name": "061-772-2053",
+                    "phone": "팩스 4회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (14:22)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "233",
+                    "date": "2026-10-19",
+                    "company": "삼우특수포밍",
+                    "name": "055-342-7347",
+                    "phone": "팩스 4회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (14:23)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "242",
+                    "date": "2026-10-19",
+                    "company": "성우축관포밍",
+                    "name": "031-8015-0020",
+                    "phone": "팩스 4회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (14:23)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "218",
+                    "date": "2026-10-13",
+                    "company": "세일철망",
+                    "name": "032-581-3355",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "161",
+                    "date": "2026-10-13",
+                    "company": "대명산기",
+                    "name": "031-498-8019",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "224",
+                    "date": "2026-10-13",
+                    "company": "삼진특수확관",
+                    "name": "031-352-7744",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "173",
+                    "date": "2026-10-13",
+                    "company": "한일포밍",
+                    "name": "031-686-7081",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "223",
+                    "date": "2026-10-13",
+                    "company": "태림철망가공",
+                    "name": "031-432-2800",
+                    "phone": "팩스 3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (15:44)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "229",
+                    "date": "2026-10-13",
+                    "company": "부경용접철망",
+                    "name": "051-971-4477",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "225",
+                    "date": "2026-10-13",
+                    "company": "동일포밍테크",
+                    "name": "055-326-8822",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "222",
+                    "date": "2026-10-13",
+                    "company": "창원스웨이징",
+                    "name": "055-285-1166",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "228",
+                    "date": "2026-10-13",
+                    "company": "한일축관가공",
+                    "name": "053-581-2299",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "184",
+                    "date": "2026-10-13",
+                    "company": "명성포밍산업",
+                    "name": "053-476-3753",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "227",
+                    "date": "2026-10-13",
+                    "company": "서해스웨이징",
+                    "name": "032-818-6633",
+                    "phone": "팩스 3회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "220",
+                    "date": "2026-10-13",
+                    "company": "대일휀스",
+                    "name": "061-772-2053",
+                    "phone": "팩스 3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (15:44)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "226",
+                    "date": "2026-10-13",
+                    "company": "영남철망제작",
+                    "name": "054-950-7249",
+                    "phone": "팩스 3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (15:44)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "221",
+                    "date": "2026-10-13",
+                    "company": "중앙정밀축관",
+                    "name": "053-857-9860",
+                    "phone": "팩스 3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (15:44)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "219",
+                    "date": "2026-10-13",
+                    "company": "우진스틸포밍",
+                    "name": "052-288-4499",
+                    "phone": "팩스 3회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (15:44)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "134",
+                    "date": "2026-10-12",
+                    "company": "삼광인더스",
+                    "name": "031-225-1693",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "번호오류 (결번/없는 번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "126",
+                    "date": "2026-10-12",
+                    "company": "태평철강",
+                    "name": "02-2633-3114",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (대표 전화번호 추정)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "130",
+                    "date": "2026-10-12",
+                    "company": "용문밴딩",
+                    "name": "031-370-4620",
+                    "phone": "팩스 2회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:17)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "121",
+                    "date": "2026-10-12",
+                    "company": "큐브테크",
+                    "name": "031-366-2970",
+                    "phone": "팩스 2회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:17)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "131",
+                    "date": "2026-10-12",
+                    "company": "승민산업벤딩",
+                    "name": "0507-1404-6366",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "응답없음 (0507 가상번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "132",
+                    "date": "2026-10-12",
+                    "company": "자유벤딩테크",
+                    "name": "0507-1318-6041",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "응답없음 (0507 가상번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "136",
+                    "date": "2026-10-12",
+                    "company": "그루터기하우징",
+                    "name": "031-8077-9403",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "127",
+                    "date": "2026-10-12",
+                    "company": "대성벤딩",
+                    "name": "031-499-9181",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "125",
+                    "date": "2026-10-12",
+                    "company": "올니스",
+                    "name": "055-299-0723",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "116",
+                    "date": "2026-10-12",
+                    "company": "한국철강",
+                    "name": "052-288-8111",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (대표 전화번호 추정)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "106",
+                    "date": "2026-10-12",
+                    "company": "튼튼철강",
+                    "name": "0507-1380-9693",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (0507 가상번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "128",
+                    "date": "2026-10-12",
+                    "company": "효진벤딩",
+                    "name": "032-811-6011",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "129",
+                    "date": "2026-10-12",
+                    "company": "정철밴딩",
+                    "name": "032-589-1456",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "87",
+                    "date": "2026-10-12",
+                    "company": "진흥레이저",
+                    "name": "031-981-3768",
+                    "phone": "팩스 2회차",
+                    "email": "실패",
+                    "product": "응답없음 (팩스 미수신)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "87",
+                    "date": "2026-10-06",
+                    "company": "진흥레이저",
+                    "name": "031-981-3768",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "56",
+                    "date": "2026-10-06",
+                    "company": "진성금속레이져",
+                    "name": "031-768-8327",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "53",
+                    "date": "2026-10-06",
+                    "company": "대진밴딩",
+                    "name": "043-856-1189",
+                    "phone": "팩스 1회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:38)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "41",
+                    "date": "2026-10-06",
+                    "company": "원일금속",
+                    "name": "063-856-8663",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "40",
+                    "date": "2026-10-06",
+                    "company": "현대특수철강공업",
+                    "name": "063-835-2082",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "58",
+                    "date": "2026-10-06",
+                    "company": "대아실업",
+                    "name": "055-752-2938",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "96",
+                    "date": "2026-10-06",
+                    "company": "한국철강",
+                    "name": "052-288-8111",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (대표 전화번호 추정)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "49",
+                    "date": "2026-10-06",
+                    "company": "문화벤딩",
+                    "name": "051-327-1740",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (팩스 신호 없음)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "86",
+                    "date": "2026-10-06",
+                    "company": "튼튼철강",
+                    "name": "0507-1380-9693",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (0507 가상번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "73",
+                    "date": "2026-10-06",
+                    "company": "에이피씨엠",
+                    "name": "0507-1300-9784",
+                    "phone": "팩스 1회차",
+                    "email": "실패",
+                    "product": "연결오류 (0507 가상번호)",
+                    "specs": "",
+                    "source": "fail"
+                },
+                {
+                    "id": "75",
+                    "date": "2026-10-06",
+                    "company": "금성철강",
+                    "name": "063-465-0943",
+                    "phone": "팩스 1회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:39)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "12",
+                    "date": "2026-10-06",
+                    "company": "대명산업",
+                    "name": "063-460-7035",
+                    "phone": "팩스 1회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:39)",
+                    "specs": "",
+                    "source": "success"
+                },
+                {
+                    "id": "50",
+                    "date": "2026-10-06",
+                    "company": "국제벤딩",
+                    "name": "061-772-2053",
+                    "phone": "팩스 1회차",
+                    "email": "성공",
+                    "product": "정상 수신 완료 (11:38)",
+                    "specs": "",
+                    "source": "success"
+                }
+            ]
+        };
+
+        // 로컬스토리지 데이터 초기 세팅
+        if (!localStorage.getItem('samhyup_sim_analytics')) {
+            localStorage.setItem('samhyup_sim_analytics', JSON.stringify(defaultSimData));
+        }
+        if (!localStorage.getItem('samhyup_main_sim_analytics')) {
+            localStorage.setItem('samhyup_main_sim_analytics', JSON.stringify(defaultMainSimData));
+        }
+        if (!localStorage.getItem('samhyup_mailling_sim_analytics')) {
+            localStorage.setItem('samhyup_mailling_sim_analytics', JSON.stringify(defaultMailSimData));
+        }
+        // 팩스 4차(10/19 81건 누적) 캐시 강제 갱신
+        const FAX_CACHE_VERSION = "20261116_v6";
+        if (localStorage.getItem('samhyup_fax_version') !== FAX_CACHE_VERSION) {
+            localStorage.setItem('samhyup_fax_analytics', JSON.stringify(defaultFaxData));
+            localStorage.setItem('samhyup_fax_version', FAX_CACHE_VERSION);
+        }
+
+        // 1. 대상 사이트 전환 함수
+        function switchSite(site) {
+            currentSite = site;
+
+            const brandTitle = document.getElementById('brand-title');
+            const brandSubtitle = document.getElementById('brand-subtitle');
+            const adsBadge = document.getElementById('badge-google-ads');
+            const mockGenBtn = document.getElementById('btn-mock-generate');
+            const reportBtn = document.getElementById('btn-report-view');
+
+            if (site === 'catalog') {
+                brandTitle.textContent = "삼협철망";
+                brandSubtitle.textContent = "용접철망·와이어메쉬·휀스 카탈로그 모니터링 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (samhyup 651-167-5293): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 견적 접수";
+                reportBtn.style.display = 'none';
+            } else if (site === 'mailling') {
+                brandTitle.textContent = "삼협철망 B2B";
+                brandSubtitle.textContent = "아웃바운드 메일 발송 현황 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Sheets 연동 (mail_log): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 발송 로그 생성";
+                reportBtn.style.display = 'inline-flex';
+            } else if (site === 'fax') {
+                brandTitle.textContent = "삼협철망 B2B";
+                brandSubtitle.textContent = "아웃바운드 팩스 발송 현황 (fax_log)";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Sheets 연동 (fax_log): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 팩스 로그 생성";
+                reportBtn.style.display = 'inline-flex';
+            } else {
+                brandTitle.textContent = "삼협철망 공식홈";
+                brandSubtitle.textContent = "www.samhyup.com 마케팅 성과 관리자";
+                adsBadge.innerHTML = '<span class="status-indicator active"></span>Google Ads 연동 (Main-9802): Active';
+                mockGenBtn.textContent = "⚡ 시뮬레이션: 가상 견적 접수";
+                reportBtn.style.display = 'none';
+            }
+
+            // 모드 초기화 후 UI 새로고침
+            currentPage = 1;
+            updateDashboardUI();
+        }
+
+        // 보고서 페이지 새 탭으로 오픈
+        function openMailReport() {
+            if (currentSite === 'fax') {
+                window.open('fax/fax_report.html', '_blank');
+            } else {
+                window.open('mailling/mail_report.html', '_blank');
+            }
+        }
+
+        // 2. 모드 전환 함수 (실시간 LIVE vs 시뮬레이터)
+        function switchMode(mode) {
+            dashboardMode = mode;
+
+            const btnRealtime = document.getElementById('mode-realtime');
+            const btnSim = document.getElementById('mode-simulator');
+            const mockGenBtn = document.getElementById('btn-mock-generate');
+
+            if (mode === 'realtime') {
+                btnRealtime.classList.add('active');
+                btnSim.classList.remove('active');
+
+                mockGenBtn.disabled = true;
+                mockGenBtn.style.opacity = '0.4';
+                mockGenBtn.style.cursor = 'not-allowed';
+            } else {
+                btnRealtime.classList.remove('active');
+                btnSim.classList.add('active');
+
+                mockGenBtn.disabled = false;
+                mockGenBtn.style.opacity = '1';
+                mockGenBtn.style.cursor = 'pointer';
+            }
+
+            currentPage = 1;
+            updateDashboardUI();
+        }
+
+        // Load data from LocalStorage based on site and mode
+        function loadLocalData() {
+            let rawData;
+
+            if (currentSite === 'catalog') {
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultSimData));
+                    }
+                }
+            } else if (currentSite === 'mailling') {
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_mailling_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { success: 0, fail: 0, pending: 0 }, quotes: [] };
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_mailling_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultMailSimData));
+                    }
+                }
+            } else if (currentSite === 'fax') {
+                rawData = localStorage.getItem('samhyup_fax_analytics');
+                if (rawData) {
+                    analyticsData = JSON.parse(rawData);
+                } else {
+                    analyticsData = JSON.parse(JSON.stringify(defaultFaxData));
+                }
+            } else {
+                // 공식 홈페이지 (main_site)
+                if (dashboardMode === 'realtime') {
+                    rawData = localStorage.getItem('samhyup_main_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                        localStorage.setItem('samhyup_main_analytics', JSON.stringify(analyticsData));
+                    }
+                } else {
+                    rawData = localStorage.getItem('samhyup_main_sim_analytics');
+                    if (rawData) {
+                        analyticsData = JSON.parse(rawData);
+                    } else {
+                        analyticsData = JSON.parse(JSON.stringify(defaultMainSimData));
+                    }
+                }
+            }
+        }
+
+        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응, 5초 타임아웃)
+        function fetchJSONP(url, callbackName) {
+            return new Promise((resolve, reject) => {
+                const uniqueCallbackName = `${callbackName}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+                let done = false;
+
+                // 5초 타임아웃: GAS URL이 잘못되거나 응답 없을 시 즉시 폴백
+                const timer = setTimeout(() => {
+                    if (!done) {
+                        done = true;
+                        reject(new Error('JSONP timeout after 5s'));
+                        cleanup();
+                    }
+                }, 5000);
+
+                window[uniqueCallbackName] = (data) => {
+                    if (!done) {
+                        done = true;
+                        clearTimeout(timer);
+                        resolve(data);
+                        cleanup();
+                    }
+                };
+
+                function cleanup() {
+                    delete window[uniqueCallbackName];
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                }
+
+                const script = document.createElement('script');
+                script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${uniqueCallbackName}`;
+                script.onerror = (err) => {
+                    if (!done) {
+                        done = true;
+                        clearTimeout(timer);
+                        reject(err);
+                        cleanup();
+                    }
+                };
+                document.body.appendChild(script);
+            });
+        }
+
+        // Render metrics to UI
+        function updateDashboardUI() {
+            // GAS URL이 설정되지 않았거나 더미(TODO 포함)인 경우 즉시 로컬 폴백
+            const gasReady = GAS_WEB_APP_URL &&
+                GAS_WEB_APP_URL.startsWith('http') &&
+                !GAS_WEB_APP_URL.includes('TODO');
+
+            if (gasReady && dashboardMode === 'realtime') {
+                // 구글 시트에서 실시간 데이터 로드 (JSONP 방식, 5초 타임아웃)
+                const fetchUrl = `${GAS_WEB_APP_URL}?site=${currentSite}`;
+
+                // 로딩 상태 표시
+                document.getElementById('kpi-visits').textContent = '로드 중...';
+                document.getElementById('kpi-quotes').textContent = '로드 중...';
+
+                fetchJSONP(fetchUrl, 'gas_callback')
+                    .then(data => {
+                        // [핵심] GAS가 반환하는 { visits, logs } 구조를
+                        // 대시보드가 기대하는 { visits, quotes } 구조로 변환
+                        if (currentSite === 'mailling' && data.logs) {
+                            analyticsData = {
+                                visits: data.visits || { success: 0, fail: 0, pending: 0 },
+                                quotes: data.logs.map(log => ({
+                                    id: log.id,
+                                    date: String(log.date),   // Date 객체 → 문자열 강제 변환
+                                    company: log.company,
+                                    name: log.email,          // 수신 이메일 → name 필드에 매핑
+                                    phone: log.round,         // 발송회차 → phone 필드에 매핑
+                                    email: log.status,        // 발송상태(성공/실패) → email 필드에 매핑
+                                    product: log.detail,      // 세부결과 → product 필드에 매핑
+                                    specs: log.note,          // 비고 → specs 필드에 매핑
+                                    source: log.status === '성공' ? 'success' : 'fail'
+                                }))
+                            };
+                            // 실시간 데이터를 로컬스토리지에도 캐시 (오프라인 대비)
+                            localStorage.setItem('samhyup_mailling_analytics', JSON.stringify(analyticsData));
+                        } else if (currentSite === 'fax' && data.logs) {
+                            analyticsData = {
+                                visits: data.visits || { success: 0, fail: 0, pending: 0 },
+                                quotes: data.logs.map(log => ({
+                                    id: log.id,
+                                    date: String(log.date),
+                                    company: log.company,
+                                    name: log.fax || log.email,
+                                    phone: log.round,
+                                    email: log.status,
+                                    product: log.detail,
+                                    specs: log.note,
+                                    source: log.status === '성공' ? 'success' : 'fail'
+                                }))
+                            };
+                            localStorage.setItem('samhyup_fax_analytics', JSON.stringify(analyticsData));
+                        } else {
+                            analyticsData = data;
+                        }
+                        renderDashboardData();
+                    })
+                    .catch(err => {
+                        console.error('GAS 연동 실패 (로컬 폴백 적용):', err);
+                        // 에러/타임아웃 시 로컬스토리지 폴백
+                        loadLocalData();
+                        renderDashboardData();
+                    });
+            } else {
+                // GAS URL 미설정 or 시뮬레이터 모드 → 즉시 로컬 데이터 표시
+                loadLocalData();
+                renderDashboardData();
+            }
+        }
+
+        // UI 데이터 그리기 핵심 로직
+        function renderDashboardData() {
+            let totalVisits = 0;
+            let totalQuotes = 0;
+            let cvr = "0.00";
+
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                const isFax = currentSite === 'fax';
+                document.getElementById('kpi-title-1').innerHTML = isFax ? '총 발송 팩스수 <span>📠</span>' : '총 발송 메일수 <span>✉️</span>';
+                document.getElementById('kpi-title-2').innerHTML = '성공 / 실패 건수 <span>✅</span>';
+                document.getElementById('kpi-title-3').innerHTML = isFax ? '팩스 수신 성공률 <span>🎯</span>' : '발송 성공률 <span>🎯</span>';
+
+                document.getElementById('chart-visits-title').textContent = isFax ? '팩스 발송 결과 비율' : '메일 발송 결과 비율';
+                document.getElementById('chart-visits-desc').textContent = isFax ? '팩스 정상 수신 및 연결 오류/결번 비율' : '성공 및 실패 발송 로그의 비율 분석';
+                document.getElementById('chart-product-title').textContent = isFax ? '회차별 팩스 발송 현황' : '회차별 메일 발송 현황';
+                document.getElementById('chart-product-desc').textContent = isFax ? '1차/2차 회차별 팩스 발송 분포' : '회차별(1일차, 9일차 등) 이메일 발송 성공 분포';
+
+                document.getElementById('table-mode-title').textContent = isFax ? (dashboardMode === 'realtime' ? "실시간 팩스 발송 로그 피드 (LIVE)" : "데모 팩스 발송 로그 피드") : (dashboardMode === 'realtime' ? "실시간 메일 발송 로그 피드 (LIVE)" : "데모 메일 발송 로그 피드");
+                document.getElementById('table-mode-desc').textContent = isFax ? "구글 스프레드시트 fax_log 시트와 실시간 연동된 이력" : "구글 스프레드시트 mail_log 시트와 실시간 연동된 이력";
+
+                totalVisits = (analyticsData.visits.success || 0) + (analyticsData.visits.fail || 0);
+                totalQuotes = analyticsData.quotes.filter(q => q.email === '성공').length;
+                cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(1) : '0.0';
+
+                document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString() + ' 건';
+                document.getElementById('kpi-quotes').textContent = `${analyticsData.visits.success || 0} / ${analyticsData.visits.fail || 0}`;
+                document.getElementById('kpi-cvr').textContent = cvr + '%';
+                document.getElementById('kpi-visits-ratio').textContent = (currentSite === 'fax') ? `총 발송 시도: ${totalVisits}건` : `대기 메일 잔여: ${analyticsData.visits.pending || 0}건`;
+
+                const now = new Date();
+                const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const todayMails = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
+                document.getElementById('kpi-subtitle-2').innerHTML = `최근 24시간 내 <span class="trend-up">${todayMails}건</span> 발송 완료됨`;
+                document.getElementById('kpi-subtitle-3').textContent = '발송 성공 대비 실패율 분석 지표';
+            } else {
+                document.getElementById('kpi-title-1').innerHTML = '총 방문 세션수 <span>👤</span>';
+                document.getElementById('kpi-title-2').innerHTML = '누적 접수 견적수 <span>✉️</span>';
+                document.getElementById('kpi-title-3').innerHTML = '평균 견적 전환율 (CVR) <span>🎯</span>';
+
+                document.getElementById('chart-visits-title').textContent = '마케팅 유입 채널 분석';
+                document.getElementById('chart-visits-desc').textContent = 'Google Ads 광고 유입 대 오가닉 검색 및 직접 유입 비중';
+                document.getElementById('chart-product-title').textContent = '요청 품목 선호도';
+                document.getElementById('chart-product-desc').textContent = '견적 요청이 접수된 가공 서비스별 분포 분석';
+
+                document.getElementById('table-mode-title').textContent = dashboardMode === 'realtime' ? "실시간 접수 견적 피드 (LIVE)" : "데모 시뮬레이터 견적 피드";
+                document.getElementById('table-mode-desc').textContent = "용접철망 및 휀스 가공 문의를 통해 접수된 실시간 견적 목록";
+
+                totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+                totalQuotes = analyticsData.quotes.length;
+                cvr = totalVisits > 0 ? ((totalQuotes / totalVisits) * 100).toFixed(2) : '0.00';
+
+                document.getElementById('kpi-visits').textContent = totalVisits.toLocaleString();
+                document.getElementById('kpi-quotes').textContent = totalQuotes.toLocaleString();
+                document.getElementById('kpi-cvr').textContent = cvr + '%';
+
+                const adsPercentage = totalVisits > 0 ? ((analyticsData.visits.google_ads / totalVisits) * 100).toFixed(1) : '0';
+                document.getElementById('kpi-visits-ratio').textContent = `Google Ads 광고 유입 ${adsPercentage}%`;
+
+                const now = new Date();
+                const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const todayQuotesCount = analyticsData.quotes.filter(q => new Date(q.date) > oneDayAgo).length;
+                document.getElementById('kpi-subtitle-2').innerHTML = `최근 24시간 내 <span class="trend-up">${todayQuotesCount}건</span> 추가 접수됨`;
+                document.getElementById('kpi-subtitle-3').textContent = '총 방문 대비 견적 전환 성공 비율';
+            }
+
+            // Render table headers dynamically
+            const tableHeader = document.querySelector('#leads-table thead tr');
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                const isFax = currentSite === 'fax';
+                tableHeader.innerHTML = `
+                    <th>ID</th>
+                    <th>발송 일시</th>
+                    <th>회사명</th>
+                    <th>${isFax ? '수신 팩스번호' : '수신 이메일'}</th>
+                    <th>발송 회차</th>
+                    <th>발송 상태</th>
+                    <th>세부결과 / 비고</th>
+                `;
+            } else {
+                tableHeader.innerHTML = `
+                    <th>ID</th>
+                    <th>접수 일시</th>
+                    <th>회사/현장명</th>
+                    <th>담당자</th>
+                    <th>연락처</th>
+                    <th>가공 서비스</th>
+                    <th>유입 경로</th>
+                `;
+            }
+
+            // Render table body with search filter and pagination
+            const tbody = document.getElementById('leads-body');
+            const emptyState = document.getElementById('table-empty');
+            const emptyText = document.getElementById('empty-state-text');
+            tbody.innerHTML = '';
+
+            const sortedQuotes = [...analyticsData.quotes].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Apply search & status filter
+            const filteredQuotes = sortedQuotes.filter(quote => {
+                // Status Filter Check (mailling mode)
+                if (statusFilter !== 'all') {
+                    if (currentSite === 'mailling' || currentSite === 'fax') {
+                        if (quote.email !== statusFilter) return false;
+                    }
+                }
+
+                if (!searchQuery) return true;
+                const q = searchQuery.toLowerCase().trim();
+                const companyStr = (quote.company || '').toLowerCase();
+                const nameStr = (quote.name || '').toLowerCase();
+                const phoneStr = (quote.phone || '').toLowerCase();
+                const emailStr = (quote.email || '').toLowerCase();
+                const productStr = (quote.product || '').toLowerCase();
+                const specsStr = (quote.specs || '').toLowerCase();
+
+                return companyStr.includes(q) ||
+                    nameStr.includes(q) ||
+                    phoneStr.includes(q) ||
+                    emailStr.includes(q) ||
+                    productStr.includes(q) ||
+                    specsStr.includes(q);
+            });
+
+            const totalFiltered = filteredQuotes.length;
+            const totalPages = Math.ceil(totalFiltered / pageSize) || 1;
+
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, totalFiltered);
+            const pageData = filteredQuotes.slice(startIndex, endIndex);
+
+            // Update Header Count & Pagination Summary
+            document.getElementById('table-count-info').textContent = `검색결과 ${totalFiltered.toLocaleString()}건 (전체 ${analyticsData.quotes.length.toLocaleString()}건)`;
+
+            if (totalFiltered === 0) {
+                emptyState.style.display = 'block';
+                emptyText.textContent = searchQuery ? `"${searchQuery}" 검색 결과가 없습니다.` : "접수된 견적 요청이 없습니다.";
+                document.getElementById('pagination-summary').textContent = "Showing 0 to 0 of 0 entries";
+                document.getElementById('page-num-display').textContent = "0 / 0";
+                document.getElementById('btn-prev-page').disabled = true;
+                document.getElementById('btn-next-page').disabled = true;
+                document.getElementById('btn-prev-page').style.opacity = '0.5';
+                document.getElementById('btn-next-page').style.opacity = '0.5';
+            } else {
+                emptyState.style.display = 'none';
+                document.getElementById('pagination-summary').textContent = `Showing ${startIndex + 1} to ${endIndex} of ${totalFiltered} entries`;
+                document.getElementById('page-num-display').textContent = `${currentPage} / ${totalPages}`;
+
+                const prevBtn = document.getElementById('btn-prev-page');
+                const nextBtn = document.getElementById('btn-next-page');
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
+                nextBtn.style.opacity = currentPage === totalPages ? '0.5' : '1';
+
+                pageData.forEach(quote => {
+                    const tr = document.createElement('tr');
+                    tr.onclick = () => openQuoteDetail(quote.id);
+
+                    const dateStr = new Date(quote.date).toLocaleDateString('ko-KR', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    if (currentSite === 'mailling' || currentSite === 'fax') {
+                        let statusBadge = quote.email === '성공' ?
+                            '<span class="badge-source ads" style="background: var(--success); color: #fff;">성공</span>' :
+                            '<span class="badge-source direct" style="background: var(--danger); color: #fff;">실패</span>';
+
+                        tr.innerHTML = `
+                            <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
+                            <td class="date-col">${dateStr}</td>
+                            <td style="font-weight: 500;">${quote.company}</td>
+                            <td>${quote.name}</td>
+                            <td><span class="badge-product" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">${quote.phone}</span></td>
+                            <td>${statusBadge}</td>
+                            <td style="font-size: 13px; color: var(--text-secondary);">${quote.product}${quote.specs ? ' | ' + quote.specs : ''}</td>
+                        `;
+                    } else {
+                        let sourceBadge = '';
+                        if (quote.source === 'google_ads') {
+                            sourceBadge = '<span class="badge-source ads">Google Ads</span>';
+                        } else if (quote.source === 'search') {
+                            sourceBadge = '<span class="badge-source search">Search</span>';
+                        } else {
+                            sourceBadge = '<span class="badge-source direct">Direct</span>';
+                        }
+
+                        tr.innerHTML = `
+                            <td style="font-family: var(--font-title); font-weight: 600;">#${quote.id}</td>
+                            <td class="date-col">${dateStr}</td>
+                            <td style="font-weight: 500;">${quote.company}</td>
+                            <td>${quote.name}</td>
+                            <td style="font-size: 13px; color: var(--text-secondary);">${quote.phone}</td>
+                            <td><span class="badge-product">${quote.product}</span></td>
+                            <td>${sourceBadge}</td>
+                        `;
+                    }
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Update charts
+            updateCharts();
+            // Update simulator values
+            calculateSimulator();
+        }
+
+        // Table Search & Pagination Handlers
+        function onSearchInputChanged() {
+            searchQuery = document.getElementById('table-search-input').value;
+            currentPage = 1; // Reset to page 1 on search
+            renderDashboardData();
+        }
+
+        function onStatusFilterChanged() {
+            statusFilter = document.getElementById('status-filter-select').value;
+            currentPage = 1; // Reset to page 1 on filter change
+            renderDashboardData();
+        }
+
+        function onPageSizeChanged() {
+            const val = document.getElementById('items-per-page-select').value;
+            if (val === 'all') {
+                pageSize = 999999;
+            } else {
+                pageSize = parseInt(val, 10) || 10;
+            }
+            currentPage = 1; // Reset to page 1 on page size change
+            renderDashboardData();
+        }
+
+        function changePage(delta) {
+            currentPage += delta;
+            renderDashboardData();
+        }
+
+        // Initialize and Update Chart.js
+        function updateCharts() {
+            let labels_src = ['Google Ads', '검색 (Organic)', '직접 유입 (Direct)'];
+            let colors_src = ['#f97316', '#3b82f6', '#64748b'];
+            let sourceData = [
+                analyticsData.visits.google_ads || 0,
+                analyticsData.visits.search || 0,
+                analyticsData.visits.direct || 0
+            ];
+
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                const successCount = analyticsData.quotes.filter(q => q.email === '성공').length;
+                const failCount = analyticsData.quotes.filter(q => q.email === '실패').length;
+                const pendingCount = analyticsData.visits.pending || 0;
+                labels_src = ['발송 성공', '발송 실패', '대기'];
+                colors_src = ['#10b981', '#ef4444', '#64748b'];
+                sourceData = [successCount, failCount, pendingCount];
+            }
+
+            if (sourceChart) {
+                sourceChart.data.labels = labels_src;
+                sourceChart.data.datasets[0].data = sourceData;
+                sourceChart.data.datasets[0].backgroundColor = colors_src;
+                sourceChart.update();
+            } else {
+                const ctx = document.getElementById('sourceChart').getContext('2d');
+                sourceChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels_src,
+                        datasets: [{
+                            data: sourceData,
+                            backgroundColor: colors_src,
+                            borderWidth: 0,
+                            hoverOffset: 6,
+                            cutout: '75%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', font: { family: 'Inter', size: 11, weight: '500' } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Product popularity chart (Bar)
+            let labels = [];
+            let data = [];
+            let datasetLabel = '견적 건수';
+
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                datasetLabel = '발송 건수';
+                const roundCounts = { '1일차': 0, '9일차': 0, '10일차': 0 };
+                analyticsData.quotes.forEach(q => {
+                    const r = q.phone || '기타';
+                    if (roundCounts[r] === undefined) {
+                        roundCounts[r] = 0;
+                    }
+                    roundCounts[r]++;
+                });
+                labels = Object.keys(roundCounts);
+                data = Object.values(roundCounts);
+            } else {
+                const productCounts = {
+                    '용접철망': 0,
+                    '일체형메쉬': 0,
+                    '메쉬파레트': 0,
+                    '와이어메쉬': 0,
+                    '인테리어용접': 0,
+                    '견사망': 0,
+                    '개비온철망': 0
+                };
+                analyticsData.quotes.forEach(q => {
+                    if (productCounts[q.product] !== undefined) {
+                        productCounts[q.product]++;
+                    }
+                });
+                labels = Object.keys(productCounts);
+                data = Object.values(productCounts);
+            }
+
+            if (productChart) {
+                productChart.data.labels = labels;
+                productChart.data.datasets[0].label = datasetLabel;
+                productChart.data.datasets[0].data = data;
+                productChart.update();
+            } else {
+                const ctx2 = document.getElementById('productChart').getContext('2d');
+                productChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: datasetLabel,
+                            data: data,
+                            backgroundColor: 'rgba(59, 130, 246, 0.75)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#94a3b8', font: { size: 10 } }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { color: '#94a3b8', stepSize: 1, beginAtZero: true }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Live ROI & CPA Simulator calculation
+        function calculateSimulator() {
+            const budget = parseInt(document.getElementById('input-budget').value);
+            const cpc = parseInt(document.getElementById('input-cpc').value);
+
+            document.getElementById('label-budget').textContent = budget.toLocaleString() + ' 원';
+            document.getElementById('label-cpc').textContent = cpc.toLocaleString() + ' 원';
+
+            const clicks = Math.round(budget / cpc);
+            document.getElementById('result-clicks').textContent = clicks.toLocaleString() + ' 회';
+
+            let currentCvr = 0.02;
+            if (currentSite !== 'mailling') {
+                const totalVisits = analyticsData.visits.google_ads + analyticsData.visits.search + analyticsData.visits.direct;
+                currentCvr = totalVisits > 0 ? (analyticsData.quotes.length / totalVisits) : 0.02;
+            }
+
+            const expectedLeads = Math.max(1, Math.round(clicks * currentCvr));
+            document.getElementById('result-leads').textContent = expectedLeads.toLocaleString() + (currentSite === 'mailling' ? ' 건(메일)' : ' 건');
+
+            const cpa = Math.round(budget / expectedLeads);
+            document.getElementById('result-cpa').textContent = cpa.toLocaleString() + ' 원';
+        }
+
+        // Generate dynamic mock quote data for testing
+        function generateMockQuote() {
+            if (dashboardMode === 'realtime') return; // Prevent writing to live database
+
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                const companies = ['삼협철망', '우주로봇', '한성철강', '동성테크', '신화금속', '삼우기계', '경남제작소'];
+                const emails = ['buyer@samhyup.com', 'contact@ujurobot.co.kr', 'hssteel@naver.com', 'dstek@daum.net', 'shmetal@sh.com', 'info@samoo.co.kr', 'sales@kngroup.com'];
+                const rounds = ['1일차', '9일차', '10일차'];
+                const statuses = ['성공', '실패'];
+                const details = ['Gmail API 발송 완료', 'SMTP connection timeout', '수신인 이메일 사서함 용량 초과'];
+                const notes = ['비고 없음', '재발송 필요', '휴폐업 업체 확인'];
+
+                const compIdx = Math.floor(Math.random() * companies.length);
+                const company = companies[compIdx];
+                const email = emails[compIdx];
+                const round = rounds[Math.floor(Math.random() * rounds.length)];
+                const status = Math.random() > 0.15 ? '성공' : '실패'; // 85% success rate
+                const detail = status === '성공' ? details[0] : details[Math.floor(Math.random() * (details.length - 1)) + 1];
+                const note = Math.random() > 0.5 ? notes[Math.floor(Math.random() * notes.length)] : '';
+
+                loadLocalData();
+
+                if (status === '성공') analyticsData.visits.success++;
+                else analyticsData.visits.fail++;
+
+                if (analyticsData.visits.pending > 0) {
+                    analyticsData.visits.pending--;
+                }
+
+                const nextId = analyticsData.quotes.length > 0 ? Math.max(...analyticsData.quotes.map(q => q.id)) + 1 : 201;
+                const newLog = {
+                    id: nextId,
+                    date: new Date().toISOString(),
+                    company: company,
+                    name: email,
+                    phone: round,
+                    email: status,
+                    product: detail,
+                    specs: note,
+                    source: status === '성공' ? 'success' : 'fail'
+                };
+
+                analyticsData.quotes.push(newLog);
+                localStorage.setItem('samhyup_mailling_sim_analytics', JSON.stringify(analyticsData));
+                updateDashboardUI();
+                return;
+            }
+
+            const companies = ['(주)태진산업', '일우기계', '명성철망', '영남제관', '중앙금속', '서원정밀', '한국철망'];
+            const names = ['강준우 과장', '임지은 대리', '최동식 부장', '오영호 대표', '윤서아 실장', '서태수 팀장'];
+            const phones = ['010-2345-6789', '010-8765-4321', '010-5678-1234', '010-4321-8765', '010-9876-5432'];
+            const emails = ['buyer@taejin.com', 'ilwoo@naver.com', 'msfence@daum.net', 'ynconst@gmail.com', 'design@center.com'];
+            const products = ['용접철망', '일체형메쉬', '메쉬파레트', '와이어메쉬', '인테리어용접', '견사망', '개비온철망'];
+            const specs = [
+                '#8번선(4.0mm) 100x100 용접철망 500장 단가 및 납기 문의',
+                '아연도금 와이어메쉬 2000x1000 300매 출하 일정 문의',
+                'Ø25.4 탄소강 냉간 인발 정밀 성형 공차 ±0.05mm 300개 문의',
+                'Ø60.3 T3.0 테이퍼 축관 가공 100개 단가 회신 바랍니다',
+                'Ø76.1 알루미늄 플레어형 확관 가공 150개 납기 문의',
+                '도면 기준 비규격 복합가공(벤딩+축관) 50개 주문제작 견적',
+                'Ø101.6 T4.0 탄소강 벤딩 45° + 확관 복합가공 30개 문의'
+            ];
+            const sources = ['google_ads', 'search', 'direct'];
+
+            const company = companies[Math.floor(Math.random() * companies.length)];
+            const name = names[Math.floor(Math.random() * names.length)];
+            const phone = phones[Math.floor(Math.random() * phones.length)];
+            const email = emails[Math.floor(Math.random() * emails.length)];
+            const prodIdx = Math.floor(Math.random() * products.length);
+            const product = products[prodIdx];
+            const spec = specs[prodIdx];
+            const source = sources[Math.floor(Math.random() * sources.length)];
+
+            loadLocalData();
+
+            const additionalVisits = Math.floor(Math.random() * 10) + 5;
+            for (let i = 0; i < additionalVisits; i++) {
+                const randomSource = sources[Math.floor(Math.random() * sources.length)];
+                analyticsData.visits[randomSource]++;
+            }
+
+            const nextId = analyticsData.quotes.length > 0 ? Math.max(...analyticsData.quotes.map(q => q.id)) + 1 : 1;
+            const newQuote = {
+                id: nextId,
+                date: new Date().toISOString(),
+                company: company,
+                name: name,
+                phone: phone,
+                email: email,
+                product: product,
+                specs: spec,
+                source: source
+            };
+
+            analyticsData.quotes.push(newQuote);
+
+            // Save to correct simulation bucket
+            const targetKey = currentSite === 'catalog' ? 'samhyup_sim_analytics' : 'samhyup_main_sim_analytics';
+            localStorage.setItem(targetKey, JSON.stringify(analyticsData));
+
+            updateDashboardUI();
+        }
+
+        // Reset Data
+        function resetAnalytics() {
+            if (currentSite === 'fax') {
+                if (confirm('팩스 발송 로그 데이터를 초기 상태로 리셋하시겠습니까?')) {
+                    localStorage.setItem('samhyup_fax_analytics', JSON.stringify(defaultFaxData));
+                    updateDashboardUI();
+                }
+                return;
+            }
+            if (currentSite === 'mailling') {
+                const targetRealKey = 'samhyup_mailling_analytics';
+                const targetSimKey = 'samhyup_mailling_sim_analytics';
+                const defaultSimObj = defaultMailSimData;
+
+                if (dashboardMode === 'realtime') {
+                    if (confirm('실제 메일 발송 로그 데이터를 초기화하시겠습니까?')) {
+                        const cleanData = { visits: { success: 0, fail: 0, pending: 0 }, quotes: [] };
+                        localStorage.setItem(targetRealKey, JSON.stringify(cleanData));
+                        updateDashboardUI();
+                    }
+                } else {
+                    if (confirm('메일 시뮬레이터 데모 데이터를 초기 상태로 리셋하시겠습니까?')) {
+                        localStorage.setItem(targetSimKey, JSON.stringify(defaultSimObj));
+                        updateDashboardUI();
+                    }
+                }
+                return;
+            }
+
+            const targetRealKey = currentSite === 'catalog' ? 'samhyup_analytics' : 'samhyup_main_analytics';
+            const targetSimKey = currentSite === 'catalog' ? 'samhyup_sim_analytics' : 'samhyup_main_sim_analytics';
+            const defaultSimObj = currentSite === 'catalog' ? defaultSimData : defaultMainSimData;
+
+            if (dashboardMode === 'realtime') {
+                if (confirm('이 사이트의 실제 실시간 데이터를 초기화하시겠습니까?')) {
+                    const cleanData = { visits: { google_ads: 0, search: 0, direct: 0 }, quotes: [] };
+                    localStorage.setItem(targetRealKey, JSON.stringify(cleanData));
+                    updateDashboardUI();
+                }
+            } else {
+                if (confirm('이 사이트의 시뮬레이터 데모 데이터를 초기 상태로 리셋하시겠습니까?')) {
+                    localStorage.setItem(targetSimKey, JSON.stringify(defaultSimObj));
+                    updateDashboardUI();
+                }
+            }
+        }
+
+        // Password Verification
+        function verifyPassword() {
+            const passwordInput = document.getElementById('authPassword');
+            const errorDiv = document.getElementById('authError');
+            const password = passwordInput.value;
+
+            const savedPassword = localStorage.getItem('samhyup_admin_password') || 'dh1472';
+            if (password === savedPassword || password === 'sh1472' || password === 'dh1472') {
+                sessionStorage.setItem('samhyup_admin_auth', 'true');
+
+                const authOverlay = document.getElementById('authOverlay');
+                authOverlay.style.opacity = '0';
+                authOverlay.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    authOverlay.style.display = 'none';
+                }, 500);
+
+                const wrapper = document.getElementById('dashboard-wrapper');
+                wrapper.style.filter = 'none';
+                wrapper.style.pointerEvents = 'auto';
+
+                // Default start site
+                switchSite('catalog');
+            } else {
+                errorDiv.textContent = '❌ 비밀번호가 올바르지 않습니다. 다시 입력해 주세요.';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Change Admin Password using prompt
+        function changeAdminPassword() {
+            const currentSaved = localStorage.getItem('samhyup_admin_password') || 'dh1472';
+            const currentInput = prompt("현재 비밀번호를 입력해주세요:");
+            if (currentInput === null) return;
+            if (currentInput !== currentSaved) {
+                alert("현재 비밀번호가 일치하지 않습니다.");
+                return;
+            }
+            const newPassword = prompt("새로 설정할 비밀번호를 입력해주세요 (최대 8자리):");
+            if (newPassword === null) return;
+            if (!newPassword.trim()) {
+                alert("비밀번호는 공백일 수 없습니다.");
+                return;
+            }
+            if (newPassword.length > 8) {
+                alert("비밀번호는 최대 8자리까지 가능합니다.");
+                return;
+            }
+            const confirmPassword = prompt("새 비밀번호를 한번 더 입력해주세요:");
+            if (confirmPassword === null) return;
+            if (newPassword !== confirmPassword) {
+                alert("새 비밀번호가 서로 일치하지 않습니다.");
+                return;
+            }
+            localStorage.setItem('samhyup_admin_password', newPassword);
+            alert("비밀번호가 성공적으로 변경되었습니다.");
+        }
+
+        // Open Modal dialog with full details
+        function openQuoteDetail(id) {
+            const quote = analyticsData.quotes.find(q => q.id === id);
+            if (!quote) return;
+
+            if (currentSite === 'mailling' || currentSite === 'fax') {
+                document.querySelector('.modal-title').textContent = "메일 발송 이력 상세 보기";
+                document.querySelector('.info-grid').innerHTML = `
+                    <div class="info-item">
+                        <label>회사명</label>
+                        <p>${quote.company}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>수신 이메일</label>
+                        <p>${quote.name}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>발송 회차</label>
+                        <p>${quote.phone}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>발송 상태</label>
+                        <p>${quote.email === '성공' ? '🟢 성공' : '🔴 실패'}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>세부 결과</label>
+                        <p>${quote.product}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>비고</label>
+                        <div class="specs-display-box">${quote.specs || '비고 없음'}</div>
+                    </div>
+                `;
+            } else {
+                document.querySelector('.modal-title').textContent = "견적 요청 상세 보기";
+                document.querySelector('.info-grid').innerHTML = `
+                    <div class="info-item">
+                        <label>회사/현장명</label>
+                        <p id="modal-company">${quote.company}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>담당자</label>
+                        <p id="modal-name">${quote.name}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>연락처</label>
+                        <p id="modal-phone">${quote.phone}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>이메일</label>
+                        <p id="modal-email">${quote.email}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>가공 서비스</label>
+                        <p><span class="badge-product" id="modal-product">${quote.product}</span></p>
+                    </div>
+                    <div class="info-item">
+                        <label>유입 경로</label>
+                        <p id="modal-source">${quote.source === 'google_ads' ? '🟢 Google Ads 광고 유입' : quote.source === 'search' ? '🔵 검색엔진 유입' : '⚪ 직접 방문'}</p>
+                    </div>
+                    <div class="info-item info-item-full">
+                        <label>희망 규격 및 요청 수량</label>
+                        <div class="specs-display-box" id="modal-specs">${quote.specs}</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('quoteModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('quoteModal').classList.remove('active');
+        }
+
+        document.getElementById('input-budget').addEventListener('input', calculateSimulator);
+        document.getElementById('input-cpc').addEventListener('input', calculateSimulator);
+
+        // Initial setup check
+        window.addEventListener('DOMContentLoaded', () => {
+            // 과거 구형 더미 데이터 1회성 강제 리셋 (실시간 데이터 오염 방지)
+            if (!localStorage.getItem('samhyup_analytics_cleared')) {
+                const cleanData = {
+                    visits: { google_ads: 0, search: 0, direct: 0 },
+                    quotes: []
+                };
+                localStorage.setItem('samhyup_analytics', JSON.stringify(cleanData));
+                localStorage.setItem('samhyup_analytics_cleared', 'true');
+            }
+
+            if (sessionStorage.getItem('samhyup_admin_auth') === 'true') {
+                document.getElementById('authOverlay').style.display = 'none';
+                const wrapper = document.getElementById('dashboard-wrapper');
+                wrapper.style.filter = 'none';
+                wrapper.style.pointerEvents = 'auto';
+                switchSite('catalog'); // Default start site
+            } else {
+                setTimeout(() => {
+                    document.getElementById('authPassword').focus();
+                }, 200);
+            }
+        });
+
+    </script>
+
+    <script>
+
+        // =============================================
+        // 에러 리포트 데이터 (날짜 추가 시 여기에 추가)
+        // =============================================
+        const ERR_REPORTS = [
+            {
+                date: "2026-09-14",
+                day: "8일차",
+                errors: [
+                    { company: "한국철강", email: "ygd1201@seunsteel.co", type: "DNS", reason: "도메인 없음 (seunsteel.co)" },
+                    { company: "욱일레이저", email: "wookil_laser@naver.com", type: "550", reason: "존재하지 않는 계정" },
+                    { company: "은성철강", email: "3663780_@naver.com", type: "550", reason: "존재하지 않는 계정" },
+                    { company: "태흥철강", email: "taeheung-inc@naver.com", type: "550", reason: "존재하지 않는 계정" },
+                    { company: "튼튼철강", email: "park0817@nts.go", type: "DNS", reason: "도메인 없음 (nts.go)" },
+                    { company: "진흥레이저", email: "auto@gjto.or", type: "DNS", reason: "도메인 없음 (gjto.or)" },
+                    { company: "은성와이어메쉬", email: "eunsungmesh@naver.com", type: "550", reason: "존재하지 않는 계정" }
+                ]
+            }
+            // 다음 날 추가 예시:
+            // { date: "2026-09-15", day: "9일차", errors: [ ... ] }
+        ];
+
+        let currentErrDate = ERR_REPORTS[ERR_REPORTS.length - 1].date;
+
+        function openErrModal() {
+            document.getElementById('errModal').classList.add('open');
+            renderErrList(currentErrDate);
+            renderErrDateSelector();
+            // 배지 숨기기
+            localStorage.setItem('samhyup_err_seen_' + currentErrDate, 'true');
+            updateErrBadge();
+        }
+        function closeErrModal() {
+            document.getElementById('errModal').classList.remove('open');
+        }
+        function closeErrModalOutside(e) {
+            if (e.target === document.getElementById('errModal')) closeErrModal();
+        }
+
+        function switchErrTab(tab, el) {
+            document.querySelectorAll('.err-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.err-tab-content').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('errTab-' + tab).classList.add('active');
+        }
+
+        function renderErrList(date) {
+            const report = ERR_REPORTS.find(r => r.date === date);
+            if (!report) return;
+            const meta = document.getElementById('errModalMeta');
+            meta.textContent = report.date + ' (' + report.day + ')  ·  총 ' + report.errors.length + '건 반송';
+            document.getElementById('sc-total').textContent = report.errors.length;
+            document.getElementById('sc-dns').textContent = report.errors.filter(e => e.type === 'DNS').length;
+            document.getElementById('sc-550').textContent = report.errors.filter(e => e.type === '550').length;
+            document.getElementById('errListCnt').textContent = report.errors.length;
+            document.getElementById('errHistoryCnt').textContent = ERR_REPORTS.length;
+            const tbody = document.getElementById('errTableBody');
+            tbody.innerHTML = report.errors.map((e, i) => `
+            <tr>
+                <td style="color:#aaa;font-size:11px">${i + 1}</td>
+                <td><strong>${e.company}</strong></td>
+                <td class="err-email-cell">${e.email}</td>
+                <td>${e.type === 'DNS'
+                    ? '<span class="err-badge-dns">DNS 오류</span>'
+                    : '<span class="err-badge-550">계정 없음</span>'}</td>
+                <td style="font-size:12px;color:#718096">${e.reason}</td>
+            </tr>
+        `).join('');
+        }
+
+        function renderErrDateSelector() {
+            // 탭2 날짜 셀렉터
+            const sel2 = document.getElementById('errDateSelector');
+            if (sel2) sel2.innerHTML = ERR_REPORTS.map(r =>
+                `<button class="err-date-btn ${r.date === currentErrDate ? 'active' : ''}"
+                onclick="selectErrDate('${r.date}')">${r.date} (${r.day})</button>`
+            ).join('');
+            // 탭1 날짜 셀렉터
+            const sel1 = document.getElementById('errDateSelectorList');
+            if (sel1) sel1.innerHTML = ERR_REPORTS.map(r =>
+                `<button class="err-date-btn ${r.date === currentErrDate ? 'active' : ''}"
+                onclick="selectErrDate('${r.date}')">${r.date} (${r.day})</button>`
+            ).join('');
+            renderErrHistory(currentErrDate);
+        }
+
+        function selectErrDate(date) {
+            currentErrDate = date;
+            // 두 셀렉터 모두 동기화
+            document.querySelectorAll('.err-date-btn').forEach(b => {
+                b.classList.toggle('active', b.textContent.startsWith(date));
+            });
+            renderErrList(date);
+            renderErrHistory(date);
+        }
+
+        function renderErrHistory(date) {
+            const report = ERR_REPORTS.find(r => r.date === date);
+            if (!report) return;
+            const done = JSON.parse(localStorage.getItem('samhyup_err_done_' + date) || '[]');
+            const tbody = document.getElementById('errHistoryBody');
+            tbody.innerHTML = report.errors.map((e, i) => {
+                const isDone = done.includes(e.email);
+                return `<tr>
+                <td style="color:#aaa;font-size:11px">${i + 1}</td>
+                <td><strong>${e.company}</strong></td>
+                <td class="err-email-cell">${e.email}</td>
+                <td>${e.type === 'DNS'
+                        ? '<span class="err-badge-dns">DNS 오류</span>'
+                        : '<span class="err-badge-550">계정 없음</span>'}</td>
+                <td>${isDone
+                        ? '<span style="color:#2D6A4F;font-size:12px;font-weight:700">✅ 처리완료</span>'
+                        : '<span style="color:#718096;font-size:12px">미처리</span>'}</td>
+            </tr>`;
+            }).join('');
+        }
+
+        function copyErrList() {
+            const report = ERR_REPORTS.find(r => r.date === currentErrDate);
+            if (!report) return;
+            const lines = [
+                `[${report.date} ${report.day} 발송 에러 ${report.errors.length}건]`,
+                '',
+                ...report.errors.map((e, i) =>
+                    `${i + 1}. ${e.company} | ${e.email} | ${e.type === 'DNS' ? 'DNS 오류' : '계정 없음'} | ${e.reason}`
+                )
+            ];
+            navigator.clipboard.writeText(lines.join('\n'))
+                .then(() => alert('클립보드에 복사되었습니다!'))
+                .catch(() => alert('복사 실패: 직접 선택 후 복사해주세요.'));
+        }
+
+        function markAllDone() {
+            const report = ERR_REPORTS.find(r => r.date === currentErrDate);
+            if (!report) return;
+            const emails = report.errors.map(e => e.email);
+            localStorage.setItem('samhyup_err_done_' + currentErrDate, JSON.stringify(emails));
+            renderErrHistory(currentErrDate);
+            alert('모두 처리완료로 표시되었습니다.');
+        }
+
+        function updateErrBadge() {
+            const latest = ERR_REPORTS[ERR_REPORTS.length - 1];
+            const seen = localStorage.getItem('samhyup_err_seen_' + latest.date);
+            const badge = document.getElementById('errBadge');
+            const floatBadge = document.getElementById('floatingErrBadge');
+            if (seen) {
+                if (badge) badge.style.display = 'none';
+                if (floatBadge) floatBadge.style.display = 'none';
+            } else {
+                if (badge) {
+                    badge.style.display = 'flex';
+                    badge.textContent = latest.errors.length;
+                }
+                if (floatBadge) {
+                    floatBadge.style.display = 'inline-block';
+                    floatBadge.textContent = latest.errors.length;
+                }
+            }
+        }
+
+        // 초기 배지 상태 설정
+        window.addEventListener('DOMContentLoaded', () => {
+            updateErrBadge();
+        });
+
+    </script>
+
+    <!-- Floating Error Report Button (대흥정밀 스타일 알약형 필 버튼) -->
+    <button id="errReportBtn" onclick="openErrModal()" title="발송 에러 리포트 열기"
+        style="position: fixed; bottom: 24px; right: 24px; z-index: 1000; background: #15284d; color: #FFFFFF; border: none; border-radius: 50px; padding: 12px 18px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.35); transition: all 0.2s ease;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span>에러 리포트</span>
+        <span id="floatingErrBadge" style="background: #D97706; color: #FFFFFF; font-size: 11px; font-weight: 800; border-radius: 12px; padding: 2px 7px; margin-left: 2px; line-height: 1.2;">7</span>
+    </button>
+</body>
+
+</html>

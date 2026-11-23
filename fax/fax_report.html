@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼협철망 | B2B 아웃바운드 팩스 발송 현황 보고서</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+        <!-- html2canvas for image export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --navy: #15284D;
+            --navy-deep: #0F172A;
+            --brand-blue: #2563EB;
+            --blue-light: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --gold: #D97706;
+            --gold-light: #FEF3C7;
+            --success: #16A34A;
+            --success-bg: #DCFCE7;
+            --fail: #DC2626;
+            --fail-bg: #FEE2E2;
+            --text: #1E293B;
+            --text-mid: #475569;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --bg-screen: #F8FAFC;
+            --bg-soft: #F8FAFC;
+            --card-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+            background: var(--bg-screen);
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+            color: var(--text);
+            font-size: 13px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 컨트롤 패널 */
+        .control-panel {
+            max-width: 1020px;
+            margin: 0 auto 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: var(--card-shadow);
+        }
+
+        .cp-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-mid);
+            white-space: nowrap;
+        }
+
+        .cp-input, .cp-select {
+            padding: 7.5px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-family: inherit;
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .cp-input:focus, .cp-select:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+            box-shadow: 0 2px 6px rgba(21, 40, 77, 0.15);
+        }
+        .btn-primary:hover {
+            background: #1E3A70;
+        }
+
+        .btn-export-pdf {
+            background: #fff;
+            color: #991B1B;
+            border-color: #F87171;
+        }
+        .btn-export-pdf:hover {
+            background: #FEF2F2;
+        }
+
+        .btn-export-img {
+            background: #fff;
+            color: var(--brand-blue);
+            border-color: #93C5FD;
+        }
+        .btn-export-img:hover {
+            background: var(--blue-light);
+        }
+
+        .btn-print {
+            background: #fff;
+            color: var(--text-mid);
+            border-color: var(--border);
+        }
+        .btn-print:hover {
+            background: var(--border-light);
+        }
+
+        #status-bar {
+            max-width: 1020px;
+            margin: -6px auto 14px;
+            padding: 10px 18px;
+            background: var(--blue-light);
+            border-left: 3px solid var(--brand-blue);
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+            color: var(--navy);
+            font-weight: 500;
+            display: none;
+        }
+
+        /* A4 보고서 */
+        #report-wrapper {
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+
+        .a4-page {
+            width: 1020px;
+            max-width: 100%;
+            min-height: 1123px;
+            background: #fff;
+            margin: 0 auto;
+            padding: 44px 48px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            position: relative;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 18px;
+            border-bottom: 2px solid var(--navy);
+            margin-bottom: 22px;
+        }
+
+        .report-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .report-logo-img {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .report-logo-text h1 {
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.3px;
+        }
+
+        .report-logo-text p {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .report-title-area {
+            text-align: right;
+        }
+
+        .report-doc-type {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--brand-blue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .report-main-title {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-top: 3px;
+            letter-spacing: -0.4px;
+        }
+
+        .meta-strip {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 18px;
+            margin-bottom: 20px;
+            font-size: 12.5px;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 6px;
+        }
+        .meta-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .meta-val {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .kpi-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: #fff;
+            border-left: 3.5px solid var(--navy);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .kpi-card.k-success { border-left-color: var(--success); }
+        .kpi-card.k-fail { border-left-color: var(--fail); }
+        .kpi-card.k-rate { border-left-color: var(--brand-blue); }
+
+        .kpi-card-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .kpi-card-value {
+            font-size: 25px;
+            font-weight: 600;
+            color: var(--navy);
+            line-height: 1.1;
+        }
+
+        .kpi-card.k-success .kpi-card-value { color: var(--success); }
+        .kpi-card.k-fail .kpi-card-value { color: var(--fail); }
+        .kpi-card.k-rate .kpi-card-value { color: var(--brand-blue); }
+
+        .kpi-card-sub {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            margin-top: 22px;
+        }
+
+        .section-bar {
+            width: 3.5px;
+            height: 15px;
+            background: var(--brand-blue);
+            border-radius: 2px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: var(--bg-soft);
+            color: var(--navy);
+            font-weight: 600;
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover {
+            background-color: #F8FAFC;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 2.5px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .badge-status.success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid #BBF7D0;
+        }
+        .badge-status.fail {
+            background: var(--fail-bg);
+            color: var(--fail);
+            border: 1px solid #FECACA;
+        }
+
+        .badge-round {
+            background: var(--blue-light);
+            color: var(--navy);
+            border: 1px solid #BFDBFE;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .report-footer {
+            margin-top: 28px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            color: var(--text-light);
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .control-panel, #status-bar {
+                display: none !important;
+            }
+            .a4-page {
+                box-shadow: none;
+                border: none;
+                padding: 15mm 12mm;
+                width: 100%;
+                min-height: auto;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- 컨트롤 패널 -->
+    <div class="control-panel">
+        <span class="cp-label">📅 보고서 번호:</span>
+        <input type="text" id="input-report-no" class="cp-input" style="width:140px;" value="DHR-FAX-20261013" oninput="updateReportMeta()">
+
+        <span class="cp-label">조회 회차:</span>
+        <select id="select-round" class="cp-select" onchange="applyFilters()">
+            <option value="all" selected>전체 회차 (1~3차 총 42건)</option>
+            <option value="팩스 3회차">팩스 3회차 (10/13, 15건)</option>
+            <option value="팩스 2회차">팩스 2회차 (10/12, 14건)</option>
+            <option value="팩스 1회차">팩스 1회차 (10/06, 13건)</option>
+        </select>
+
+        <span class="cp-label">상태 필터:</span>
+        <select id="select-status" class="cp-select" onchange="applyFilters()">
+            <option value="all" selected>전체 상태</option>
+            <option value="성공">✅ 성공만</option>
+            <option value="실패">❌ 실패만</option>
+        </select>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadGASData()">🔄 실시간 동기화</button>
+            <button class="btn btn-export-pdf" onclick="exportPDF()">📄 PDF 저장</button>
+            <button class="btn btn-export-img" onclick="exportImage()">🖼️ 이미지 저장</button>
+            <button class="btn btn-print" onclick="window.print()">🖨️ 인쇄</button>
+        </div>
+    </div>
+
+    <div id="status-bar"></div>
+
+    <!-- A4 인쇄 영역 -->
+    <div id="report-wrapper">
+        <div class="a4-page" id="a4-capture-area">
+            
+            <!-- 헤더 -->
+            <div class="report-header">
+                <div class="report-logo-area">
+                    <img src="data:image/png;base64,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" class="report-logo-img" alt="SAMHYUP">
+                    <div class="report-logo-text">
+                        <h1>삼협철망 (SAMHYUP)</h1>
+                        <p>용접철망 · 와이어메쉬 · 휀스 전문 제조기업 | B2B 마케팅 본부</p>
+                    </div>
+                </div>
+                <div class="report-title-area">
+                    <div class="report-doc-type">OFFICIAL PERFORMANCE REPORT</div>
+                    <div class="report-main-title">B2B 팩스 발송 현황 보고서</div>
+                </div>
+            </div>
+
+            <!-- 메타 정보 바 -->
+            <div class="meta-strip">
+                <div class="meta-item"><span class="meta-label">문서번호:</span><span class="meta-val" id="rpt-no">DHR-FAX-20261013</span></div>
+                <div class="meta-item"><span class="meta-label">기준일자:</span><span class="meta-val" id="rpt-date">2026.10.13</span></div>
+                <div class="meta-item"><span class="meta-label">발송채널:</span><span class="meta-val">샌드랩스 대량 팩스 (A4 단면)</span></div>
+                <div class="meta-item"><span class="meta-label">작성부서:</span><span class="meta-val">영업마케팅팀</span></div>
+            </div>
+
+            <!-- KPI 카드 -->
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-card-label">총 발송 시도</div>
+                    <div class="kpi-card-value" id="kpi-total">27건</div>
+                    <div class="kpi-card-sub">샌드랩스 1·2차 누적</div>
+                </div>
+                <div class="kpi-card k-success">
+                    <div class="kpi-card-label">정상 수신 (성공)</div>
+                    <div class="kpi-card-value" id="kpi-success">6건</div>
+                    <div class="kpi-card-sub">도면 제안서 수신 완료</div>
+                </div>
+                <div class="kpi-card k-fail">
+                    <div class="kpi-card-label">수신 실패</div>
+                    <div class="kpi-card-value" id="kpi-fail">21건</div>
+                    <div class="kpi-card-sub">0507안심번호/결번 등</div>
+                </div>
+                <div class="kpi-card k-rate">
+                    <div class="kpi-card-label">수신 성공률</div>
+                    <div class="kpi-card-value" id="kpi-rate">22.2%</div>
+                    <div class="kpi-card-sub">성공 / 전체 발송</div>
+                </div>
+            </div>
+
+            <!-- 본문 테이블 섹션 -->
+            <div class="section-heading">
+                <div class="section-bar"></div>
+                <span>세부 팩스 발송 로그 목록 (<span id="table-count">27건</span>)</span>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width:55px; text-align:center; white-space:nowrap;">연번</th>
+                        <th style="width:105px; white-space:nowrap;">발송일자</th>
+                        <th style="width:170px; white-space:nowrap;">수신 업체명</th>
+                        <th style="width:125px; white-space:nowrap;">팩스 번호</th>
+                        <th style="width:120px; text-align:center; white-space:nowrap;">발송회차</th>
+                        <th style="width:75px; text-align:center; white-space:nowrap;">발송상태</th>
+                        <th style="white-space:nowrap;">세부결과 및 비고</th>
+                    </tr>
+                </thead>
+                <tbody id="log-table-body">
+                    <!-- JavaScript 랜더링 -->
+                </tbody>
+            </table>
+
+            <!-- 푸터 -->
+            <div class="report-footer">
+                <div>삼협철망 | 경기도 시흥시 범안로 390번길 63 (계수동) | 대표전화: 010-9014-9373 / 031-315-0236</div>
+                <div>데이터 소스: 구글 스프레드시트 (fax_log) 실시간 연동</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbyRYc9FcS5hmG-EFrz3ra2ky6eVGSq_5dFnKQ0RPB9H80dO64cA2xOSUkA1j_hyIwFF-A/exec";
+        
+        // 팩스 1차(10/06) 및 2차(10/12) 발송 로그 데이터
+        let allFaxLogs = [
+        {
+                "id": "141",
+                "date": "2026-11-16",
+                "company": "(주)아이디오",
+                "fax": "0415488238",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "140",
+                "date": "2026-11-16",
+                "company": "히트텍",
+                "fax": "0415848889",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "139",
+                "date": "2026-11-16",
+                "company": "온돌라이프",
+                "fax": "05052407070",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "138",
+                "date": "2026-11-16",
+                "company": "다올이티에스",
+                "fax": "0519552045",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "137",
+                "date": "2026-11-16",
+                "company": "정우카프링",
+                "fax": "0553398666",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "136",
+                "date": "2026-11-16",
+                "company": "해림ENG",
+                "fax": "0553461514",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "135",
+                "date": "2026-11-16",
+                "company": "(주)JH금속",
+                "fax": "0629552167",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "134",
+                "date": "2026-11-16",
+                "company": "대명산업",
+                "fax": "0634607035",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "133",
+                "date": "2026-11-16",
+                "company": "금성철강",
+                "fax": "0634650943",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "132",
+                "date": "2026-11-16",
+                "company": "더원드레스룸",
+                "fax": "07088330116",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "131",
+                "date": "2026-11-16",
+                "company": "주식회사 선천스틸",
+                "fax": "0315629135",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "130",
+                "date": "2026-11-16",
+                "company": "(주)천명",
+                "fax": "0316578891",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "129",
+                "date": "2026-11-16",
+                "company": "주식회사 엠에스테크",
+                "fax": "0316830267",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "128",
+                "date": "2026-11-16",
+                "company": "엠오디이엔",
+                "fax": "0316966155",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "127",
+                "date": "2026-11-16",
+                "company": "대성테크",
+                "fax": "0319893825",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "126",
+                "date": "2026-11-16",
+                "company": "이레텍",
+                "fax": "0319910080",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "125",
+                "date": "2026-11-16",
+                "company": "서일",
+                "fax": "0324465363",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "124",
+                "date": "2026-11-16",
+                "company": "GD산업",
+                "fax": "0325841574",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "123",
+                "date": "2026-11-16",
+                "company": "삼원금속",
+                "fax": "0319411769",
+                "round": "팩스 6회차(정기)",
+                "status": "실패",
+                "detail": "실패(번호오류) (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "122",
+                "date": "2026-11-16",
+                "company": "(주)유풍",
+                "fax": "0325784788",
+                "round": "팩스 6회차(정기)",
+                "status": "실패",
+                "detail": "실패(응답없음) (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "121",
+                "date": "2026-11-16",
+                "company": "(주)바디스톤",
+                "fax": "0269192560",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "120",
+                "date": "2026-11-16",
+                "company": "아이엘티",
+                "fax": "0313110004",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "119",
+                "date": "2026-11-16",
+                "company": "프레임세상",
+                "fax": "0313386465",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "118",
+                "date": "2026-11-16",
+                "company": "큐브테크",
+                "fax": "0313662970",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "117",
+                "date": "2026-11-16",
+                "company": "태림파이프가공",
+                "fax": "0314322800",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "116",
+                "date": "2026-11-16",
+                "company": "원심하이테크",
+                "fax": "0314971575",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "115",
+                "date": "2026-11-16",
+                "company": "스타인테리어",
+                "fax": "0315283166",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "114",
+                "date": "2026-11-16",
+                "company": "대흥탱크",
+                "fax": "0315369848",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:48)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "113",
+                "date": "2026-11-16",
+                "company": "삼일기업",
+                "fax": "0315443186",
+                "round": "팩스 6회차(정기)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (10:49)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "112",
+                "date": "2026-11-02",
+                "company": "(주)아이디오",
+                "fax": "0415488238",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "111",
+                "date": "2026-11-02",
+                "company": "히트텍",
+                "fax": "0415848889",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "110",
+                "date": "2026-11-02",
+                "company": "온돌라이프",
+                "fax": "05052407070",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "109",
+                "date": "2026-11-02",
+                "company": "다올이티에스",
+                "fax": "0519552045",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "108",
+                "date": "2026-11-02",
+                "company": "정우카프링",
+                "fax": "0553398666",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "107",
+                "date": "2026-11-02",
+                "company": "해림ENG",
+                "fax": "0553461514",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "106",
+                "date": "2026-11-02",
+                "company": "(주)JH금속",
+                "fax": "0629552167",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "105",
+                "date": "2026-11-02",
+                "company": "더원드레스룸",
+                "fax": "07088330116",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "104",
+                "date": "2026-11-02",
+                "company": "주식회사 명진커넥터",
+                "fax": "0328124588",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "103",
+                "date": "2026-11-02",
+                "company": "혜인일렉트릭㈜",
+                "fax": "0432136846",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "102",
+                "date": "2026-11-02",
+                "company": "주식회사 엠에스테크",
+                "fax": "0316830267",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "101",
+                "date": "2026-11-02",
+                "company": "엠오디이엔",
+                "fax": "0316966155",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "100",
+                "date": "2026-11-02",
+                "company": "삼원금속",
+                "fax": "0319411769",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "99",
+                "date": "2026-11-02",
+                "company": "대성테크",
+                "fax": "0319893825",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "98",
+                "date": "2026-11-02",
+                "company": "GD산업",
+                "fax": "0325841574",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "97",
+                "date": "2026-11-02",
+                "company": "주식회사 히트솔루션",
+                "fax": "0327154284",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "96",
+                "date": "2026-11-02",
+                "company": "로존",
+                "fax": "0318587460",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "95",
+                "date": "2026-11-02",
+                "company": "니엣칸테홈",
+                "fax": "0319143556",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "94",
+                "date": "2026-11-02",
+                "company": "한일열교환기",
+                "fax": "0319998646",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "93",
+                "date": "2026-11-02",
+                "company": "(주)코리프냉동공조",
+                "fax": "0325784788",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "92",
+                "date": "2026-11-02",
+                "company": "(주)바디스톤",
+                "fax": "0269192560",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "91",
+                "date": "2026-11-02",
+                "company": "아이엘티",
+                "fax": "0313110004",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "90",
+                "date": "2026-11-02",
+                "company": "프레임세상",
+                "fax": "0313386465",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "89",
+                "date": "2026-11-02",
+                "company": "원심하이테크",
+                "fax": "0314971575",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "88",
+                "date": "2026-11-02",
+                "company": "스타인테리어",
+                "fax": "0315283166",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:57)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "87",
+                "date": "2026-11-02",
+                "company": "대흥탱크",
+                "fax": "0315369848",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "86",
+                "date": "2026-11-02",
+                "company": "삼일기업",
+                "fax": "0315443186",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "85",
+                "date": "2026-11-02",
+                "company": "주식회사 선천스틸",
+                "fax": "0315629135",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "84",
+                "date": "2026-11-02",
+                "company": "(주)천명",
+                "fax": "0316578891",
+                "round": "팩스 5회차(2차전환)",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:56)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "83",
+                "date": "2026-11-02",
+                "company": "이수냉열테크",
+                "fax": "0315299199",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "82",
+                "date": "2026-11-02",
+                "company": "전오전기(주)",
+                "fax": "0222662310",
+                "round": "팩스 5회차(2차전환)",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "샌드랩스 웹팩스 발송"
+        },
+        {
+                "id": "134",
+                "date": "2026-10-19",
+                "company": "삼광인더스",
+                "fax": "0312251693",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "126",
+                "date": "2026-10-19",
+                "company": "태평철강",
+                "fax": "0226333114",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "136",
+                "date": "2026-10-19",
+                "company": "그루터기하우징",
+                "fax": "03180779403",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "161",
+                "date": "2026-10-19",
+                "company": "대명산기",
+                "fax": "0314988019",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "41",
+                "date": "2026-10-19",
+                "company": "원일금속",
+                "fax": "0638568663",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "회선불량 (통신 회선 장애)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "40",
+                "date": "2026-10-19",
+                "company": "현대특수철강공업",
+                "fax": "0638352082",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "58",
+                "date": "2026-10-19",
+                "company": "대아실업",
+                "fax": "0557522938",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "125",
+                "date": "2026-10-19",
+                "company": "올니스",
+                "fax": "0552990723",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "96",
+                "date": "2026-10-19",
+                "company": "한국철강",
+                "fax": "0522888111",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "56",
+                "date": "2026-10-19",
+                "company": "진성금속레이져",
+                "fax": "0317688327",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "87",
+                "date": "2026-10-19",
+                "company": "진흥레이저",
+                "fax": "0319813768",
+                "round": "팩스 4-3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "재발송 실패"
+        },
+        {
+                "id": "19",
+                "date": "2026-10-19",
+                "company": "대명기업",
+                "fax": "0634607035",
+                "round": "팩스 4-3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (16:29)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "175",
+                "date": "2026-10-19",
+                "company": "에스티어",
+                "fax": "0312250025",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "회선불량 (통신 회선 장애)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "143",
+                "date": "2026-10-19",
+                "company": "성모산업",
+                "fax": "0314327341",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "105",
+                "date": "2026-10-19",
+                "company": "은성파이프레이저",
+                "fax": "0313663780",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "118",
+                "date": "2026-10-19",
+                "company": "신라톱기계",
+                "fax": "0547516366",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "5",
+                "date": "2026-10-19",
+                "company": "RELA",
+                "fax": "0542897999",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "193",
+                "date": "2026-10-19",
+                "company": "아이엠씨테크",
+                "fax": "0535848447",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "4",
+                "date": "2026-10-19",
+                "company": "현성산업",
+                "fax": "0533587595",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "8",
+                "date": "2026-10-19",
+                "company": "남경테크",
+                "fax": "0513149705",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "137",
+                "date": "2026-10-19",
+                "company": "에스오토닉스",
+                "fax": "0537108565",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "10",
+                "date": "2026-10-19",
+                "company": "신성에스앤티",
+                "fax": "0536092222",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "7",
+                "date": "2026-10-19",
+                "company": "한일금속",
+                "fax": "0325894566",
+                "round": "팩스 4-2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "162",
+                "date": "2026-10-19",
+                "company": "서일",
+                "fax": "0324465363",
+                "round": "팩스 4-2회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (16:31)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "168",
+                "date": "2026-10-19",
+                "company": "이레텍",
+                "fax": "0319910080",
+                "round": "팩스 4-2회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (16:26)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "240",
+                "date": "2026-10-19",
+                "company": "동양파이프스웨이징",
+                "fax": "0314972277",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "231",
+                "date": "2026-10-19",
+                "company": "광성파이프확관",
+                "fax": "0313141133",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "237",
+                "date": "2026-10-19",
+                "company": "유진축관기술",
+                "fax": "0535846688",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "243",
+                "date": "2026-10-19",
+                "company": "태양스웨이징",
+                "fax": "0513161188",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "239",
+                "date": "2026-10-19",
+                "company": "창성특수포밍",
+                "fax": "0552614433",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "회선불량 (통신 회선 장애)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "241",
+                "date": "2026-10-19",
+                "company": "경북파이프벤딩",
+                "fax": "0549738899",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "232",
+                "date": "2026-10-19",
+                "company": "대덕스웨이징",
+                "fax": "0429317788",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "236",
+                "date": "2026-10-19",
+                "company": "세종정밀스웨이징",
+                "fax": "0448625566",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "연결오류 (통신 연결 실패)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "238",
+                "date": "2026-10-19",
+                "company": "한빛파이프확관",
+                "fax": "0325671155",
+                "round": "팩스 4회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "235",
+                "date": "2026-10-19",
+                "company": "신한파이프벤딩",
+                "fax": "0617722053",
+                "round": "팩스 4회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (신성특수벤딩과 동일번호)",
+                "note": "동일 팩스번호"
+        },
+        {
+                "id": "234",
+                "date": "2026-10-19",
+                "company": "동방파이프축관",
+                "fax": "0313535105",
+                "round": "팩스 4회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (14:23)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "230",
+                "date": "2026-10-19",
+                "company": "신성특수벤딩",
+                "fax": "0617722053",
+                "round": "팩스 4회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (14:22)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "233",
+                "date": "2026-10-19",
+                "company": "삼우특수포밍",
+                "fax": "0553427347",
+                "round": "팩스 4회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (14:23)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "242",
+                "date": "2026-10-19",
+                "company": "성우축관포밍",
+                "fax": "03180150020",
+                "round": "팩스 4회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (14:23)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "218",
+                "date": "2026-10-13",
+                "company": "세일파이프확관",
+                "fax": "0325813355",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "161",
+                "date": "2026-10-13",
+                "company": "대명산기",
+                "fax": "0314988019",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "224",
+                "date": "2026-10-13",
+                "company": "삼진특수확관",
+                "fax": "0313527744",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "173",
+                "date": "2026-10-13",
+                "company": "한일포밍",
+                "fax": "0316867081",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "223",
+                "date": "2026-10-13",
+                "company": "태림파이프가공",
+                "fax": "0314322800",
+                "round": "팩스 3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (15:44)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "229",
+                "date": "2026-10-13",
+                "company": "부경파이프포밍",
+                "fax": "0519714477",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "225",
+                "date": "2026-10-13",
+                "company": "동일포밍테크",
+                "fax": "0553268822",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "222",
+                "date": "2026-10-13",
+                "company": "창원스웨이징",
+                "fax": "0552851166",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "228",
+                "date": "2026-10-13",
+                "company": "한일축관가공",
+                "fax": "0535812299",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "184",
+                "date": "2026-10-13",
+                "company": "명성포밍산업",
+                "fax": "0534763753",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "227",
+                "date": "2026-10-13",
+                "company": "서해스웨이징",
+                "fax": "0328186633",
+                "round": "팩스 3회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "220",
+                "date": "2026-10-13",
+                "company": "대일파이프벤딩",
+                "fax": "0617722053",
+                "round": "팩스 3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (15:44)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "226",
+                "date": "2026-10-13",
+                "company": "영남파이프벤딩",
+                "fax": "0549507249",
+                "round": "팩스 3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (15:44)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "221",
+                "date": "2026-10-13",
+                "company": "중앙정밀축관",
+                "fax": "0538579860",
+                "round": "팩스 3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (15:44)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "219",
+                "date": "2026-10-13",
+                "company": "우진스틸포밍",
+                "fax": "0522884499",
+                "round": "팩스 3회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (15:44)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "134",
+                "date": "2026-10-12",
+                "company": "삼광인더스",
+                "fax": "0312251693",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "번호오류 (결번/없는 번호)",
+                "note": "결번"
+        },
+        {
+                "id": "126",
+                "date": "2026-10-12",
+                "company": "태평철강",
+                "fax": "0226333114",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (대표 전화번호 추정)",
+                "note": "대표번호 혼입 추정"
+        },
+        {
+                "id": "130",
+                "date": "2026-10-12",
+                "company": "용문밴딩",
+                "fax": "0313704620",
+                "round": "팩스 2회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:17)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "121",
+                "date": "2026-10-12",
+                "company": "큐브테크",
+                "fax": "0313662970",
+                "round": "팩스 2회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:17)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "131",
+                "date": "2026-10-12",
+                "company": "승민산업벤딩",
+                "fax": "050714046366",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "응답없음 (0507 가상번호)",
+                "note": "0507 안심번호"
+        },
+        {
+                "id": "132",
+                "date": "2026-10-12",
+                "company": "자유벤딩테크",
+                "fax": "050713186041",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "응답없음 (0507 가상번호)",
+                "note": "0507 안심번호"
+        },
+        {
+                "id": "136",
+                "date": "2026-10-12",
+                "company": "그루터기하우징",
+                "fax": "03180779403",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "127",
+                "date": "2026-10-12",
+                "company": "대성벤딩",
+                "fax": "0314999181",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "125",
+                "date": "2026-10-12",
+                "company": "올니스",
+                "fax": "0552990723",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "116",
+                "date": "2026-10-12",
+                "company": "한국철강",
+                "fax": "0522888111",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (대표 전화번호 추정)",
+                "note": "대표번호 혼입 추정"
+        },
+        {
+                "id": "106",
+                "date": "2026-10-12",
+                "company": "튼튼철강",
+                "fax": "050713809693",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (0507 가상번호)",
+                "note": "0507 안심번호"
+        },
+        {
+                "id": "128",
+                "date": "2026-10-12",
+                "company": "효진벤딩",
+                "fax": "0328116011",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "129",
+                "date": "2026-10-12",
+                "company": "정철밴딩",
+                "fax": "0325891456",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "87",
+                "date": "2026-10-12",
+                "company": "진흥레이저",
+                "fax": "0319813768",
+                "round": "팩스 2회차",
+                "status": "실패",
+                "detail": "응답없음 (팩스 미수신)",
+                "note": "신규 제안서 발송"
+        },
+        {
+                "id": "87",
+                "date": "2026-10-06",
+                "company": "진흥레이저",
+                "fax": "0319813768",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "56",
+                "date": "2026-10-06",
+                "company": "진성금속레이져",
+                "fax": "0317688327",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "53",
+                "date": "2026-10-06",
+                "company": "대진밴딩",
+                "fax": "0438561189",
+                "round": "팩스 1회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:38)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "41",
+                "date": "2026-10-06",
+                "company": "원일금속",
+                "fax": "0638568663",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "40",
+                "date": "2026-10-06",
+                "company": "현대특수철강공업",
+                "fax": "0638352082",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "58",
+                "date": "2026-10-06",
+                "company": "대아실업",
+                "fax": "0557522938",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "96",
+                "date": "2026-10-06",
+                "company": "한국철강",
+                "fax": "0522888111",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (대표 전화번호 추정)",
+                "note": "대표번호 혼입 추정"
+        },
+        {
+                "id": "49",
+                "date": "2026-10-06",
+                "company": "문화벤딩",
+                "fax": "0513271740",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (팩스 신호 없음)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "86",
+                "date": "2026-10-06",
+                "company": "튼튼철강",
+                "fax": "050713809693",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (0507 가상번호)",
+                "note": "0507 안심번호"
+        },
+        {
+                "id": "73",
+                "date": "2026-10-06",
+                "company": "에이피씨엠",
+                "fax": "050713009784",
+                "round": "팩스 1회차",
+                "status": "실패",
+                "detail": "연결오류 (0507 가상번호)",
+                "note": "0507 안심번호"
+        },
+        {
+                "id": "75",
+                "date": "2026-10-06",
+                "company": "금성철강",
+                "fax": "0634650943",
+                "round": "팩스 1회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:39)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "12",
+                "date": "2026-10-06",
+                "company": "대명산업",
+                "fax": "0634607035",
+                "round": "팩스 1회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:39)",
+                "note": "샌드랩스 대량 팩스"
+        },
+        {
+                "id": "50",
+                "date": "2026-10-06",
+                "company": "국제벤딩",
+                "fax": "0617722053",
+                "round": "팩스 1회차",
+                "status": "성공",
+                "detail": "정상 수신 완료 (11:38)",
+                "note": "샌드랩스 대량 팩스"
+        }
+];
+
+        function fetchJSONP(url, callbackName) {
+            return new Promise((resolve, reject) => {
+                const cbName = `${callbackName}_${Date.now()}`;
+                let done = false;
+                const timer = setTimeout(() => {
+                    if (!done) { done = true; reject(new Error('timeout')); cleanup(); }
+                }, 8000);
+                window[cbName] = (data) => {
+                    if (!done) { done = true; clearTimeout(timer); resolve(data); cleanup(); }
+                };
+                function cleanup() {
+                    delete window[cbName];
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                }
+                const script = document.createElement('script');
+                script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${cbName}`;
+                script.onerror = () => { if (!done) { done = true; clearTimeout(timer); reject(new Error('script error')); cleanup(); } };
+                document.body.appendChild(script);
+            });
+        }
+
+        function updateReportMeta() {
+            document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || 'DHR-FAX-20261013';
+        }
+
+        async function loadGASData() {
+            const bar = document.getElementById('status-bar');
+            bar.style.display = 'block';
+            bar.textContent = '📡 구글 시트 fax_log 시트에서 최신 데이터를 가져오는 중...';
+
+            try {
+                const data = await fetchJSONP(`${GAS_URL}?site=fax`, 'fax_cb');
+                if (data && data.logs && data.logs.length > 0) {
+                    allFaxLogs = data.logs;
+                    bar.textContent = `✅ 구글 시트 fax_log 연동 완료: 총 ${allFaxLogs.length}건`;
+                    bar.style.background = '#ECFDF5';
+                    bar.style.borderColor = '#10B981';
+                    bar.style.color = '#065F46';
+                    updateRoundDropdown(allFaxLogs);
+                }
+            } catch (err) {
+                bar.textContent = 'ℹ️ 구글 시트 로컬 폴백 데이터로 보고서를 갱신합니다.';
+                bar.style.background = '#FFFBEB';
+                bar.style.borderColor = '#F59E0B';
+                bar.style.color = '#B45309';
+            }
+            applyFilters();
+        }
+
+        
+        function updateRoundDropdown(logs) {
+            const select = document.getElementById('select-round');
+            const rounds = logs.map(l => (l.round || '').trim()).filter(Boolean);
+            const uniqueRounds = Array.from(new Set(rounds));
+            const latestRound = uniqueRounds[0] || 'all';
+
+            let htmlStr = `<option value="all">전체 회차 (1~5차 총 ${logs.length}건)</option>`;
+            uniqueRounds.forEach(r => {
+                const count = logs.filter(l => (l.round || '').trim() === r).length;
+                const isSelected = (r === latestRound) ? 'selected' : '';
+                htmlStr += `<option value="${r}" ${isSelected}>${r} (${count}건)</option>`;
+            });
+            select.innerHTML = htmlStr;
+        }
+
+        function applyFilters() {
+            const selectedRound = document.getElementById('select-round').value;
+            const selectedStatus = document.getElementById('select-status').value;
+
+            let filtered = allFaxLogs;
+            if (selectedRound !== 'all') {
+                filtered = filtered.filter(l => (l.round || '').trim() === selectedRound);
+            }
+            if (selectedStatus !== 'all') {
+                filtered = filtered.filter(l => (l.status || '').trim() === selectedStatus);
+            }
+
+            const total = filtered.length;
+            const successCount = filtered.filter(l => (l.status || '').trim() === '성공').length;
+            const failCount = filtered.filter(l => (l.status || '').trim() === '실패').length;
+            const rate = total > 0 ? ((successCount / total) * 100).toFixed(1) : '0.0';
+
+            document.getElementById('kpi-total').textContent = `${total}건`;
+            document.getElementById('kpi-success').textContent = `${successCount}건`;
+            document.getElementById('kpi-fail').textContent = `${failCount}건`;
+            document.getElementById('kpi-rate').textContent = `${rate}%`;
+            document.getElementById('table-count').textContent = `${total}건`;
+
+            const tbody = document.getElementById('log-table-body');
+            tbody.innerHTML = '';
+
+            filtered.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                const isSuccess = (item.status || '').trim() === '성공';
+                const statusBadge = isSuccess ? 
+                    '<span class="badge-status success">성공</span>' : 
+                    '<span class="badge-status fail">실패</span>';
+                
+                const noteInfo = item.note ? ` <span style="color:#888;">(${item.note})</span>` : '';
+
+                const cleanNote = (item.note && item.note !== '샌드랩스 대량 팩스') ? ` <span style="color:#888;">(${item.note})</span>` : '';
+                tr.innerHTML = `
+                    <td style="text-align:center; font-family:'Outfit'; font-weight:600; font-size:12.5px; color:#555; white-space:nowrap;">#${item.id || (idx + 1)}</td>
+                    <td style="font-size:12.5px; color:#555; white-space:nowrap;">${item.date || '-'}</td>
+                    <td style="font-weight:600; font-size:13.5px; color:var(--navy); white-space:nowrap;">${item.company || '-'}</td>
+                    <td style="font-family:'Outfit'; font-size:12.5px; color:#444; white-space:nowrap;">${item.fax || '-'}</td>
+                    <td style="text-align:center; white-space:nowrap;"><span class="badge-round">${item.round || '-'}</span></td>
+                    <td style="text-align:center; white-space:nowrap;">${statusBadge}</td>
+                    <td style="font-size:12.5px; color:#444; white-space:nowrap;">${item.detail || '-'}${cleanNote}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function exportPDF(btn) {
+            btn = btn || event?.currentTarget;
+            const originalText = btn ? btn.innerHTML : '📄 PDF 저장';
+            if (btn) {
+                btn.innerHTML = '⏳ PDF 생성 중...';
+                btn.disabled = true;
+            }
+
+            try {
+                const element = document.getElementById('a4-capture-area');
+                const canvas = await html2canvas(element, {
+                    scale: 2.5,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight
+                });
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+                const imgWidth = 210;
+                const pageHeight = 297;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                let yPos = 0;
+                while (yPos < imgHeight) {
+                    if (yPos > 0) pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 0, -yPos, imgWidth, imgHeight);
+                    yPos += pageHeight;
+                }
+
+                const docNo = document.getElementById('rpt-no')?.textContent || 'DHR-FAX';
+                pdf.save(`삼협철망_B2B_팩스발송현황_${docNo}.pdf`);
+            } catch (err) {
+                console.error(err);
+                alert('PDF 저장 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                if (btn) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        async function exportImage(btn) {
+            btn = btn || event?.currentTarget;
+            const originalText = btn ? btn.innerHTML : '🖼️ 이미지 저장';
+            if (btn) {
+                btn.innerHTML = '⏳ 이미지 생성 중...';
+                btn.disabled = true;
+            }
+
+            try {
+                const element = document.getElementById('a4-capture-area');
+                const canvas = await html2canvas(element, {
+                    scale: 2.5,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight
+                });
+
+                const docNo = document.getElementById('rpt-no')?.textContent || 'DHR-FAX';
+                const fileName = `삼협철망_B2B_팩스발송현황_${docNo}.png`;
+
+                if (canvas.toBlob) {
+                    canvas.toBlob((blob) => {
+                        if (!blob) {
+                            throw new Error('이미지 Blob 변환에 실패했습니다.');
+                        }
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = fileName;
+                        link.href = url;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    }, 'image/png');
+                } else {
+                    const link = document.createElement('a');
+                    link.download = fileName;
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('이미지 저장 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                if (btn) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = String(today.getMonth() + 1).padStart(2, '0');
+            const d = String(today.getDate()).padStart(2, '0');
+            document.getElementById('input-report-no').value = `DHR-FAX-${y}${m}${d}`;
+            document.getElementById('rpt-date').textContent = `${y}.${m}.${d}`;
+            updateReportMeta();
+            updateRoundDropdown(allFaxLogs);
+            applyFilters();
+        });
+    </script>
+</body>
+</html>

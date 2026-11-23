@@ -1,10 +1,11 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼협철망 | B2B 아웃바운드 메일 발송 현황 보고서</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <!-- html2canvas for image export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- jsPDF for PDF export -->
@@ -15,30 +16,40 @@
            DESIGN TOKENS
         ============================ */
         :root {
-            --navy:       #1C2B4A;   /* 주 네이비 */
-            --navy-deep:  #111B31;   /* 진한 네이비 */
-            --gold:       #B8962A;   /* 포인트 골드 */
-            --gold-light: #F5EDD3;   /* 연한 골드 배경 */
-            --success:    #2D6A4F;   /* 수멀 녹색 */
-            --fail:       #9B2335;   /* 수멀 붉색 */
-            --text:       #1A1A2E;
-            --text-mid:   #4A5568;
-            --text-light: #718096;
-            --border:     #DDE1E7;
-            --border-light: #EAEDF1;
-            --bg-screen:  #EEF0F4;
-            --bg-soft:    #F7F8FA;
+            --navy: #15284D;
+            --navy-deep: #0F172A;
+            --brand-blue: #2563EB;
+            --blue-light: #EFF6FF;
+            --accent-blue: #3B82F6;
+            --gold: #D97706;
+            --gold-light: #FEF3C7;
+            --success: #16A34A;
+            --success-bg: #DCFCE7;
+            --fail: #DC2626;
+            --fail-bg: #FEE2E2;
+            --text: #1E293B;
+            --text-mid: #475569;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --bg-screen: #F8FAFC;
+            --bg-soft: #F8FAFC;
+            --card-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
 
             /* aliases for backward compat */
-            --brand:        var(--navy);
-            --brand-light:  #2E4A82;
-            --accent:       var(--gold);
+            --brand: var(--navy);
+            --brand-light: #1E3A70;
+            --accent: var(--brand-blue);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
             background: var(--bg-screen);
             min-height: 100vh;
             padding: 30px 20px 60px;
@@ -46,12 +57,12 @@
 
         /* --- 컨트롤 패널 --- */
         .control-panel {
-            max-width: 900px;
-            margin: 0 auto 24px;
+            max-width: 1020px;
+            margin: 0 auto 20px;
             background: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 20px 24px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-wrap: wrap;
             align-items: flex-end;
@@ -61,16 +72,16 @@
 
         .control-panel h2 {
             width: 100%;
-            font-family: 'Outfit', sans-serif;
-            font-size: 17px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--navy);
             margin-bottom: 2px;
         }
 
         .control-panel p {
             width: 100%;
-            font-size: 12px;
+            font-size: 13.5px;
             color: var(--text-light);
             margin-top: -6px;
         }
@@ -82,7 +93,7 @@
         }
 
         .ctrl-group label {
-            font-size: 11px;
+            font-size: 12.5px;
             font-weight: 600;
             color: var(--text-mid);
             letter-spacing: 0.3px;
@@ -93,8 +104,8 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 8px 12px;
-            font-size: 12.5px;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 13.5px;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
             color: var(--text);
             outline: none;
             transition: border-color 0.15s;
@@ -117,7 +128,7 @@
         .btn {
             padding: 8px 16px;
             border-radius: 6px;
-            font-size: 12.5px;
+            font-size: 13.5px;
             font-weight: 600;
             cursor: pointer;
             border: 1.5px solid transparent;
@@ -125,7 +136,7 @@
             align-items: center;
             gap: 6px;
             transition: all 0.15s;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
             white-space: nowrap;
             letter-spacing: 0;
         }
@@ -135,39 +146,54 @@
             color: #fff;
             border-color: var(--navy);
         }
-        .btn-primary:hover { background: var(--navy-deep); }
+
+        .btn-primary:hover {
+            background: var(--navy-deep);
+        }
 
         .btn-export-pdf {
             background: #fff;
             color: #7B1D1D;
             border-color: #C0392B;
         }
-        .btn-export-pdf:hover { background: #FEF2F2; }
+
+        .btn-export-pdf:hover {
+            background: #FEF2F2;
+        }
 
         .btn-export-img {
             background: #fff;
             color: #4C1D95;
             border-color: #6B21A8;
         }
-        .btn-export-img:hover { background: #F5F3FF; }
+
+        .btn-export-img:hover {
+            background: #F5F3FF;
+        }
 
         .btn-print {
             background: #fff;
             color: var(--text-mid);
             border-color: var(--border);
         }
-        .btn-print:hover { background: var(--bg-soft); }
+
+        .btn-print:hover {
+            background: var(--bg-soft);
+        }
 
         .btn-sample {
             background: #fff;
             color: var(--text-mid);
             border-color: var(--border);
         }
-        .btn-sample:hover { background: var(--bg-soft); }
+
+        .btn-sample:hover {
+            background: var(--bg-soft);
+        }
 
         /* 배너류 */
         #gas-warn-bar {
-            max-width: 900px;
+            max-width: 1020px;
             margin: -14px auto 16px;
             padding: 9px 16px;
             background: #FFFBEB;
@@ -181,13 +207,13 @@
         }
 
         #status-bar {
-            max-width: 900px;
+            max-width: 1020px;
             margin: -14px auto 16px;
             padding: 9px 16px;
             background: #F0F4FF;
             border-left: 3px solid var(--navy);
             border-radius: 0 6px 6px 0;
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--navy);
             font-weight: 500;
             display: none;
@@ -196,19 +222,23 @@
         /* ============================
            A4 보고서
         ============================ */
-        #report-wrapper { max-width: 900px; margin: 0 auto; }
+        #report-wrapper {
+            max-width: 1020px;
+            margin: 0 auto;
+        }
 
         .a4-page {
-            width: 794px;
+            width: 1020px;
+            max-width: 100%;
             min-height: 1123px;
             background: #fff;
             margin: 0 auto;
             padding: 44px 48px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
             border-radius: 3px;
             position: relative;
-            font-size: 11.5px;
-            line-height: 1.55;
+            font-size: 13px;
+            line-height: 1.6;
             color: var(--text);
         }
 
@@ -229,13 +259,19 @@
         }
 
         .report-logo-badge {
-            max-width: 140px;
-            height: auto;
-            display: flex;
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
+        }
+        .report-logo-badge img {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
         }
 
         .report-logo-badge img {
@@ -247,23 +283,25 @@
         }
 
         .report-logo-text h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 17px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--navy);
             letter-spacing: -0.3px;
         }
 
         .report-logo-text p {
-            font-size: 10.5px;
+            font-size: 12px;
             color: var(--text-light);
             margin-top: 1px;
         }
 
-        .report-title-area { text-align: right; }
+        .report-title-area {
+            text-align: right;
+        }
 
         .report-doc-type {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-light);
             letter-spacing: 1.5px;
@@ -272,15 +310,15 @@
         }
 
         .report-main-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 21px;
+            font-weight: 600;
             color: var(--navy);
             line-height: 1.2;
         }
 
         .report-period {
-            font-size: 11px;
+            font-size: 12.5px;
             color: var(--text-light);
             margin-top: 3px;
         }
@@ -303,7 +341,7 @@
 
         .meta-item label {
             display: block;
-            font-size: 9.5px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-light);
             margin-bottom: 3px;
@@ -311,22 +349,22 @@
         }
 
         .meta-item .meta-val {
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
             color: var(--navy);
         }
 
         .meta-item .meta-sub {
-            font-size: 9.5px;
+            font-size: 11px;
             color: var(--text-light);
             margin-top: 1px;
         }
 
         /* --- 섹션 타이틀 --- */
         .section-title {
-            font-size: 10.5px;
-            font-weight: 700;
+            font-size: 12.5px;
+            font-weight: 600;
             color: var(--navy);
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -352,12 +390,20 @@
             border-left: 3px solid var(--navy);
         }
 
-        .kpi-card.k-success { border-left-color: var(--success); }
-        .kpi-card.k-fail    { border-left-color: var(--fail); }
-        .kpi-card.k-rate    { border-left-color: var(--gold); }
+        .kpi-card.k-success {
+            border-left-color: var(--success);
+        }
+
+        .kpi-card.k-fail {
+            border-left-color: var(--fail);
+        }
+
+        .kpi-card.k-rate {
+            border-left-color: var(--gold);
+        }
 
         .kpi-card-label {
-            font-size: 9.5px;
+            font-size: 11.5px;
             font-weight: 600;
             color: var(--text-light);
             letter-spacing: 0.5px;
@@ -365,19 +411,27 @@
         }
 
         .kpi-card-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 25px;
+            font-weight: 600;
             color: var(--navy);
             line-height: 1;
         }
 
-        .kpi-card.k-success .kpi-card-value { color: var(--success); }
-        .kpi-card.k-fail    .kpi-card-value { color: var(--fail); }
-        .kpi-card.k-rate    .kpi-card-value { color: var(--gold); }
+        .kpi-card.k-success .kpi-card-value {
+            color: var(--success);
+        }
+
+        .kpi-card.k-fail .kpi-card-value {
+            color: var(--fail);
+        }
+
+        .kpi-card.k-rate .kpi-card-value {
+            color: var(--gold);
+        }
 
         .kpi-card-sub {
-            font-size: 9.5px;
+            font-size: 11px;
             color: var(--text-light);
             margin-top: 4px;
         }
@@ -398,7 +452,7 @@
             border: 1px solid var(--border);
             border-radius: 4px;
             padding: 5px 12px;
-            font-size: 11px;
+            font-size: 12.5px;
             font-weight: 500;
             color: var(--text-mid);
         }
@@ -412,9 +466,9 @@
         }
 
         .round-pill .round-count {
-            font-family: 'Outfit', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--navy);
         }
 
@@ -422,7 +476,7 @@
         .log-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10.5px;
+            font-size: 12.5px;
         }
 
         .log-table thead tr {
@@ -431,10 +485,10 @@
         }
 
         .log-table thead th {
-            padding: 8px 9px;
+            padding: 9px 10px;
             font-weight: 600;
             text-align: left;
-            font-size: 10px;
+            font-size: 12px;
             white-space: nowrap;
         }
 
@@ -442,7 +496,9 @@
             border-bottom: 1px solid var(--border-light);
         }
 
-        .log-table tbody tr:last-child { border-bottom: none; }
+        .log-table tbody tr:last-child {
+            border-bottom: none;
+        }
 
         .log-table tbody tr:nth-child(4n+3),
         .log-table tbody tr:nth-child(4n+4) {
@@ -450,7 +506,7 @@
         }
 
         .log-table tbody td {
-            padding: 7px 9px;
+            padding: 8px 10px;
             color: var(--text);
             vertical-align: middle;
         }
@@ -458,10 +514,10 @@
         /* 상태 배지 */
         .status-badge {
             display: inline-block;
-            padding: 1px 7px;
-            border-radius: 3px;
-            font-size: 9.5px;
-            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11.5px;
+            font-weight: 600;
             letter-spacing: 0.3px;
             white-space: nowrap;
         }
@@ -484,9 +540,9 @@
             background: var(--gold-light);
             color: #7A5C00;
             border: 1px solid #DEC97A;
-            padding: 1px 6px;
+            padding: 2px 7px;
             border-radius: 3px;
-            font-size: 9.5px;
+            font-size: 11px;
             font-weight: 600;
             white-space: nowrap;
         }
@@ -510,9 +566,9 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 1px 8px;
-            border-radius: 3px;
-            font-size: 9.5px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11.5px;
             font-weight: 400;
             white-space: nowrap;
             background: #F1F3F5;
@@ -527,7 +583,7 @@
         }
 
         .info-chip .chip-icon {
-            font-size: 9px;
+            font-size: 10.5px;
             opacity: 0.6;
         }
 
@@ -542,15 +598,15 @@
         }
 
         .report-footer-left {
-            font-size: 9.5px;
+            font-size: 11px;
             color: var(--text-light);
             line-height: 1.7;
         }
 
         .report-footer-left strong {
             display: block;
-            font-size: 10.5px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--navy);
             margin-bottom: 1px;
         }
@@ -562,7 +618,7 @@
 
         .report-footer-right {
             text-align: right;
-            font-size: 9.5px;
+            font-size: 11px;
             color: var(--text-light);
             line-height: 1.7;
         }
@@ -572,22 +628,37 @@
             border: 1px solid var(--text-light);
             color: var(--text-light);
             border-radius: 3px;
-            padding: 1px 7px;
-            font-size: 8.5px;
-            font-weight: 700;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 3px;
         }
 
         /* 워터마크 제거 */
-        .watermark { display: none; }
+        .watermark {
+            display: none;
+        }
 
         /* 인쇄 */
         @media print {
-            body { background: #fff !important; padding: 0 !important; }
-            .control-panel, #status-bar, #gas-warn-bar, .print-hide { display: none !important; }
-            #report-wrapper { max-width: 100% !important; }
+            body {
+                background: #fff !important;
+                padding: 0 !important;
+            }
+
+            .control-panel,
+            #status-bar,
+            #gas-warn-bar,
+            .print-hide {
+                display: none !important;
+            }
+
+            #report-wrapper {
+                max-width: 100% !important;
+            }
+
             .a4-page {
                 width: 100% !important;
                 min-height: auto !important;
@@ -596,7 +667,11 @@
                 padding: 18mm 16mm !important;
                 margin: 0 !important;
             }
-            @page { size: A4 portrait; margin: 0; }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
         }
 
         /* 스피너 */
@@ -604,18 +679,26 @@
             display: inline-block;
             width: 12px;
             height: 12px;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: currentColor;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* 날짜 선택 모달 */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -635,13 +718,13 @@
             padding: 24px;
             border-radius: 8px;
             width: 320px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             border: 1px solid var(--border);
         }
 
         .date-modal h3 {
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--navy);
             margin-bottom: 16px;
             border-bottom: 1.5px solid var(--navy);
@@ -656,7 +739,7 @@
         }
 
         .date-modal label {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
             color: var(--text-mid);
         }
@@ -680,7 +763,7 @@
         .date-modal button {
             padding: 6px 14px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             border: 1px solid transparent;
@@ -690,566 +773,1354 @@
             background: var(--navy);
             color: #fff;
         }
-        .date-modal .btn-apply:hover { background: var(--navy-deep); }
+
+        .date-modal .btn-apply:hover {
+            background: var(--navy-deep);
+        }
 
         .date-modal .btn-cancel {
             background: #fff;
             color: var(--text-mid);
             border-color: var(--border);
         }
-        .date-modal .btn-cancel:hover { background: var(--bg-soft); }
+
+        .date-modal .btn-cancel:hover {
+            background: var(--bg-soft);
+        }
+
+        /* ============================
+           탭 네비게이션
+        ============================ */
+        .tab-nav {
+            max-width: 1020px;
+            margin: 0 auto 16px;
+            display: flex;
+            gap: 8px;
+            background: #fff;
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            border: none;
+            background: var(--bg-soft);
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .tab-btn:hover {
+            background: #f0f4ff;
+            color: var(--navy);
+        }
+
+        .tab-btn.active {
+            background: #fff;
+            color: var(--navy);
+            border-bottom-color: var(--navy);
+            font-weight: 600;
+        }
+
+        .tab-btn.tab-process.active {
+            color: #9B2335;
+            border-bottom-color: #9B2335;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* ============================
+           처리결과 패널
+        ============================ */
+        .process-panel {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 28px 0 60px;
+        }
+
+        .process-header {
+            background: linear-gradient(135deg, #7B1D1D 0%, #9B2335 100%);
+            color: #fff;
+            padding: 28px 32px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(155, 35, 53, 0.18);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .process-header h2 {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .process-header p {
+            font-size: 12.5px;
+            opacity: 0.8;
+        }
+
+        .process-notice {
+            background: #FFFBEB;
+            border-left: 4px solid #F59E0B;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            font-size: 12.5px;
+            color: #78350F;
+            line-height: 1.7;
+        }
+
+        .process-notice strong {
+            font-weight: 600;
+        }
+
+        /* KPI 카드 - 처리결과용 */
+        .process-kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .process-kpi {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .process-kpi-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .process-kpi-val {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .process-kpi-sub {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .kv-sent {
+            color: var(--navy);
+        }
+
+        .kv-reach {
+            color: #2D6A4F;
+        }
+
+        .kv-bounce {
+            color: #9B2335;
+        }
+
+        .kv-rate {
+            color: #B8962A;
+        }
+
+        /* 차트 + 사유 섹션 */
+        .process-chart-row {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .donut-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .donut-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            align-self: flex-start;
+        }
+
+        .donut-wrap {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 16px;
+        }
+
+        .donut-wrap canvas {
+            display: block;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-center-val {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #9B2335;
+            line-height: 1;
+        }
+
+        .donut-center-label {
+            font-size: 9px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .donut-legend {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10.5px;
+            color: var(--text-mid);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-val {
+            margin-left: auto;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            font-weight: 600;
+            font-size: 12.5px;
+            color: var(--text);
+        }
+
+        /* 회차별 바 차트 */
+        .bar-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .bar-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            border-left: 3px solid #9B2335;
+            padding-left: 9px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .bar-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-mid);
+            width: 48px;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 20px;
+            background: var(--bg-soft);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill-sent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #BFDBFE;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .bar-fill-bounce {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #FCA5A5;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .bar-nums {
+            font-size: 10.5px;
+            color: var(--text-mid);
+            white-space: nowrap;
+            width: 80px;
+            text-align: right;
+        }
+
+        /* 반송 상세 카드 */
+        .bounce-section-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-left: 3px solid #9B2335;
+            padding-left: 9px;
+            margin-bottom: 14px;
+        }
+
+        .bounce-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .bounce-card {
+            background: #fff;
+            border: 1px solid #FECACA;
+            border-left: 4px solid #9B2335;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(155, 35, 53, 0.07);
+        }
+
+        .bounce-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .bounce-company {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .bounce-round-badge {
+            background: #FEE2E2;
+            color: #9B2335;
+            border: 1px solid #FECACA;
+            padding: 1px 7px;
+            border-radius: 3px;
+            font-size: 9.5px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .bounce-email {
+            font-size: 10.5px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .bounce-reason {
+            font-size: 10.5px;
+            color: #9B2335;
+            background: #FFF1F2;
+            border-radius: 4px;
+            padding: 5px 9px;
+            line-height: 1.5;
+        }
+
+        .bounce-date {
+            font-size: 9.5px;
+            color: var(--text-light);
+            margin-top: 7px;
+            text-align: right;
+        }
+
+        /* 처리결과 빈 상태 */
+        .process-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .process-empty .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .process-empty p {
+            font-size: 13px;
+        }
+
+        @media print {
+            .tab-nav {
+            max-width: 1020px;
+            margin: 0 auto 16px;
+            display: flex;
+            gap: 8px;
+            background: #fff;
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        }
     </style>
 </head>
+
 <body>
 
-<!-- ===================== CONTROL PANEL ===================== -->
-<div class="control-panel print-hide">
-    <h2>📋 B2B 메일 발송 현황 보고서 생성기</h2>
-    <p>Google Sheets mail_log 시트의 실제 발송 데이터를 A4 보고서로 출력합니다.</p>
+    <!-- ===================== CONTROL PANEL ===================== -->
+    <div class="control-panel print-hide">
+        <h2>📋 삼협철망 B2B 메일 발송 관리 리포트</h2>
+        <p>Google Sheets mail_log 시트의 실제 발송 데이터를 불러옵니다. 아래 탭에서 <strong>발송 현황</strong>과 <strong>처리 결과</strong>를 구분하여
+            확인하세요.</p>
 
-    <div class="ctrl-group">
-        <label>보고 기간</label>
-        <input type="text" id="input-period" placeholder="클릭하여 날짜 선택" style="width: 240px; cursor: pointer;" readonly>
+        <div class="ctrl-group">
+            <label>보고 기간</label>
+            <input type="text" id="input-period" placeholder="클릭하여 날짜 선택" style="width: 240px; cursor: pointer;"
+                readonly>
+        </div>
+
+        <div class="ctrl-group">
+            <label>발송 회차</label>
+            <select id="select-round" style="width: 130px;" onchange="applyFilters()">
+                <option value="all">전체 회차</option>
+            </select>
+        </div>
+
+        <div class="ctrl-group">
+            <label>담당자</label>
+            <input type="text" id="input-manager" placeholder="예: 김철수 과장" style="width: 130px;">
+        </div>
+
+        <div class="ctrl-group">
+            <label>결재자</label>
+            <input type="text" id="input-approver" placeholder="예: 이대표 대표" style="width: 130px;">
+        </div>
+
+        <div class="ctrl-group">
+            <label>보고서 번호</label>
+            <input type="text" id="input-report-no" placeholder="자동 생성" style="width: 150px;">
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadGASData()">
+                🔄 시트에서 데이터 불러오기
+            </button>
+            <button class="btn btn-sample" onclick="loadSamplePreview()">
+                🧪 샘플 미리보기
+            </button>
+            <button class="btn btn-export-pdf" onclick="exportPDF()">
+                📄 PDF 저장
+            </button>
+            <button class="btn btn-export-img" onclick="exportImage()">
+                🖼️ 이미지 저장
+            </button>
+            <button class="btn btn-print" onclick="window.print()">
+                🖨️ 인쇄하기
+            </button>
+        </div>
     </div>
 
-    <div class="ctrl-group">
-        <label>담당자</label>
-        <input type="text" id="input-manager" placeholder="예: 김철수 과장" style="width: 140px;">
-    </div>
-
-    <div class="ctrl-group">
-        <label>결재자</label>
-        <input type="text" id="input-approver" placeholder="예: 이대표 대표" style="width: 140px;">
-    </div>
-
-    <div class="ctrl-group">
-        <label>보고서 번호</label>
-        <input type="text" id="input-report-no" placeholder="자동 생성" style="width: 160px;">
-    </div>
-
-    <div class="btn-group">
-        <button class="btn btn-primary" onclick="loadGASData()">
-            🔄 시트에서 데이터 불러오기
+    <!-- ===================== TAB NAVIGATION ===================== -->
+    <div class="tab-nav print-hide" id="tab-nav">
+        <button class="tab-btn active" id="tab-btn-send" onclick="switchTab('send')">
+            📧 발송 현황 &nbsp;<span style="font-size:11.5px; font-weight:400; opacity:0.8;">SMTP 전송 기록</span>
         </button>
-        <button class="btn btn-sample" onclick="loadSamplePreview()">
-            🧪 샘플 미리보기
-        </button>
-        <button class="btn btn-export-pdf" onclick="exportPDF()">
-            📄 PDF 저장
-        </button>
-        <button class="btn btn-export-img" onclick="exportImage()">
-            🖼️ 이미지 저장
-        </button>
-        <button class="btn btn-print" onclick="window.print()">
-            🖨️ 인쇄하기
+        <button class="tab-btn tab-process" id="tab-btn-process" onclick="switchTab('process')">
+            🔍 처리 결과 &nbsp;<span style="font-size:11.5px; font-weight:400; opacity:0.8;">수신 확인 · 반송 분석</span>
         </button>
     </div>
-</div>
 
-<div id="status-bar">📡 구글 시트에서 데이터를 불러오는 중...</div>
-<div id="gas-warn-bar">⚠️ <strong>GAS 재배포 필요</strong> — company 시트의 상세 정보(지역·전화번호·주소·사이트)가 보이지 않습니다.<br>
-구글 Apps Script 편집기에서 <code>google_apps_script_outbound.js</code>의 <code>doGet</code> 함수를 최신 코드로 교체하고 <strong>새 버전으로 배포</strong>해 주세요.</div>
+    <div id="status-bar">📡 구글 시트에서 데이터를 불러오는 중...</div>
+    <div id="gas-warn-bar">⚠️ <strong>GAS 재배포 필요</strong> — company 시트의 상세 정보(지역·전화번호·주소·사이트)가 보이지 않습니다.<br>
+        구글 Apps Script 편집기에서 <code>google_apps_script_outbound.js</code>의 <code>doGet</code> 함수를 최신 코드로 교체하고 <strong>새
+            버전으로 배포</strong>해 주세요.</div>
 
-<!-- ===================== A4 REPORT PAGE ===================== -->
-<div id="report-wrapper">
-    <div class="a4-page" id="a4-report">
+    <!-- ===================== TAB: 발송 현황 ===================== -->
+    <div id="tab-panel-send" class="tab-panel active">
+        <div id="report-wrapper">
+            <div class="a4-page" id="a4-report">
 
-        <!-- Watermark -->
-        <div class="watermark">SAMHYUP</div>
+                <!-- Watermark -->
+                <div class="watermark">SAMHYUP</div>
 
-        <!-- Report Header -->
-        <div class="report-header">
-            <div class="report-logo-area">
-                <div class="report-logo-badge"><img src="../assets/samhyup_logo.png" alt="삼협철망" style="height:100%;object-fit:contain;"></div>
-                <div class="report-logo-text">
-                    <h1>삼협철망</h1>
-                    <p>SAMHYUP MESH Co., Ltd.</p>
+                <!-- Report Header -->
+                <div class="report-header">
+                    <div class="report-logo-area">
+                        <div class="report-logo-badge"><img src="data:image/png;base64,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" alt="DHSTEEL"></div>
+                        <div class="report-logo-text">
+                            <h1>삼협철망 (SAMHYUP)</h1>
+                            <p>용접철망 · 와이어메쉬 · 휀스 전문 제조기업 | B2B 마케팅 본부</p>
+                        </div>
+                    </div>
+                    <div class="report-title-area">
+                        <div class="report-doc-type">B2B Outbound Report</div>
+                        <div class="report-main-title">메일 발송 현황 보고서</div>
+                        <div class="report-period" id="rpt-period">기간: —</div>
+                    </div>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="meta-bar">
+                    <div class="meta-item">
+                        <label>보고서 번호</label>
+                        <div class="meta-val" style="font-size:13px;" id="rpt-no">—</div>
+                        <div class="meta-sub" id="rpt-date">작성일: —</div>
+                    </div>
+                    <div class="meta-item">
+                        <label>담당자</label>
+                        <div class="meta-val" style="font-size:15px;" id="rpt-manager">—</div>
+                        <div class="meta-sub">작성 책임자</div>
+                    </div>
+                    <div class="meta-item">
+                        <label>결재자</label>
+                        <div class="meta-val" style="font-size:15px;" id="rpt-approver">—</div>
+                        <div class="meta-sub">최종 승인자</div>
+                    </div>
+                    <div class="meta-item">
+                        <label>데이터 소스</label>
+                        <div class="meta-val" style="font-size:11px; margin-top: 4px;">Google Sheets</div>
+                        <div class="meta-sub">builder-samhyup_data / mail_log</div>
+                    </div>
+                </div>
+
+                <!-- KPI Summary -->
+                <div class="section-title">📊 발송 성과 요약</div>
+                <div class="kpi-row">
+                    <div class="kpi-card">
+                        <div class="kpi-card-label">총 발송 건수</div>
+                        <div class="kpi-card-value" id="kpi-total">—</div>
+                        <div class="kpi-card-sub">성공 + 실패 합산</div>
+                    </div>
+                    <div class="kpi-card k-success">
+                        <div class="kpi-card-label">발송 성공</div>
+                        <div class="kpi-card-value" id="kpi-success">—</div>
+                        <div class="kpi-card-sub">Gmail API 발송 완료</div>
+                    </div>
+                    <div class="kpi-card k-fail">
+                        <div class="kpi-card-label">발송 실패</div>
+                        <div class="kpi-card-value" id="kpi-fail">—</div>
+                        <div class="kpi-card-sub">재발송 또는 확인 필요</div>
+                    </div>
+                </div>
+
+                <!-- Round Distribution -->
+                <div class="section-title">📬 발송 회차별 현황</div>
+                <div class="round-summary" id="round-summary">
+                    <div class="round-pill">
+                        <span class="round-dot"></span>
+                        <span>데이터 없음</span>
+                    </div>
+                </div>
+
+                <!-- Log Table -->
+                <div class="section-title">📋 발송 상세 내역</div>
+                <table class="log-table" id="log-table">
+                    <thead>
+                        <tr>
+                            <th style="width:32px; white-space:nowrap;">#</th>
+                            <th style="width:44px; white-space:nowrap;">연번</th>
+                            <th style="width:125px; white-space:nowrap;">발송 일시</th>
+                            <th style="width:150px; white-space:nowrap;">회사명</th>
+                            <th style="width:60px; white-space:nowrap;">지역</th>
+                            <th style="width:180px; white-space:nowrap;">이메일 주소</th>
+                            <th style="width:115px; white-space:nowrap;">발송 회차</th>
+                            <th style="width:60px; white-space:nowrap;">상태</th>
+                            <th style="white-space:nowrap;">세부 결과 · 연락처 · 사이트</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-tbody">
+                        <tr>
+                            <td colspan="9" style="text-align:center; padding: 40px; color: var(--text-light);">
+                                ⬆️ 상단의 "시트에서 데이터 불러오기" 버튼을 클릭하세요
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Footer -->
+                <div class="report-footer">
+                    <div class="report-footer-left">
+                        <strong>삼협철망 (주)</strong>
+                        용접철망 · 와이어메쉬 · 휀스 전문 제조기업<br>
+                        📞 영업부 문의: 이메일 발송 관련 이슈는 담당자에게 연락 바랍니다
+                    </div>
+                    <div class="report-footer-right">
+                        <span class="confidential-badge">CONFIDENTIAL</span><br>
+                        본 보고서는 내부 영업 자료입니다.<br>
+                        무단 배포 및 외부 공개를 금합니다.
+                    </div>
+                </div>
+
+            </div><!-- /a4-page -->
+        </div><!-- /report-wrapper -->
+    </div><!-- /tab-panel-send -->
+
+    <!-- ===================== TAB: 처리 결과 ===================== -->
+    <div id="tab-panel-process" class="tab-panel">
+        <div class="process-panel">
+            <div class="process-header">
+                <div>
+                    <h2>🔍 메일 최종 처리 결과 & 반송 분석</h2>
+                    <p>Gmail 서버 반송(Bounce) 및 수신 품질 분석 보고서입니다.</p>
+                </div>
+                <div style="font-size:11px; text-align:right; opacity:0.9;">
+                    <div>시트 반영 기준</div>
+                    <div style="font-weight:700; font-size:13px;" id="proc-update-time">실시간 연동</div>
                 </div>
             </div>
-            <div class="report-title-area">
-                <div class="report-doc-type">B2B Outbound Report</div>
-                <div class="report-main-title">메일 발송 현황 보고서</div>
-                <div class="report-period" id="rpt-period">기간: —</div>
-            </div>
-        </div>
 
-        <!-- Meta Info -->
-        <div class="meta-bar">
-            <div class="meta-item">
-                <label>보고서 번호</label>
-                <div class="meta-val" style="font-size:13px;" id="rpt-no">—</div>
-                <div class="meta-sub" id="rpt-date">작성일: —</div>
+            <div class="process-notice">
+                💡 <strong>안내:</strong> 메일 발송 직후엔 '정상 발송'으로 기록되나, 수신서버 미존재/주소 오류 등 반송(Bounce) 메일은 발송 1~24시간 후 최종 확정됩니다.
+                아래 데이터는 구글 시트에 최종 기록된 처리결과 기준입니다.
             </div>
-            <div class="meta-item">
-                <label>담당자</label>
-                <div class="meta-val" style="font-size:15px;" id="rpt-manager">—</div>
-                <div class="meta-sub">작성 책임자</div>
-            </div>
-            <div class="meta-item">
-                <label>결재자</label>
-                <div class="meta-val" style="font-size:15px;" id="rpt-approver">—</div>
-                <div class="meta-sub">최종 승인자</div>
-            </div>
-            <div class="meta-item">
-                <label>데이터 소스</label>
-                <div class="meta-val" style="font-size:11px; margin-top: 4px;">Google Sheets</div>
-                <div class="meta-sub">builder-samhyup_data / mail_log</div>
-            </div>
-        </div>
 
-        <!-- KPI Summary -->
-        <div class="section-title">📊 발송 성과 요약</div>
-        <div class="kpi-row">
-            <div class="kpi-card">
-                <div class="kpi-card-label">총 발송 건수</div>
-                <div class="kpi-card-value" id="kpi-total">—</div>
-                <div class="kpi-card-sub">성공 + 실패 합산</div>
+            <!-- KPI Summary -->
+            <div class="process-kpi-row">
+                <div class="process-kpi">
+                    <div class="process-kpi-label">시도된 발송 건수</div>
+                    <div class="process-kpi-val kv-sent" id="pkpi-sent">—</div>
+                    <div class="process-kpi-sub">전체 이메일 전송건</div>
+                </div>
+                <div class="process-kpi">
+                    <div class="process-kpi-label">최종 수신 도달</div>
+                    <div class="process-kpi-val kv-reach" id="pkpi-reach">—</div>
+                    <div class="process-kpi-sub">정상 수신된 메일</div>
+                </div>
+                <div class="process-kpi">
+                    <div class="process-kpi-label">반송 / 수신 실패</div>
+                    <div class="process-kpi-val kv-bounce" id="pkpi-bounce">—</div>
+                    <div class="process-kpi-sub">주소/도메인 오류 등</div>
+                </div>
+                <div class="process-kpi">
+                    <div class="process-kpi-label">최종 수신 도달률</div>
+                    <div class="process-kpi-val kv-rate" id="pkpi-rate">—</div>
+                    <div class="process-kpi-sub">도달 / 총발송 비율</div>
+                </div>
             </div>
-            <div class="kpi-card k-success">
-                <div class="kpi-card-label">발송 성공</div>
-                <div class="kpi-card-value" id="kpi-success">—</div>
-                <div class="kpi-card-sub">Gmail API 발송 완료</div>
+
+            <!-- Charts Row -->
+            <div class="process-chart-row">
+                <!-- Donut Chart Card -->
+                <div class="donut-card">
+                    <div class="donut-title">🚨 반송 사유 비율</div>
+                    <div class="donut-wrap">
+                        <canvas id="donutCanvas" width="150" height="150"></canvas>
+                        <div class="donut-center">
+                            <div class="donut-center-val" id="donut-fail-cnt">0</div>
+                            <div class="donut-center-label">건 실패</div>
+                        </div>
+                    </div>
+                    <div class="donut-legend" id="donut-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:#EF4444;"></span>
+                            <span>계정 없음</span>
+                            <span class="legend-val" id="leg-no-acc">0</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:#F59E0B;"></span>
+                            <span>도메인 오류</span>
+                            <span class="legend-val" id="leg-domain-err">0</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:#6B7280;"></span>
+                            <span>기타 실패</span>
+                            <span class="legend-val" id="leg-etc">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bar Chart Card -->
+                <div class="bar-card">
+                    <div class="bar-title">📊 회차별 도달 vs 반송 현황</div>
+                    <div id="bar-chart-container">
+                        <div style="font-size:11px; color:var(--text-light); text-align:center; padding:30px;">
+                            데이터를 불러오는 중입니다...
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="kpi-card k-fail">
-                <div class="kpi-card-label">발송 실패</div>
-                <div class="kpi-card-value" id="kpi-fail">—</div>
-                <div class="kpi-card-sub">재발송 또는 확인 필요</div>
+
+            <!-- Bounce Detail Cards -->
+            <div class="bounce-section-title">❌ 반송 및 실패 상세 내역</div>
+            <div class="bounce-grid" id="bounce-cards-grid">
+                <div class="process-empty" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">✅</div>
+                    <p>불러온 데이터 중 반송된 메일이 없거나, 시트 데이터를 로드하지 않았습니다.</p>
+                </div>
             </div>
-        </div>
-
-        <!-- Round Distribution -->
-        <div class="section-title">📬 발송 회차별 현황</div>
-        <div class="round-summary" id="round-summary">
-            <div class="round-pill">
-                <span class="round-dot"></span>
-                <span>데이터 없음</span>
-            </div>
-        </div>
-
-        <!-- Log Table -->
-        <div class="section-title">📋 발송 상세 내역</div>
-        <table class="log-table" id="log-table">
-            <thead>
-                <tr>
-                    <th style="width:26px;">#</th>
-                    <th style="width:38px;">연번</th>
-                    <th style="width:112px;">발송 일시</th>
-                    <th style="width:95px;">회사명</th>
-                    <th style="width:60px;">지역</th>
-                    <th style="width:130px;">이메일 주소</th>
-                    <th style="width:52px;">발송 회차</th>
-                    <th style="width:56px;">상태</th>
-                    <th>세부 결과 · 연락처 · 사이트</th>
-                </tr>
-            </thead>
-            <tbody id="log-tbody">
-                <tr>
-                    <td colspan="9" style="text-align:center; padding: 40px; color: var(--text-light);">
-                        ⬆️ 상단의 "시트에서 데이터 불러오기" 버튼을 클릭하세요
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Footer -->
-        <div class="report-footer">
-            <div class="report-footer-left">
-                <strong>삼협철망 (주)</strong>
-                용접철망·휀스 전문 제조기업<br>
-                📞 영업부 문의: 이메일 발송 관련 이슈는 담당자에게 연락 바랍니다
-            </div>
-            <div class="report-footer-right">
-                <span class="confidential-badge">CONFIDENTIAL</span><br>
-                본 보고서는 내부 영업 자료입니다.<br>
-                무단 배포 및 외부 공개를 금합니다.
-            </div>
-        </div>
-
-    </div><!-- /a4-page -->
-</div><!-- /report-wrapper -->
-
-<!-- 날짜 선택 팝업 모달 -->
-<div class="modal-overlay" id="date-modal-overlay">
-    <div class="date-modal">
-        <h3>📅 보고 기간 설정</h3>
-        
-        <div class="input-row">
-            <label>시작일</label>
-            <input type="date" id="modal-start-date">
-        </div>
-
-        <div class="input-row">
-            <label>종료일</label>
-            <input type="date" id="modal-end-date">
-        </div>
-
-        <div class="modal-buttons">
-            <button class="btn-cancel" onclick="closeDateModal()">취소</button>
-            <button class="btn-apply" onclick="applyDateSelection()">적용</button>
         </div>
     </div>
-</div>
+
+    <!-- 날짜 선택 팝업 모달 -->
+    <div class="modal-overlay" id="date-modal-overlay">
+        <div class="date-modal">
+            <h3>📅 보고 기간 설정</h3>
+
+            <div class="input-row">
+                <label>시작일</label>
+                <input type="date" id="modal-start-date">
+            </div>
+
+            <div class="input-row">
+                <label>종료일</label>
+                <input type="date" id="modal-end-date">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeDateModal()">취소</button>
+                <button class="btn-apply" onclick="applyDateSelection()">적용</button>
+            </div>
+        </div>
+    </div>
 
 
-<script>
-    // =========================================
-    //  CONFIG
-    // =========================================
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyDmDEFfVeLKT_wgzipPwQmNGY1iSBA-vFxhBAQxzDw263Lvh2Q_Bjr6h1JXkZLItmsFQ/exec";
+    <script>
+        // =========================================
+        //  TAB SWITCHING & PROCESS REPORT LOGIC
+        // =========================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
 
-    // =========================================
-    //  INIT
-    // =========================================
-    window.addEventListener('DOMContentLoaded', () => {
-        // 기본값 채우기 (시작일: 2026-08-01, 종료일: 오늘)
-        const today = new Date();
-        const fmtDash = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        
-        document.getElementById('modal-start-date').value = "2026-08-01";
-        document.getElementById('modal-end-date').value = fmtDash(today);
-        
-        // 초기 텍스트 포맷 변환 대입
-        applyDateText();
-
-        document.getElementById('input-report-no').value = `SHR-MAIL-${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
-        updateReportMeta();
-
-        // 입력창 클릭 시 모달 열기 바인딩
-        document.getElementById('input-period').addEventListener('click', openDateModal);
-    });
-
-    // 모달 제어 함수
-    function openDateModal() {
-        document.getElementById('date-modal-overlay').classList.add('open');
-    }
-
-    function closeDateModal() {
-        document.getElementById('date-modal-overlay').classList.remove('open');
-    }
-
-    function applyDateText() {
-        const startVal = document.getElementById('modal-start-date').value;
-        const endVal = document.getElementById('modal-end-date').value;
-        
-        if (startVal && endVal) {
-            const startFmt = startVal.replace(/-/g, '.');
-            const endFmt = endVal.replace(/-/g, '.');
-            document.getElementById('input-period').value = `${startFmt} ~ ${endFmt}`;
-        }
-    }
-
-    function applyDateSelection() {
-        applyDateText();
-        updateReportMeta();
-        closeDateModal();
-    }
-
-    function updateReportMeta() {
-        const today = new Date();
-        const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-
-        document.getElementById('rpt-period').textContent = '기간: ' + (document.getElementById('input-period').value || '—');
-        document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || '—';
-        document.getElementById('rpt-date').textContent = '작성일: ' + fmt(today);
-        document.getElementById('rpt-manager').textContent = document.getElementById('input-manager').value || '—';
-        document.getElementById('rpt-approver').textContent = document.getElementById('input-approver').value || '—';
-    }
-
-    // =========================================
-    //  JSONP FETCH from GAS
-    // =========================================
-    function fetchJSONP(url, callbackName) {
-        return new Promise((resolve, reject) => {
-            const cbName = `${callbackName}_${Date.now()}`;
-            let done = false;
-            const timer = setTimeout(() => {
-                if (!done) { done = true; reject(new Error('timeout')); cleanup(); }
-            }, 10000);
-            window[cbName] = (data) => {
-                if (!done) { done = true; clearTimeout(timer); resolve(data); cleanup(); }
-            };
-            function cleanup() {
-                delete window[cbName];
-                if (script.parentNode) script.parentNode.removeChild(script);
+            if (tabName === 'send') {
+                document.getElementById('tab-btn-send').classList.add('active');
+                document.getElementById('tab-panel-send').classList.add('active');
+            } else if (tabName === 'process') {
+                document.getElementById('tab-btn-process').classList.add('active');
+                document.getElementById('tab-panel-process').classList.add('active');
+                if (reportData && reportData.logs) {
+                    renderProcessReport(reportData.logs);
+                }
             }
-            const script = document.createElement('script');
-            script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${cbName}`;
-            script.onerror = () => { if (!done) { done = true; clearTimeout(timer); reject(new Error('script error')); cleanup(); } };
-            document.body.appendChild(script);
+        }
+
+        function renderProcessReport(logs) {
+            const totalSent = logs.length;
+            const bounceLogs = logs.filter(l => l.status === '실패' || (l.detail && l.detail.includes('반송')));
+            const failCount = bounceLogs.length;
+            const reachCount = totalSent - failCount;
+            const reachRate = totalSent > 0 ? ((reachCount / totalSent) * 100).toFixed(1) + '%' : '0%';
+
+            document.getElementById('pkpi-sent').textContent = totalSent + '건';
+            document.getElementById('pkpi-reach').textContent = reachCount + '건';
+            document.getElementById('pkpi-bounce').textContent = failCount + '건';
+            document.getElementById('pkpi-rate').textContent = reachRate;
+            document.getElementById('donut-fail-cnt').textContent = failCount;
+
+            // 반송 사유 분류
+            let noAcc = 0, domainErr = 0, etcErr = 0;
+            bounceLogs.forEach(l => {
+                const det = (l.detail || '') + (l.note || '');
+                if (det.includes('수신 주소') || det.includes('계정 없음') || det.includes('수신자')) {
+                    noAcc++;
+                } else if (det.includes('도메인') || det.includes('sanner') || det.includes('kjc.or')) {
+                    domainErr++;
+                } else {
+                    etcErr++;
+                }
+            });
+
+            document.getElementById('leg-no-acc').textContent = noAcc + '건';
+            document.getElementById('leg-domain-err').textContent = domainErr + '건';
+            document.getElementById('leg-etc').textContent = etcErr + '건';
+
+            // Draw Canvas Donut Chart
+            drawDonutChart(noAcc, domainErr, etcErr, failCount);
+
+            // Render Bar Chart by Round
+            renderRoundBarChart(logs);
+
+            // Render Bounce Cards
+            renderBounceCards(bounceLogs);
+        }
+
+        function drawDonutChart(noAcc, domainErr, etcErr, total) {
+            const canvas = document.getElementById('donutCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (total === 0) {
+                ctx.beginPath();
+                ctx.arc(75, 75, 60, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#E5E7EB';
+                ctx.lineWidth = 18;
+                ctx.stroke();
+                return;
+            }
+
+            const data = [
+                { val: noAcc, color: '#EF4444' },
+                { val: domainErr, color: '#F59E0B' },
+                { val: etcErr, color: '#6B7280' }
+            ];
+
+            let startAngle = -0.5 * Math.PI;
+            data.forEach(item => {
+                if (item.val === 0) return;
+                const sliceAngle = (item.val / total) * (2 * Math.PI);
+                ctx.beginPath();
+                ctx.arc(75, 75, 60, startAngle, startAngle + sliceAngle);
+                ctx.strokeStyle = item.color;
+                ctx.lineWidth = 18;
+                ctx.stroke();
+                startAngle += sliceAngle;
+            });
+        }
+
+        function renderRoundBarChart(logs) {
+            const container = document.getElementById('bar-chart-container');
+            const roundMap = {};
+            logs.forEach(l => {
+                const r = l.round || '기타';
+                if (!roundMap[r]) roundMap[r] = { total: 0, fail: 0 };
+                roundMap[r].total++;
+                if (l.status === '실패' || (l.detail && l.detail.includes('반송'))) roundMap[r].fail++;
+            });
+
+            const rounds = Object.keys(roundMap).sort();
+            if (rounds.length === 0) {
+                container.innerHTML = '<div style="font-size:11px; color:var(--text-light); text-align:center; padding:20px;">발송 데이터가 없습니다.</div>';
+                return;
+            }
+
+            let html = '';
+            rounds.forEach(r => {
+                const item = roundMap[r];
+                const reach = item.total - item.fail;
+                const failPct = item.total > 0 ? (item.fail / item.total) * 100 : 0;
+
+                html += `
+                <div class="bar-row">
+                    <div class="bar-label">${r}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill-sent" style="width: 100%;"></div>
+                        <div class="bar-fill-bounce" style="width: ${failPct}%;"></div>
+                    </div>
+                    <div class="bar-nums">
+                        <span style="color:#2D6A4F; font-weight:700;">${reach}</span> / 
+                        <span style="color:#9B2335; font-weight:700;">${item.fail}</span>건
+                    </div>
+                </div>
+            `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderBounceCards(bounceLogs) {
+            const grid = document.getElementById('bounce-cards-grid');
+            if (bounceLogs.length === 0) {
+                grid.innerHTML = `
+                <div class="process-empty" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">🎉</div>
+                    <p style="font-weight:700; color:#2D6A4F; font-size:14px;">모든 이메일이 반송 없이 수신 처리되었습니다!</p>
+                </div>
+            `;
+                return;
+            }
+
+            let html = '';
+            bounceLogs.forEach(l => {
+                html += `
+                <div class="bounce-card">
+                    <div class="bounce-card-top">
+                        <div class="bounce-company">${escHtml(l.company || '업체명 미상')}</div>
+                        <span class="bounce-round-badge">${escHtml(l.round || '1일차')}</span>
+                    </div>
+                    <div class="bounce-email">📧 ${escHtml(l.email || '이메일 없음')}</div>
+                    <div class="bounce-reason">⚠️ ${escHtml(l.detail || l.note || '반송 처리됨')}</div>
+                    <div class="bounce-date">${formatDate(l.date)}</div>
+                </div>
+            `;
+            });
+            grid.innerHTML = html;
+        }
+
+        // =========================================
+        //  CONFIG
+        // =========================================
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbyRYc9FcS5hmG-EFrz3ra2ky6eVGSq_5dFnKQ0RPB9H80dO64cA2xOSUkA1j_hyIwFF-A/exec";
+
+        // =========================================
+        //  INIT
+        // =========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // 기본값 채우기 (시작일: 2026-08-01, 종료일: 오늘)
+            const today = new Date();
+            const fmtDash = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+            document.getElementById('modal-start-date').value = "2026-08-01";
+            document.getElementById('modal-end-date').value = fmtDash(today);
+
+            // 초기 텍스트 포맷 변환 대입
+            applyDateText();
+
+            document.getElementById('input-report-no').value = `DHR-MAIL-${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+            updateReportMeta();
+
+            // 입력창 클릭 시 모달 열기 바인딩
+            document.getElementById('input-period').addEventListener('click', openDateModal);
         });
-    }
 
-    let reportData = null; // 전역 캐시
+        // 모달 제어 함수
+        function openDateModal() {
+            document.getElementById('date-modal-overlay').classList.add('open');
+        }
 
-    async function loadGASData() {
-        updateReportMeta();
-        const bar = document.getElementById('status-bar');
-        bar.style.display = 'block';
-        bar.textContent = '📡 구글 시트에서 데이터를 불러오는 중...';
+        function closeDateModal() {
+            document.getElementById('date-modal-overlay').classList.remove('open');
+        }
 
-        try {
-            const gasData = await fetchJSONP(`${GAS_URL}?site=mailling`, 'rpt_cb');
+        function applyDateText() {
+            const startVal = document.getElementById('modal-start-date').value;
+            const endVal = document.getElementById('modal-end-date').value;
 
-            // GAS가 반환하는 { visits, logs } 구조 변환
-            const logs = gasData.logs || [];
-            const visits = gasData.visits || { success: 0, fail: 0 };
+            if (startVal && endVal) {
+                const startFmt = startVal.replace(/-/g, '.');
+                const endFmt = endVal.replace(/-/g, '.');
+                document.getElementById('input-period').value = `${startFmt} ~ ${endFmt}`;
+            }
+        }
 
-            reportData = { visits, logs };
-            renderReport(logs, visits);
+        function applyDateSelection() {
+            applyDateText();
+            updateReportMeta();
+            closeDateModal();
+        }
 
-            bar.textContent = `✅ 데이터 로드 완료 — 총 ${logs.length}건 (성공: ${visits.success}, 실패: ${visits.fail})`;
+        function updateReportMeta() {
+            const today = new Date();
+            const fmt = d => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+
+            document.getElementById('rpt-period').textContent = '기간: ' + (document.getElementById('input-period').value || '—') + ' | 발송 채널: Gmail API (구글 워크스페이스)';
+            document.getElementById('rpt-no').textContent = document.getElementById('input-report-no').value || '—';
+            document.getElementById('rpt-date').textContent = '작성일: ' + fmt(today);
+            document.getElementById('rpt-manager').textContent = document.getElementById('input-manager').value || '—';
+            document.getElementById('rpt-approver').textContent = document.getElementById('input-approver').value || '—';
+        }
+
+        // =========================================
+        //  JSONP FETCH from GAS
+        // =========================================
+        function fetchJSONP(url, callbackName) {
+            return new Promise((resolve, reject) => {
+                const cbName = `${callbackName}_${Date.now()}`;
+                let done = false;
+                const timer = setTimeout(() => {
+                    if (!done) { done = true; reject(new Error('timeout')); cleanup(); }
+                }, 10000);
+                window[cbName] = (data) => {
+                    if (!done) { done = true; clearTimeout(timer); resolve(data); cleanup(); }
+                };
+                function cleanup() {
+                    delete window[cbName];
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                }
+                const script = document.createElement('script');
+                script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${cbName}`;
+                script.onerror = () => { if (!done) { done = true; clearTimeout(timer); reject(new Error('script error')); cleanup(); } };
+                document.body.appendChild(script);
+            });
+        }
+
+        function getLatestDate(logs) {
+            if (!logs || logs.length === 0) {
+                return new Date().toISOString().split('T')[0];
+            }
+            // 로그에서 가장 최신 날짜(YYYY-MM-DD) 추출
+            const dates = logs.map(l => (l.date || '').slice(0, 10)).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d));
+            dates.sort().reverse();
+            return dates[0] || new Date().toISOString().split('T')[0];
+        }
+
+        function applyFilters() {
+            if (!reportData || !reportData.logs) return;
+            const selectedRound = document.getElementById('select-round').value;
+            const latestDate = getLatestDate(reportData.logs);
+
+            let filteredLogs = reportData.logs;
+            let filterTitle = '';
+
+            if (selectedRound === 'today') {
+                filteredLogs = reportData.logs.filter(l => (l.date || '').startsWith(latestDate));
+                filterTitle = `오늘 발송분(${latestDate}, ${filteredLogs.length}건)`;
+            } else if (selectedRound === 'all') {
+                filteredLogs = reportData.logs;
+                filterTitle = `전체 누적 이력(${filteredLogs.length}건)`;
+            } else {
+                filteredLogs = reportData.logs.filter(l => (l.round || '').trim() === selectedRound);
+                filterTitle = `${selectedRound}(${filteredLogs.length}건)`;
+            }
+
+            const successCount = filteredLogs.filter(l => l.status === '성공').length;
+            const failCount = filteredLogs.filter(l => l.status === '실패' || (l.detail && l.detail.includes('반송'))).length;
+            const visits = { success: successCount, fail: failCount };
+
+            renderReport(filteredLogs, visits);
+            renderProcessReport(filteredLogs);
+
+            const bar = document.getElementById('status-bar');
+            bar.textContent = `✅ [${filterTitle}] 데이터 필터링 완료 — 총 ${filteredLogs.length}건 (성공: ${successCount}, 실패: ${failCount})`;
+        }
+
+        async function loadGASData() {
+            updateReportMeta();
+            const bar = document.getElementById('status-bar');
+            bar.style.display = 'block';
+            bar.textContent = '📡 구글 시트에서 데이터를 불러오는 중...';
+
+            try {
+                const gasData = await fetchJSONP(`${GAS_URL}?site=mailling`, 'rpt_cb');
+
+                // GAS가 반환하는 { visits, logs } 구조 변환
+                const logs = gasData.logs || [];
+                const visits = gasData.visits || { success: 0, fail: 0 };
+
+                reportData = { visits, logs };
+
+                // 가장 최근 발송일 감지
+                const latestDate = getLatestDate(logs);
+                const todayCount = logs.filter(l => (l.date || '').startsWith(latestDate)).length;
+
+                // 발송 회차 드롭다운 동적 갱신
+                const roundSelect = document.getElementById('select-round');
+                const roundsFromLogs = logs.map(l => (l.round || '').trim()).filter(Boolean);
+                const uniqueRounds = Array.from(new Set(roundsFromLogs));
+
+                let htmlStr = `<option value="today" selected>📅 오늘 발송분 (${latestDate} ${todayCount}건)</option>`;
+                htmlStr += `<option value="all">전체 누적 이력 (${logs.length}건)</option>`;
+                uniqueRounds.forEach(r => {
+                    const rCount = logs.filter(l => (l.round || '').trim() === r).length;
+                    htmlStr += `<option value="${r}">${r} (${rCount}건)</option>`;
+                });
+                roundSelect.innerHTML = htmlStr;
+
+                applyFilters();
+
+                // company 정보 누락 감지 (GAS 구버전)
+                const hasCompanyInfo = logs.some(l => l.phone || l.region || l.address || l.site);
+                if (!hasCompanyInfo && logs.length > 0) {
+                    document.getElementById('gas-warn-bar').style.display = 'block';
+                }
+            } catch (err) {
+                bar.textContent = `⚠️ 구글 시트 연동 실패: ${err.message} — 샘플 데이터로 미리보기합니다.`;
+                bar.style.background = '#fff7ed';
+                bar.style.borderColor = '#f59e0b';
+                bar.style.color = '#92400e';
+                // 샘플 데이터 폴백
+                const sampleLogs = getSampleLogs();
+                reportData = { visits: { success: 8, fail: 2 }, logs: sampleLogs };
+                applyFilters();
+            }
+        }
+
+        // 샘플 데이터 즉시 미리보기
+        function loadSamplePreview() {
+            updateReportMeta();
+            const bar = document.getElementById('status-bar');
+            bar.style.display = 'block';
+            bar.textContent = '🧪 샘플 데이터로 보고서를 미리보기합니다.';
             bar.style.background = '#f0fdf4';
             bar.style.borderColor = '#10b981';
             bar.style.color = '#065f46';
-
-            // company 정보 누락 감지 (GAS 구버전)
-            const hasCompanyInfo = logs.some(l => l.phone || l.region || l.address || l.site);
-            if (!hasCompanyInfo && logs.length > 0) {
-                document.getElementById('gas-warn-bar').style.display = 'block';
-            }
-        } catch (err) {
-            bar.textContent = `⚠️ 구글 시트 연동 실패: ${err.message} — 샘플 데이터로 미리보기합니다.`;
-            bar.style.background = '#fff7ed';
-            bar.style.borderColor = '#f59e0b';
-            bar.style.color = '#92400e';
-            // 샘플 데이터 폴백
+            document.getElementById('gas-warn-bar').style.display = 'none';
             const sampleLogs = getSampleLogs();
             const sampleVisits = { success: sampleLogs.filter(l => l.status === '성공').length, fail: sampleLogs.filter(l => l.status === '실패').length };
-            renderReport(sampleLogs, sampleVisits);
+            reportData = { visits: sampleVisits, logs: sampleLogs };
+            applyFilters();
         }
-    }
 
-    // 샘플 데이터 즉시 미리보기
-    function loadSamplePreview() {
-        updateReportMeta();
-        const bar = document.getElementById('status-bar');
-        bar.style.display = 'block';
-        bar.textContent = '🧪 샘플 데이터로 보고서를 미리보기합니다.';
-        bar.style.background = '#f0fdf4';
-        bar.style.borderColor = '#10b981';
-        bar.style.color = '#065f46';
-        document.getElementById('gas-warn-bar').style.display = 'none';
-        const sampleLogs = getSampleLogs();
-        const sampleVisits = { success: sampleLogs.filter(l => l.status === '성공').length, fail: sampleLogs.filter(l => l.status === '실패').length };
-        reportData = { visits: sampleVisits, logs: sampleLogs };
-        renderReport(sampleLogs, sampleVisits);
-    }
+        function renderReport(logs, visits) {
+            updateReportMeta();
 
-    function renderReport(logs, visits) {
-        updateReportMeta();
+            // KPI
+            const total = (visits.success || 0) + (visits.fail || 0);
+            document.getElementById('kpi-total').textContent = total + '건';
+            document.getElementById('kpi-success').textContent = (visits.success || 0) + '건';
+            document.getElementById('kpi-fail').textContent = (visits.fail || 0) + '건';
 
-        // KPI
-        const total = (visits.success || 0) + (visits.fail || 0);
-        document.getElementById('kpi-total').textContent = total + '건';
-        document.getElementById('kpi-success').textContent = (visits.success || 0) + '건';
-        document.getElementById('kpi-fail').textContent = (visits.fail || 0) + '건';
+            // Round distribution
+            const roundMap = {};
+            logs.forEach(log => {
+                const r = log.round || '기타';
+                if (!roundMap[r]) roundMap[r] = { total: 0, success: 0 };
+                roundMap[r].total++;
+                if (log.status === '성공') roundMap[r].success++;
+            });
 
-        // Round distribution
-        const roundMap = {};
-        logs.forEach(log => {
-            const r = log.round || '기타';
-            if (!roundMap[r]) roundMap[r] = { total: 0, success: 0 };
-            roundMap[r].total++;
-            if (log.status === '성공') roundMap[r].success++;
-        });
-
-        const dotColors = ['#1a3a6b', '#2563eb', '#7c3aed', '#0891b2', '#10b981', '#f59e0b'];
-        const roundHTML = Object.entries(roundMap).map(([round, cnt], i) =>
-            `<div class="round-pill">
+            const dotColors = ['#1a3a6b', '#2563eb', '#7c3aed', '#0891b2', '#10b981', '#f59e0b'];
+            const roundHTML = Object.entries(roundMap).map(([round, cnt], i) =>
+                `<div class="round-pill">
                 <span class="round-dot" style="background:${dotColors[i % dotColors.length]}"></span>
                 <span>${round}</span>
                 <span class="round-count">${cnt.total}건</span>
-                <span style="font-size:10px; color: var(--success);">(성공 ${cnt.success}건)</span>
+                <span style="font-size:11.5px; color: var(--success); font-weight:500;">(성공 ${cnt.success}건)</span>
             </div>`
-        ).join('');
-        document.getElementById('round-summary').innerHTML = roundHTML || '<div class="round-pill"><span class="round-dot"></span><span>데이터 없음</span></div>';
+            ).join('');
+            document.getElementById('round-summary').innerHTML = roundHTML || '<div class="round-pill"><span class="round-dot"></span><span>데이터 없음</span></div>';
 
-        // Table
-        const tbody = document.getElementById('log-tbody');
-        if (logs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color: var(--text-light);">발송 데이터가 없습니다.</td></tr>';
-            return;
-        }
+            // Table
+            const tbody = document.getElementById('log-tbody');
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color: var(--text-light);">발송 데이터가 없습니다.</td></tr>';
+                return;
+            }
 
-        tbody.innerHTML = logs.map((log, idx) => {
-            const isSuccess = log.status === '성공';
-            const badge = isSuccess
-                ? '<span class="status-badge success">성공</span>'
-                : '<span class="status-badge fail">실패</span>';
-            const dateStr = formatDate(log.date);
-            const detail = [log.detail, log.note].filter(Boolean).join(' | ') || '—';
+            tbody.innerHTML = logs.map((log, idx) => {
+                const isSuccess = log.status === '성공';
+                const badge = isSuccess
+                    ? '<span class="status-badge success">성공</span>'
+                    : '<span class="status-badge fail">실패</span>';
+                const dateStr = formatDate(log.date);
+                const detail = [log.detail, log.note].filter(Boolean).join(' | ') || '—';
 
-            // 상세 정보 칩 생성
-            const chips = [];
-            if (log.phone)   chips.push(`<span class="info-chip phone"><span class="chip-icon">📞</span>${escHtml(log.phone)}</span>`);
-            if (log.region)  chips.push(`<span class="info-chip region"><span class="chip-icon">📍</span>${escHtml(log.region)}</span>`);
-            if (log.address) chips.push(`<span class="info-chip address"><span class="chip-icon">🏢</span>${escHtml(log.address)}</span>`);
-            if (log.site)    chips.push(`<span class="info-chip site"><span class="chip-icon">🌐</span><a href="${escHtml(log.site)}" target="_blank">${escHtml(log.site.replace(/^https?:\/\//, ''))}</a></span>`);
+                // 상세 정보 칩 생성
+                const chips = [];
+                if (log.phone) chips.push(`<span class="info-chip phone"><span class="chip-icon">📞</span>${escHtml(log.phone)}</span>`);
+                if (log.region) chips.push(`<span class="info-chip region"><span class="chip-icon">📍</span>${escHtml(log.region)}</span>`);
+                if (log.address) chips.push(`<span class="info-chip address"><span class="chip-icon">🏢</span>${escHtml(log.address)}</span>`);
+                if (log.site) chips.push(`<span class="info-chip site"><span class="chip-icon">🌐</span><a href="${escHtml(log.site)}" target="_blank">${escHtml(log.site.replace(/^https?:\/\//, ''))}</a></span>`);
 
-            const hasChips = chips.length > 0;
+                const hasChips = chips.length > 0;
 
-            // 메인 행
-            const mainRow = `<tr>
-                <td style="color: var(--text-light); font-size:10px;">${idx + 1}</td>
-                <td style="font-weight:600;">${log.id || idx + 1}</td>
-                <td style="font-size:10px; color: var(--text-light);">${dateStr}</td>
-                <td style="font-weight:600; font-size:11px;">${escHtml(log.company || '—')}</td>
-                <td style="font-size:10px; color: var(--text-light);">${escHtml(log.region || '—')}</td>
-                <td style="font-size:10px; color: var(--text-light);">${escHtml(log.email || '—')}</td>
-                <td><span class="round-badge">${escHtml(log.round || '—')}</span></td>
-                <td>${badge}</td>
-                <td style="font-size:10px; color: var(--text-light);">${detail}</td>
+                // 세부 결과 문구 간소화 (Gmail API 발송 완료 등 중복 문구 제거)
+                let displayDetail = detail;
+                if (isSuccess && (displayDetail === 'Gmail API 발송 완료' || displayDetail === '정상 발송' || !displayDetail)) {
+                    displayDetail = '<span style="color:var(--text-light); font-size:11.5px;">—</span>';
+                }
+
+                // 메인 행
+                const mainRow = `<tr>
+                <td style="color: var(--text-light); font-size:12px; white-space:nowrap;">${idx + 1}</td>
+                <td style="font-weight:600; font-size:12.5px; white-space:nowrap;">${log.id || idx + 1}</td>
+                <td style="font-size:12px; color: var(--text-light); white-space:nowrap;">${dateStr}</td>
+                <td style="font-weight:600; font-size:13.5px; color:var(--navy); white-space:nowrap;">${escHtml(log.company || '—')}</td>
+                <td style="font-size:12px; color: var(--text-mid); white-space:nowrap;">${escHtml(log.region || '—')}</td>
+                <td style="font-size:12.5px; color: var(--text); white-space:nowrap;">${escHtml(log.email || '—')}</td>
+                <td style="white-space:nowrap;"><span class="round-badge">${escHtml(log.round || '—')}</span></td>
+                <td style="white-space:nowrap;">${badge}</td>
+                <td style="font-size:12.5px; color: var(--text);">${displayDetail}</td>
             </tr>`;
 
-            // 상세 정보 서브 행 (있을 때만)
-            const subRow = hasChips
-                ? `<tr class="company-detail-row">
+                // 상세 정보 서브 행 (있을 때만)
+                const subRow = hasChips
+                    ? `<tr class="company-detail-row">
                     <td></td>
                     <td colspan="8">
                         <div class="detail-chips">${chips.join('')}</div>
                     </td>
                 </tr>`
-                : '';
+                    : '';
 
-            return mainRow + subRow;
-        }).join('');
-    }
-
-    // XSS 방지용 이스케이프
-    function escHtml(str) {
-        if (!str) return '';
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-    }
-
-    function formatDate(raw) {
-        if (!raw) return '—';
-        try {
-            const d = new Date(raw);
-            if (isNaN(d.getTime())) return String(raw);
-            return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-        } catch(e) { return String(raw); }
-    }
-
-    // =========================================
-    //  SAMPLE DATA (fallback)
-    // =========================================
-    function getSampleLogs() {
-        return [
-            { id: 1,  date: '2026-08-29 09:11:04', company: '삼협철망1',      email: 'web365@naver.com',       round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: 'https://samhyun.co.kr',    region: '인천 계양구', address: '인천 계양구 효성동' },
-            { id: 2,  date: '2026-08-29 09:11:22', company: '삼협철망2',     email: 'samhyupm@naver.com',        round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: 'https://hkpipe.com',       region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
-            { id: 3,  date: '2026-08-29 09:11:45', company: '대성스틸(주)',       email: 'dsung@dasung.co.kr',      round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '051-789-0123', site: 'https://dasung.co.kr',    region: '부산 강서구', address: '부산광역시 강서구 녹산산단로 48' },
-            { id: 4,  date: '2026-08-29 09:12:02', company: '신성금속공업사',     email: 'ssmetal@naver.com',       round: '1일차', status: '실패', detail: '수신자 이메일 오류', note: 'bounce', phone: '053-321-0987', site: '',                         region: '대구 달성군', address: '대구광역시 달성군 구지면 창리 200' },
-            { id: 5,  date: '2026-08-29 09:12:19', company: '현대플랜트서비스',  email: 'hps_metal@hps.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '052-290-6000', site: 'https://hps.co.kr',       region: '울산 북구',   address: '울산광역시 북구 산업로 915' },
-            { id: 6,  date: '2026-08-29 09:12:38', company: '광성산업',           email: 'ks_ind@daum.net',         round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-688-5555', site: '',                         region: '경기 평택시', address: '경기도 평택시 포승읍 평택항만길 77' },
-            { id: 7,  date: '2026-08-29 09:12:55', company: '동국산업(주)',       email: 'dongkuk@steel.co.kr',     round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '02-2650-4000', site: 'https://dongkuksteel.com', region: '서울 강서구', address: '서울특별시 강서구 양천로 583' },
-            { id: 8,  date: '2026-08-29 09:13:10', company: '태양금속',           email: 'taeyangm@naver.com',      round: '1일차', status: '실패', detail: 'SMTP 타임아웃',     note: '',      phone: '055-263-1234', site: '',                         region: '경남 창원시', address: '경상남도 창원시 성산구 창원대로 2200' },
-            { id: 9,  date: '2026-08-29 14:29:32', company: '삼협철망1',      email: 'web365@naver.com',       round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '010-3211-7654', site: 'https://samhyun.co.kr',    region: '인천 계양구', address: '인천 계양구 효성동' },
-            { id: 10, date: '2026-08-29 14:29:50', company: '삼협철망2',     email: 'samhyupm@naver.com',        round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-315-0236', site: 'https://hkpipe.com',       region: '경기 시흥시', address: '경기도 시흥시 벌말로 390' },
-        ];
-    }
-
-    // =========================================
-    //  EXPORT: PDF (jsPDF + html2canvas)
-    // =========================================
-    async function exportPDF() {
-        if (!reportData) {
-            alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
-            return;
+                return mainRow + subRow;
+            }).join('');
         }
-        updateReportMeta();
-        const btn = event.currentTarget;
-        btn.innerHTML = '<span class="spinner"></span> PDF 생성 중...';
-        btn.disabled = true;
 
-        try {
-            const el = document.getElementById('a4-report');
-            const canvas = await html2canvas(el, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                backgroundColor: '#ffffff',
-                windowWidth: el.scrollWidth,
-                windowHeight: el.scrollHeight
-            });
+        // XSS 방지용 이스케이프
+        function escHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
 
-            const imgData = canvas.toDataURL('image/png', 1.0);
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        function formatDate(raw) {
+            if (!raw) return '—';
+            try {
+                const d = new Date(raw);
+                if (isNaN(d.getTime())) return String(raw);
+                return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+            } catch (e) { return String(raw); }
+        }
 
-            const pdfW = pdf.internal.pageSize.getWidth();
-            const pdfH = pdf.internal.pageSize.getHeight();
-            const imgW = canvas.width;
-            const imgH = canvas.height;
-            const ratio = pdfW / imgW;
-            const scaledH = imgH * ratio;
+        // =========================================
+        //  SAMPLE DATA (fallback)
+        // =========================================
+        function getSampleLogs() {
+            return [
+                { id: 1, date: '2026-08-29 09:11:04', company: '(주)삼현기계', email: 'samhyun@naver.com', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-123-4567', site: 'https://samhyun.co.kr', region: '경기 안산시', address: '경기도 안산시 단원구 산단로 120' },
+                { id: 2, date: '2026-08-29 09:11:22', company: '한국파이프공업', email: 'hkpipe@gmail.com', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com', region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+                { id: 3, date: '2026-08-29 09:11:45', company: '대성스틸(주)', email: 'dsung@dasung.co.kr', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '051-789-0123', site: 'https://dasung.co.kr', region: '부산 강서구', address: '부산광역시 강서구 녹산산단로 48' },
+                { id: 4, date: '2026-08-29 09:12:02', company: '신성금속공업사', email: 'ssmetal@naver.com', round: '1일차', status: '실패', detail: '수신자 이메일 오류', note: 'bounce', phone: '053-321-0987', site: '', region: '대구 달성군', address: '대구광역시 달성군 구지면 창리 200' },
+                { id: 5, date: '2026-08-29 09:12:19', company: '현대플랜트서비스', email: 'hps_metal@hps.co.kr', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '052-290-6000', site: 'https://hps.co.kr', region: '울산 북구', address: '울산광역시 북구 산업로 915' },
+                { id: 6, date: '2026-08-29 09:12:38', company: '광성산업', email: 'ks_ind@daum.net', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-688-5555', site: '', region: '경기 평택시', address: '경기도 평택시 포승읍 평택항만길 77' },
+                { id: 7, date: '2026-08-29 09:12:55', company: '동국산업(주)', email: 'dongkuk@steel.co.kr', round: '1일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '02-2650-4000', site: 'https://dongkuksteel.com', region: '서울 강서구', address: '서울특별시 강서구 양천로 583' },
+                { id: 8, date: '2026-08-29 09:13:10', company: '태양금속', email: 'taeyangm@naver.com', round: '1일차', status: '실패', detail: 'SMTP 타임아웃', note: '', phone: '055-263-1234', site: '', region: '경남 창원시', address: '경상남도 창원시 성산구 창원대로 2200' },
+                { id: 9, date: '2026-08-29 14:29:32', company: '(주)삼현기계', email: 'samhyun@naver.com', round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '031-123-4567', site: 'https://samhyun.co.kr', region: '경기 안산시', address: '경기도 안산시 단원구 산단로 120' },
+                { id: 10, date: '2026-08-29 14:29:50', company: '한국파이프공업', email: 'hkpipe@gmail.com', round: '2일차', status: '성공', detail: 'Gmail API 발송 완료', note: '', phone: '032-456-7890', site: 'https://hkpipe.com', region: '인천 남동구', address: '인천광역시 남동구 고잔동 716' },
+            ];
+        }
 
-            // 여러 페이지 지원
-            let yPos = 0;
-            while (yPos < scaledH) {
-                if (yPos > 0) pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, -yPos, pdfW, scaledH);
-                yPos += pdfH;
+        function getActiveTargetEl() {
+            const sendTabActive = document.getElementById('tab-btn-send').classList.contains('active');
+            if (sendTabActive) {
+                return { el: document.getElementById('a4-report'), name: '발송현황' };
+            } else {
+                return { el: document.getElementById('tab-panel-process'), name: '처리결과' };
             }
-
-            const today = new Date();
-            const fname = `삼협철망_메일발송보고서_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.pdf`;
-            pdf.save(fname);
-        } catch (err) {
-            alert('PDF 생성 중 오류가 발생했습니다: ' + err.message);
-        } finally {
-            btn.innerHTML = '📄 PDF 저장';
-            btn.disabled = false;
         }
-    }
 
-    // =========================================
-    //  EXPORT: IMAGE (html2canvas)
-    // =========================================
-    async function exportImage() {
-        if (!reportData) {
-            alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
-            return;
+        // =========================================
+        //  EXPORT: PDF (jsPDF + html2canvas)
+        // =========================================
+        async function exportPDF() {
+            if (!reportData) {
+                alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
+                return;
+            }
+            updateReportMeta();
+            const btn = event.currentTarget;
+            btn.innerHTML = '<span class="spinner"></span> PDF 생성 중...';
+            btn.disabled = true;
+
+            try {
+                const target = getActiveTargetEl();
+                const el = target.el;
+                const canvas = await html2canvas(el, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    windowWidth: el.scrollWidth,
+                    windowHeight: el.scrollHeight
+                });
+
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+                const pdfW = pdf.internal.pageSize.getWidth();
+                const pdfH = pdf.internal.pageSize.getHeight();
+                const imgW = canvas.width;
+                const imgH = canvas.height;
+                const ratio = pdfW / imgW;
+                const scaledH = imgH * ratio;
+
+                // 여러 페이지 지원
+                let yPos = 0;
+                while (yPos < scaledH) {
+                    if (yPos > 0) pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, -yPos, pdfW, scaledH);
+                    yPos += pdfH;
+                }
+
+                const today = new Date();
+                const fname = `삼협철망_메일_${target.name}보고서_${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}.pdf`;
+                pdf.save(fname);
+            } catch (err) {
+                alert('PDF 생성 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                btn.innerHTML = '📄 PDF 저장';
+                btn.disabled = false;
+            }
         }
-        updateReportMeta();
-        const btn = event.currentTarget;
-        btn.innerHTML = '<span class="spinner"></span> 이미지 생성 중...';
-        btn.disabled = true;
 
-        try {
-            const el = document.getElementById('a4-report');
-            const canvas = await html2canvas(el, {
-                scale: 2.5,        // 고해상도
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                backgroundColor: '#ffffff',
-                windowWidth: el.scrollWidth,
-                windowHeight: el.scrollHeight
-            });
+        // =========================================
+        //  EXPORT: IMAGE (html2canvas)
+        // =========================================
+        async function exportImage() {
+            if (!reportData) {
+                alert('먼저 "시트에서 데이터 불러오기"를 클릭해서 데이터를 로드해주세요.');
+                return;
+            }
+            updateReportMeta();
+            const btn = event.currentTarget;
+            btn.innerHTML = '<span class="spinner"></span> 이미지 생성 중...';
+            btn.disabled = true;
 
-            // PNG 다운로드
-            const link = document.createElement('a');
-            const today = new Date();
-            link.download = `삼협철망_메일발송보고서_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.png`;
-            link.href = canvas.toDataURL('image/png', 1.0);
-            link.click();
-        } catch (err) {
-            alert('이미지 생성 중 오류가 발생했습니다: ' + err.message);
-        } finally {
-            btn.innerHTML = '🖼️ 이미지 저장';
-            btn.disabled = false;
+            try {
+                const target = getActiveTargetEl();
+                const el = target.el;
+                const canvas = await html2canvas(el, {
+                    scale: 2.5,        // 고해상도
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    windowWidth: el.scrollWidth,
+                    windowHeight: el.scrollHeight
+                });
+
+                // PNG 다운로드
+                const link = document.createElement('a');
+                const today = new Date();
+                link.download = `삼협철망_메일_${target.name}보고서_${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            } catch (err) {
+                alert('이미지 생성 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                btn.innerHTML = '🖼️ 이미지 저장';
+                btn.disabled = false;
+            }
         }
-    }
 
-    // 입력값 변경 시 실시간 메타 반영
-    ['input-period', 'input-manager', 'input-approver', 'input-report-no'].forEach(id => {
-        document.getElementById(id).addEventListener('input', updateReportMeta);
-    });
-</script>
+        // 입력값 변경 시 실시간 메타 반영
+        ['input-period', 'input-manager', 'input-approver', 'input-report-no'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', updateReportMeta);
+        });
+
+        // 페이지 로드 시 구글 시트 데이터 자동 로드
+        window.addEventListener('DOMContentLoaded', () => {
+            loadGASData();
+        });
+    </script>
 </body>
+
 </html>
