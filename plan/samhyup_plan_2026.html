@@ -358,7 +358,7 @@
   <!-- Tab Controls (대흥정밀 / Fursys-Store 미러) -->
   <div class="plan-tab-nav">
     <button type="button" class="plan-tab-btn active" onclick="switchPlanTab('tab-history', this)">
-      📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~22)
+      📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~23)
     </button>
     <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-deploy', this)">
       ☁️ 2. Cloudflare Pages 배포 매뉴얼 (2026-11-20 인프라 이전)
@@ -372,12 +372,44 @@
     <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-sop', this)">
       📖 5. B2B 정기 발송 표준운영절차 (SOP)
     </button>
+    <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-cache', this)">
+      🧹 6. 브라우저 캐시·서비스워커 정리 (첫 화면이 옛 화면일 때)
+    </button>
   </div>
 
   <!-- ============================================================== -->
   <!-- TAB 1: 통합 작업 계획 & 이력 (Phase 1 ~ 20) -->
   <!-- ============================================================== -->
   <div id="tab-history" class="plan-tab-pane active">
+    <!-- PHASE 23 (NEW - 2026-11-24 회사 PC) -->
+    <div class="card" style="border: 2px solid #2563EB;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <h2 style="margin:0;"><span class="badge badge-primary">PHASE 23</span> 카탈로그 모바일 2단 헤더·PC 메뉴 구분선·견적 버튼 톤다운, 첫 화면 캐시 문제 진단 &amp; 캐시 정리 가이드</h2>
+        <span style="font-size:12px; color:#2563EB; font-weight:700;">2026-11-24 완료</span>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <a href="claude_chat_history_20261124_office.html" target="_blank" class="header-btn" style="background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:700; padding:10px 16px;">
+          💬 Claude Code 대화 내역 — 회사 PC 세션 (2026-11-24) ↗
+        </a>
+      </div>
+      <div class="tip-box green" style="margin-top:12px;">
+        • <strong>모바일 2단 헤더</strong>: 대흥정밀 규격을 이식. 1단 = 로고 + <code>📄 브로슈어</code> + <code>견적 요청</code>, 2단 = 제품소개 · 제품갤러리 · 공장직판(768px 이하). 기존 480px 이하 '제품갤러리' 숨김 규칙 제거 (<code>catalog/index_catalog.html</code>, <code>catalog/styles.css</code>)<br>
+        • <strong>PC 상단 메뉴</strong>: 메뉴 좌우 여백 18px + 세로 구분선(<code>|</code>), 모바일에서는 구분선 제거. 브로슈어 ↔ 견적 요청 버튼 간격 14px<br>
+        • <strong>헤더 견적 요청 버튼 톤다운</strong>: 평소(mouse out)는 채도 낮은 슬레이트 블루, 마우스 오버 시 파란색(<code>#0284c7</code>), 크기 축소(13px, <code>7px 16px</code>)<br>
+        • <strong>첫 화면이 대시보드로 나오는 문제</strong>: 서버는 정상(<code>/</code> → 302 → <code>/catalog/index_catalog.html</code>, 새 CSS 라이브 반영 확인). 시크릿 모드는 정상, 브라우저 캐시 삭제 후 정상 → 원인은 예전 서비스워커/브라우저 캐시. 정리 방법은 <strong>탭 6</strong>에 문서화<br>
+        • <strong>캐시 방지 헤더(<code>_headers</code>)</strong> 추가, <strong>배포 패키지(<code>dist_deploy</code>) 원격 최신본 기준 재생성</strong>(273파일)<br>
+        • <strong>Git 정리</strong>: 원격(<code>origin/main</code>)에 집 PC 작업 7커밋이 있어 강제 푸시 없이 최신 원격 위에 변경을 이식해 푸시(<code>8f2aa07</code>)
+      </div>
+      <ul class="checklist">
+        <li class="task-item completed"><input type="checkbox" id="ph23-mobile-2row" checked><span class="task-text"><strong>[모바일 헤더]</strong> 2단 구성(로고+브로슈어/견적요청 / 메뉴 3개)</span></li>
+        <li class="task-item completed"><input type="checkbox" id="ph23-pc-divider" checked><span class="task-text"><strong>[PC 메뉴]</strong> 간격 + 구분선, 모바일 구분선 제거</span></li>
+        <li class="task-item completed"><input type="checkbox" id="ph23-cta-tonedown" checked><span class="task-text"><strong>[견적 요청 버튼]</strong> 톤다운 + hover 파랑 + 크기 축소 + 브로슈어 간격</span></li>
+        <li class="task-item completed"><input type="checkbox" id="ph23-merge-push" checked><span class="task-text"><strong>[Git]</strong> 원격 최신 기준 이식 후 푸시(<code>8f2aa07</code>)</span></li>
+        <li class="task-item completed"><input type="checkbox" id="ph23-dist" checked><span class="task-text"><strong>[배포 폴더]</strong> <code>dist_deploy</code> 최신 원격 기준 재생성(<code>_headers</code> 포함)</span></li>
+        <li class="task-item completed"><input type="checkbox" id="ph23-cache-guide" checked><span class="task-text"><strong>[문서]</strong> 계획서 탭 6 '브라우저 캐시·서비스워커 정리' 추가</span></li>
+      </ul>
+    </div>
+
             <!-- PHASE 22 (NEW - 2026-11-24) -->
     <div class="card" style="border: 2px solid #2563EB;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -1309,6 +1341,79 @@ var seasonalGreeting = (month >= 3 && month <= 5) ? "따뜻한 봄기운과 함�
     </div>
   </div>
 
+
+  <!-- ============================================================== -->
+  <!-- TAB 6: 브라우저 캐시 / 서비스워커 정리 방법 -->
+  <!-- ============================================================== -->
+  <div id="tab-cache" class="plan-tab-pane">
+    <div class="card">
+      <h3 class="card-title">🧹 브라우저 캐시·서비스워커 정리 방법 (2026-11-24)</h3>
+      <p style="font-size:14px; margin-bottom:12px;">
+        배포를 고쳤는데도 내 브라우저에서만 <strong>첫 페이지가 예전 화면(관리자 대시보드)</strong>으로 나오거나 디자인이 갱신되지 않을 때의 점검·정리 절차입니다.
+      </p>
+      <div class="tip-box green">
+        • <strong>증상</strong>: <code>https://samhyup.pages.dev/</code> 접속 시 카탈로그가 아닌 <code>index_dashboard</code>가 열림 / 수정한 헤더·버튼이 반영되지 않음<br>
+        • <strong>원인</strong>: 예전에 등록된 서비스워커(<code>sw.js</code>)와 브라우저 캐시가 옛 화면을 서버보다 먼저 보여줌. 서버(<code>_redirects</code>, <code>_headers</code>) 설정과는 무관<br>
+        • <strong>가장 빠른 진단</strong>: <strong>시크릿(비공개) 창</strong>에서 열어 정상이면 서버는 정상, 일반 브라우저의 캐시 문제로 확정
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛠️ 정리 방법 (기기마다 1회)</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th width="22%">환경</th>
+            <th width="78%">정리 절차</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PC Chrome / Edge</strong><br>(빠른 방법)</td>
+            <td>
+              1. 해당 사이트에서 <code>F12</code> → <strong>Application</strong> 탭 → <strong>Service Workers</strong> → <strong>Unregister</strong><br>
+              2. 같은 탭의 <strong>Storage</strong> → <strong>Clear site data</strong><br>
+              3. 새로고침(<code>Ctrl + F5</code>)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>PC 일반 방법</strong></td>
+            <td>
+              <code>Ctrl + Shift + Delete</code> → 기간 <strong>전체</strong> → <strong>쿠키 및 기타 사이트 데이터</strong>, <strong>캐시된 이미지 및 파일</strong> 체크 → 삭제
+            </td>
+          </tr>
+          <tr>
+            <td><strong>모바일 Chrome</strong></td>
+            <td>
+              설정 → 개인정보 보호 및 보안 → <strong>인터넷 사용 기록 삭제</strong> → <strong>쿠키 및 사이트 데이터</strong>, <strong>캐시된 이미지 및 파일</strong> 삭제<br>
+              (또는 주소창 자물쇠 → 사이트 설정 → <strong>데이터 삭제</strong>)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>홈 화면에 추가한 앱(PWA)</strong></td>
+            <td>
+              앱 아이콘 삭제 후 브라우저에서 다시 접속하여 <strong>홈 화면에 추가</strong>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>확인</strong></td>
+            <td>
+              정리 후 <code>https://samhyup.pages.dev/</code> 접속 → 카탈로그가 첫 화면이면 정상. 관리자 화면은 <code>/admin</code> 또는 카탈로그 푸터의 <code>©</code> 탭
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📌 참고</h3>
+      <div class="tip-box">
+        • 일반 고객은 대부분 처음 접속하거나 서비스워커가 없어 영향이 거의 없고, <strong>예전에 대시보드로 접속했던 직원 기기</strong>에서 주로 발생<br>
+        • 서버 점검: <code>curl -I https://samhyup.pages.dev/</code> 결과가 <code>302</code> / <code>Location: /catalog/index_catalog.html</code> 이면 배포는 정상<br>
+        • 기기가 많아 일괄 해결이 필요하면 루트 <code>sw.js</code>를 캐시 삭제·자기 해제용 킬스위치로 교체해 배포
+      </div>
+    </div>
+  </div>
 
 </div><!-- /.container -->
 
