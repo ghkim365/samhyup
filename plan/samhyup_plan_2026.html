@@ -358,7 +358,7 @@
   <!-- Tab Controls (대흥정밀 / Fursys-Store 미러) -->
   <div class="plan-tab-nav">
     <button type="button" class="plan-tab-btn active" onclick="switchPlanTab('tab-history', this)">
-      📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~21)
+      📋 1. 프로젝트 통합 작업 계획 &amp; 이력 (Phase 1~22)
     </button>
     <button type="button" class="plan-tab-btn" onclick="switchPlanTab('tab-deploy', this)">
       ☁️ 2. Cloudflare Pages 배포 매뉴얼 (2026-11-20 인프라 이전)
@@ -378,7 +378,43 @@
   <!-- TAB 1: 통합 작업 계획 & 이력 (Phase 1 ~ 20) -->
   <!-- ============================================================== -->
   <div id="tab-history" class="plan-tab-pane active">
-        <!-- PHASE 21 (NEW - 2026-11-23) -->
+            <!-- PHASE 22 (NEW - 2026-11-24) -->
+    <div class="card" style="border: 2px solid #2563EB;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <h2 style="margin:0;"><span class="badge badge-primary">PHASE 22</span> 대시보드 모바일 반응형 전면 개선, 고객 중심 루트 라우팅(카탈로그 직결) 개편, 은폐 관리자 진입로 구축 &amp; 협업 대화록</h2>
+        <span style="font-size:12px; color:#2563EB; font-weight:700;">2026-11-24 완료</span>
+      </div>
+      
+      <!-- 대화록 바로가기 배너 -->
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <a href="claude_chat_history_20261124.html" target="_blank" class="header-btn" style="background:#FFFBEB; border-color:#F59E0B; color:#92400E; font-weight:700; padding:10px 16px;">
+          💬 Claude Code 대화 내역 전체보기 (2026-11-24) ↗
+        </a>
+        <a href="antigravity_chat_history_20261124.html" target="_blank" class="header-btn" style="background:#F0FDF4; border-color:#10B981; color:#065F46; font-weight:700; padding:10px 16px;">
+          🌐 Antigravity 대화 내역 전체보기 (2026-11-24) ↗
+        </a>
+        <span style="font-size:12.5px; color:#64748B; align-self:center;">💡 각 대화록은 브라우저에서 Ctrl+A ➔ Ctrl+C 복사 후 구글 독스에 완벽하게 서식이 유지됩니다.</span>
+      </div>
+
+      <div class="tip-box green" style="margin-top:14px;">
+        • <strong>대시보드 모바일(360px~480px) 반응형 전면 최적화</strong>: 하단 고정 탭바(Bottom Tab Bar) 적용, 상단 액션 바 겹침 해소(수직 정렬 및 2열 그리드), 견적/로그 테이블 모바일 카드 변환 및 시뮬레이터 차트 우측 잘림 방지 완료<br>
+        • <strong>고객 메인 접속 구조 개편 (카탈로그 직결)</strong>: 루트(<code>https://samhyup.pages.dev/</code>) 및 <code>index.html</code> 접속 시 관리자 대시보드가 아니라 <strong>모바일 카탈로그(<code>catalog/index_catalog.html</code>)</strong>가 첫 화면으로 즉시 열리도록 <code>_redirects</code> 및 리다이렉터 100% 개편 완료<br>
+        • <strong>카탈로그 내 브로슈어 연계 &amp; 은폐형 관리자 진입로(Hidden Admin Gate) 구축</strong>: 카탈로그 상단 메뉴에 <code>[📄 브로슈어 ↗]</code> 신설 및 모바일 반응형 메뉴 겹침 방지(800px 이하 공장직판 숨김, 400px 이하 제품소개 숨김), 하단 푸터 저작권 텍스트(<code>&copy; 2026 삼협철망.</code>)를 탭하면 관리자 로그인 화면(<code>index_dashboard.html</code>)으로 즉시 이동하는 은폐 모드 구현<br>
+        • <strong>Google Apps Script 15초 타임아웃 상향 및 0건 데이터 방어</strong>: <code>fetchJSONP</code> 타임아웃을 5초에서 15초로 상향하여 대용량 시트 파싱 지연 시 0건 폴백 방어, 요청 순번(<code>gasRequestSeq</code>) 도입 및 통신 실패 시에도 직전 캐시 데이터 보존 처리 완료<br>
+        • <strong>구글 스프레드시트 mail_log 및 fax_log 시트 매핑 최적화</strong>: <code>builder-samhyup_data</code> 내 메일 발송 로그(<code>gid=1157332263</code>) 및 팩스 발송 로그(<code>gid=1912531041</code>) 정확한 시트 GID 연동 완료
+      </div>
+
+      <ul class="checklist">
+        <li class="task-item completed"><input type="checkbox" id="ph22-mobile-responsive" checked><span class="task-text">대시보드 모바일 반응형 액션 바 &amp; 하단 고정 탭바 구축</span><input type="date" class="task-date-input" id="ph22-mobile-responsive-date"><input type="text" class="task-memo-input" id="ph22-mobile-responsive-memo"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph22-root-routing" checked><span class="task-text">고객 메인 접속 구조 개편 (루트 접속 시 모바일 카탈로그 직행)</span><input type="date" class="task-date-input" id="ph22-root-routing-date"><input type="text" class="task-memo-input" id="ph22-root-routing-memo"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph22-hidden-admin-gate" checked><span class="task-text">카탈로그 브로슈어 메뉴 탑재 및 푸터 은폐 관리자 게이트 링크</span><input type="date" class="task-date-input" id="ph22-hidden-admin-gate-date"><input type="text" class="task-memo-input" id="ph22-hidden-admin-gate-memo"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph22-gas-timeout-15s" checked><span class="task-text">GAS fetchJSONP 15초 타임아웃 상향 및 0건 데이터 방어 조치</span><input type="date" class="task-date-input" id="ph22-gas-timeout-15s-date"><input type="text" class="task-memo-input" id="ph22-gas-timeout-15s-memo"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph22-sheets-gid-sync" checked><span class="task-text">mail_log(gid=1157332263) &amp; fax_log(gid=1912531041) 시트 매핑 연동</span><input type="date" class="task-date-input" id="ph22-sheets-gid-sync-date"><input type="text" class="task-memo-input" id="ph22-sheets-gid-sync-memo"></li>
+        <li class="task-item completed"><input type="checkbox" id="ph22-chat-histories" checked><span class="task-text">Claude Code 및 Antigravity 2026-11-24 대화 내역 HTML/MD 생성 영구 보존</span><input type="date" class="task-date-input" id="ph22-chat-histories-date"><input type="text" class="task-memo-input" id="ph22-chat-histories-memo"></li>
+      </ul>
+    </div>
+
+<!-- PHASE 21 (NEW - 2026-11-23) -->
     <div class="card" style="border: 2px solid #2563EB;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2 style="margin:0;"><span class="badge badge-primary">PHASE 21</span> 관리자 대시보드 130px 사이드바 UI/UX 전면 개편 &amp; 메일·팩스 리포트 1020px 표준화 및 GitHub 프로덕션 배포</h2>
