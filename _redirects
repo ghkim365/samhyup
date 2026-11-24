@@ -1,4 +1,6 @@
 # Cloudflare Pages Redirects / Rewrites
-/    /index_dashboard.html    200
+/    /catalog/index_catalog.html    302
+/admin    /index_dashboard.html    200
+/brochure    /catalog/index_brochure.html    200
 /gallery/*    /catalog/gallery/:splat    200
 /images/*     /catalog/images/:splat     200

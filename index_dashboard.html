@@ -873,37 +873,397 @@
         }
 
         @media(max-width: 768px) {
+            .heading h1 {
+                font-size: 17px;
+            }
+
+            .search-box {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .sim-layout,
+            .quickgrid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media(max-width: 480px) {
+            .grid4 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .kpi .value {
+                font-size: 28px;
+            }
+
+            .quickgrid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* 모바일 가로 폭 넘침 방지: 그리드 자식이 콘텐츠 폭(min-width:auto)으로
+           늘어나지 않도록 하고, 넓은 표는 .table-scroll 내부에서만 스크롤 */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .main,
+        .grid4>*,
+        .content-grid>*,
+        .bottomgrid>*,
+        .sim-layout>*,
+        .quickgrid>* {
+            min-width: 0;
+        }
+
+        .grid4,
+        .content-grid,
+        .bottomgrid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .content-grid {
+            grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+        }
+
+        .bottomgrid {
+            grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+        }
+
+        .chart-card canvas {
+            max-width: 100%;
+        }
+
+        .table-scroll {
+            max-width: 100%;
+        }
+
+        @media(max-width: 1024px) {
+            .grid4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid,
+            .bottomgrid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media(max-width: 480px) {
+            .grid4 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        /* ============================================================== */
+        /* MOBILE (≤768px): 하단 탭바 + 단일 컬럼 + 카드형 목록            */
+        /* ============================================================== */
+        .nav-logout-mobile {
+            display: none !important;
+        }
+
+        @media(max-width: 768px) {
+            body {
+                font-size: 13px;
+            }
+
+            /* 사이드바 → 하단 고정 탭바 (가로 스크롤) */
             .sidebar {
-                width: 65px;
-                padding: 16px 4px;
+                position: fixed;
+                top: auto;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: auto;
+                padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+                flex-direction: row;
+                box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.18);
             }
 
-            .logo-name,
-            .logo-sub {
-                display: none;
-            }
-
-            .nav a {
-                justify-content: center;
-                padding: 12px 0;
-            }
-
-            .nav a .navtext {
-                display: none;
-            }
-
+            .sidebar .logo,
             .side-bottom {
                 display: none;
             }
 
+            .nav {
+                display: flex;
+                gap: 2px;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav a,
+            .nav a.active {
+                flex: 0 0 auto;
+                min-width: 62px;
+                flex-direction: column;
+                justify-content: center;
+                gap: 2px;
+                padding: 6px 8px;
+                font-size: 10.5px;
+                white-space: nowrap;
+            }
+
+            .nav a .navtext {
+                display: inline;
+            }
+
+            .nav .ico {
+                font-size: 18px;
+                width: auto;
+            }
+
+            .nav-logout-mobile {
+                display: flex !important;
+            }
+
+            /* 본문: 전체 폭 사용 + 하단 탭바 여백 */
             .main {
-                margin-left: 65px;
-                max-width: calc(100% - 65px);
-                padding: 14px 10px;
+                margin-left: 0;
+                max-width: 100%;
+                padding: 12px 12px calc(84px + env(safe-area-inset-bottom));
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .heading>div:first-child {
+                flex-wrap: wrap;
             }
 
             .heading h1 {
-                font-size: 17px;
+                font-size: 18px;
+            }
+
+            #badge-google-ads {
+                font-size: 10px !important;
+                white-space: normal;
+            }
+
+            .top-actions {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+            }
+
+            .top-actions #site-selector,
+            .top-actions .mode-group,
+            .top-actions #btn-report-view {
+                grid-column: 1 / -1;
+            }
+
+            .top-actions .pillselect,
+            .top-actions .pillbtn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                font-size: 12px;
+                padding: 9px 8px;
+            }
+
+            .mode-group {
+                display: flex;
+            }
+
+            .mode-group .mode-btn {
+                flex: 1;
+            }
+
+            .card {
+                border-radius: 10px;
+            }
+
+            .chart-card {
+                min-height: 0;
+                padding: 14px;
+            }
+
+            .chart-container {
+                height: 240px;
+            }
+
+            .simcard,
+            .quick-card {
+                padding: 14px;
+            }
+
+            .cardtitle {
+                font-size: 15px;
+            }
+
+            /* 표 헤더/컨트롤 세로 정렬 */
+            .tablehead {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .table-controls {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+                width: 100%;
+            }
+
+            .table-controls .search-box {
+                grid-column: 1 / -1;
+            }
+
+            .table-controls .pillselect {
+                width: 100%;
+            }
+
+            /* 견적/로그 목록: 표 → 카드 */
+            #leads-table {
+                min-width: 0;
+                display: block;
+            }
+
+            #leads-table thead {
+                display: none;
+            }
+
+            #leads-table tbody {
+                display: block;
+            }
+
+            #leads-table tr {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 4px 10px;
+                padding: 12px 6px;
+                border-bottom: 1px solid #E8EDF5;
+            }
+
+            #leads-table td {
+                display: inline-block;
+                padding: 0;
+                border: none;
+                white-space: normal;
+                word-break: break-word;
+                font-size: 12.5px;
+                max-width: 100%;
+            }
+
+            #leads-table td:nth-child(3) {
+                order: -1;
+                flex: 1 0 100%;
+                font-size: 14.5px;
+                font-weight: 600;
+                color: var(--navy);
+            }
+
+            #leads-table td:nth-child(1),
+            #leads-table td:nth-child(2) {
+                color: var(--muted);
+                font-size: 11.5px;
+            }
+
+            .table-scroll {
+                overflow-x: visible;
+            }
+
+            #pagination-controls {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch !important;
+                text-align: center;
+            }
+
+            #pagination-controls>div {
+                justify-content: center;
+            }
+
+            /* 시뮬레이터 */
+            .simtable {
+                overflow-x: auto;
+            }
+
+            .simtable div {
+                padding: 8px;
+            }
+
+            /* 모달: 화면 폭에 맞춤 */
+            [class*="modal"] {
+                max-width: 100vw;
+            }
+
+            /* 본문 전체 폭 사용 (사이드바 여백 완전 제거) */
+            .main,
+            #dashboard-wrapper {
+                margin-left: 0 !important;
+                padding-left: 12px;
+                width: 100%;
+                max-width: 100% !important;
+            }
+
+            /* 차트: 부모 폭에 맞춰 자동 축소, 밖으로 잘리지 않게 */
+            .chart-card {
+                overflow: hidden;
+                max-width: 100%;
+            }
+
+            .chart-container {
+                flex: none;
+                width: 100%;
+                max-width: 100%;
+                height: 240px;
+                overflow: hidden;
+            }
+
+            .chart-container canvas {
+                display: block;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+            }
+
+            /* 시뮬레이터: 슬라이더 / 결과표 세로 1열 */
+            .simcard {
+                overflow: hidden;
+            }
+
+            .sim-layout {
+                display: flex !important;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .sim-layout>* {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .control label {
+                gap: 8px;
+            }
+
+            .simtable {
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .simtable div {
+                grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+                gap: 6px;
+                font-size: 11px;
+                word-break: keep-all;
+                overflow-wrap: anywhere;
             }
         }
     </style>
@@ -967,12 +1327,15 @@
                     class="navtext">운영계획서</span></a>
             <a href="javascript:void(0)" onclick="changeAdminPassword()"><span class="ico">🔑</span><span
                     class="navtext">비번 변경</span></a>
+            <a class="nav-logout-mobile" href="javascript:void(0)"
+                onclick="logoutAdmin();"><span
+                    class="ico">⎋</span><span class="navtext">로그아웃</span></a>
         </nav>
         <div class="side-bottom">
             <div><span class="status-dot"></span>시스템 정상</div>
             <div style="margin:6px 0 2px; color:#91A4BF; font-size:9.5px;">최근 동기화</div>
             <strong style="color:#FFFFFF; font-size:10px;">2026.11.23 LIVE</strong>
-            <button onclick="sessionStorage.removeItem('samhyup_admin_auth'); location.reload();">로그아웃</button>
+            <button onclick="logoutAdmin();">로그아웃</button>
         </div>
     </aside>
 
@@ -1464,7 +1827,12 @@
 
         let currentSite = 'catalog';   // 'catalog', 'main_site', or 'mailling'
         let dashboardMode = 'realtime'; // 'realtime' or 'simulator'
+        let gasRequestSeq = 0; // GAS 요청 순번 (늦게 도착한 이전 응답 무시용)
         let analyticsData = null;
+        window.addEventListener('resize', () => {
+            if (typeof sourceChart !== 'undefined' && sourceChart) sourceChart.resize();
+            if (typeof productChart !== 'undefined' && productChart) productChart.resize();
+        });
         let sourceChart = null;
         let productChart = null;
 
@@ -3382,20 +3750,21 @@
             }
         }
 
-        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응, 5초 타임아웃)
+        // CORS 회피를 위한 JSONP 통신 헬퍼 함수 (로컬 file:// 실행 대응, 15초 타임아웃)
+        // GAS 응답이 150KB+ 이고 모바일/콜드스타트 시 5초를 넘기는 경우가 있어 15초로 상향
         function fetchJSONP(url, callbackName) {
             return new Promise((resolve, reject) => {
                 const uniqueCallbackName = `${callbackName}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
                 let done = false;
 
-                // 5초 타임아웃: GAS URL이 잘못되거나 응답 없을 시 즉시 폴백
+                // 15초 타임아웃: GAS URL이 잘못되거나 응답 없을 시 폴백
                 const timer = setTimeout(() => {
                     if (!done) {
                         done = true;
-                        reject(new Error('JSONP timeout after 5s'));
+                        reject(new Error('JSONP timeout after 15s'));
                         cleanup();
                     }
-                }, 5000);
+                }, 15000);
 
                 window[uniqueCallbackName] = (data) => {
                     if (!done) {
@@ -3427,8 +3796,29 @@
             });
         }
 
+        // 로컬스토리지 용량 초과/차단(사파리 프라이빗 등) 시에도 조회가 실패하지 않도록 방어
+        function safeCacheSet(key, obj) {
+            try { localStorage.setItem(key, JSON.stringify(obj)); } catch (e) { console.warn('캐시 저장 생략:', e); }
+        }
+
+        // 조회 실패 사유를 사용자에게 보이게 표시 (조용히 0건으로 보이지 않도록)
+        function setGasStatus(msg, isError) {
+            const el = document.getElementById('table-mode-desc');
+            if (!el) return;
+            let note = document.getElementById('gas-status-note');
+            if (!note) {
+                note = document.createElement('div');
+                note.id = 'gas-status-note';
+                note.style.cssText = 'margin-top:6px;font-size:12px;font-weight:600;color:#B91C1C;';
+                el.insertAdjacentElement('afterend', note);
+            }
+            note.textContent = msg || '';
+            note.style.display = msg ? 'block' : 'none';
+        }
+
         // Render metrics to UI
         function updateDashboardUI() {
+            setGasStatus('');
             // GAS URL이 설정되지 않았거나 더미(TODO 포함)인 경우 즉시 로컬 폴백
             const gasReady = GAS_WEB_APP_URL &&
                 GAS_WEB_APP_URL.startsWith('http') &&
@@ -3436,7 +3826,10 @@
 
             if (gasReady && dashboardMode === 'realtime') {
                 // 구글 시트에서 실시간 데이터 로드 (JSONP 방식, 5초 타임아웃)
-                const fetchUrl = `${GAS_WEB_APP_URL}?site=${currentSite}`;
+                const requestSite = currentSite;
+                const requestMode = dashboardMode;
+                const requestSeq = ++gasRequestSeq;
+                const fetchUrl = `${GAS_WEB_APP_URL}?site=${requestSite}`;
 
                 // 로딩 상태 표시
                 document.getElementById('kpi-visits').textContent = '로드 중...';
@@ -3444,6 +3837,8 @@
 
                 fetchJSONP(fetchUrl, 'gas_callback')
                     .then(data => {
+                        // 늦게 도착한 이전 요청(다른 탭/사이트)의 응답은 무시 (정상 데이터 덮어쓰기 방지)
+                        if (requestSeq !== gasRequestSeq || requestSite !== currentSite || requestMode !== dashboardMode) return;
                         // [핵심] GAS가 반환하는 { visits, logs } 구조를
                         // 대시보드가 기대하는 { visits, quotes } 구조로 변환
                         if (currentSite === 'mailling' && data.logs) {
@@ -3462,7 +3857,7 @@
                                 }))
                             };
                             // 실시간 데이터를 로컬스토리지에도 캐시 (오프라인 대비)
-                            localStorage.setItem('samhyup_mailling_analytics', JSON.stringify(analyticsData));
+                            safeCacheSet('samhyup_mailling_analytics', analyticsData);
                         } else if (currentSite === 'fax' && data.logs) {
                             analyticsData = {
                                 visits: data.visits || { success: 0, fail: 0, pending: 0 },
@@ -3478,17 +3873,31 @@
                                     source: log.status === '성공' ? 'success' : 'fail'
                                 }))
                             };
-                            localStorage.setItem('samhyup_fax_analytics', JSON.stringify(analyticsData));
-                        } else {
+                            safeCacheSet('samhyup_fax_analytics', analyticsData);
+                        } else if (data && data.visits && Array.isArray(data.quotes)) {
                             analyticsData = data;
+                        } else {
+                            // GAS 응답에 visits/quotes 구조가 없으면 로컬 폴백으로 전환
+                            throw new Error('GAS 응답 형식 오류 (visits/quotes 누락)');
                         }
-                        renderDashboardData();
+                        setGasStatus('');
+                        try {
+                            renderDashboardData();
+                        } catch (renderErr) {
+                            // 렌더링 오류를 통신 오류로 오인해 0건으로 덮어쓰지 않도록 분리
+                            console.error('대시보드 렌더링 오류:', renderErr);
+                            setGasStatus('⚠ 데이터는 수신했으나 화면 표시 중 오류: ' + (renderErr && renderErr.message), true);
+                        }
                     })
                     .catch(err => {
+                        if (requestSeq !== gasRequestSeq || requestSite !== currentSite || requestMode !== dashboardMode) return;
                         console.error('GAS 연동 실패 (로컬 폴백 적용):', err);
                         // 에러/타임아웃 시 로컬스토리지 폴백
                         loadLocalData();
                         renderDashboardData();
+                        const reason = (err && err.message) ? err.message : '스크립트 로드 실패(네트워크/차단)';
+                        // 팩스는 GAS가 아직 logs를 주지 않고 내장 데이터로 표시하므로 경고 대상에서 제외
+                        if (requestSite !== 'fax') setGasStatus('⚠ 실시간 조회 실패 → 저장된 캐시 표시 중 (' + reason + ') · 새로고침으로 재시도', true);
                     });
             } else {
                 // GAS URL 미설정 or 시뮬레이터 모드 → 즉시 로컬 데이터 표시
@@ -3499,6 +3908,14 @@
 
         // UI 데이터 그리기 핵심 로직
         function renderDashboardData() {
+            // 방어 코드: 어떤 경로로든 구조가 비어 있어도 렌더링이 죽지 않도록 보정
+            if (!analyticsData || typeof analyticsData !== 'object') analyticsData = {};
+            if (!analyticsData.visits || typeof analyticsData.visits !== 'object') {
+                analyticsData.visits = (currentSite === 'mailling' || currentSite === 'fax')
+                    ? { success: 0, fail: 0, pending: 0 }
+                    : { google_ads: 0, search: 0, direct: 0 };
+            }
+            if (!Array.isArray(analyticsData.quotes)) analyticsData.quotes = [];
             let totalVisits = 0;
             let totalQuotes = 0;
             let cvr = "0.00";
@@ -4039,6 +4456,13 @@
                     updateDashboardUI();
                 }
             }
+        }
+
+        // 로그아웃: 로그인 시 저장한 키(samhyup_admin_auth)를 지우고 인증 화면으로 복귀
+        function logoutAdmin() {
+            sessionStorage.removeItem('samhyup_admin_auth');
+            sessionStorage.removeItem('samhyup_auth'); // 구 키 호환
+            location.reload();
         }
 
         // Password Verification

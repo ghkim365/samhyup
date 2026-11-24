@@ -1,7 +1,9 @@
 {
+  "id": "/catalog/index_catalog.html",
   "name": "삼협철망 | B2B 모바일 간편 견적",
   "short_name": "삼협철망",
-  "start_url": "./index.html",
+  "start_url": "/catalog/index_catalog.html",
+  "scope": "/catalog/",
   "display": "standalone",
   "background_color": "#0F172A",
   "theme_color": "#0284C7",

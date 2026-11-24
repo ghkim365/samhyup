@@ -161,6 +161,20 @@ a {
     color: #ffffff;
 }
 
+/* 브로슈어 링크: 데스크톱은 전체 문구, 좁은 화면은 짧은 문구 */
+.nav .nb-short { display: none; }
+@media (max-width: 1000px) {
+    .nav .nb-full { display: none; }
+    .nav .nb-short { display: inline; }
+}
+/* 초소형 화면(≤480px): 브로슈어 버튼 공간 확보를 위해 '제품갤러리' 메뉴 숨김 */
+@media (max-width: 480px) {
+    .nav a[href="#gallery"] { display: none !important; }
+}
+
+/* 푸터 은폐형 관리자 진입점 (일반 텍스트처럼 보임) */
+.admin-gate { cursor: default; -webkit-tap-highlight-color: transparent; outline: none; user-select: text; }
+
 /* HERO */
 .hero {
     position: relative;
